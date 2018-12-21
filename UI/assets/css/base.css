@@ -175,8 +175,24 @@ a {
 }
 
 .container {
-	width: 70%;
+	width: 75%;
 	margin: 0 auto;
+}
+
+.w-sm {
+	width: 80% !important;
+}
+
+.w-md {
+	width: 60% !important;
+}
+
+.w-lg {
+	width: 40% !important;
+}
+
+.w-auto {
+	/* width: 40% !important; */
 }
 
 .hero-text {
@@ -522,5 +538,41 @@ footer h3 {
 		padding: 0.4rem 1rem;
 	}
 }
+
+@media (min-width: 576px) { 
+	.w-auto {
+		width: 75% !important;
+	}
+	.container {
+		width: 85%;
+	}
+ }
+
+@media (min-width: 768px) { 
+	.w-auto {
+		width: 70% !important;
+	}
+	.container {
+		width: 65%;
+	}
+ }
+
+@media (min-width: 992px) { 
+	.w-auto {
+		width: 50% !important;
+	}
+	.container {
+		width: 70%;
+	}
+ }
+
+@media (min-width: 1200px) { 
+	.w-auto {
+		width: 40% !important;
+	}
+	.container {
+		width: 65%;
+	}
+ }
 
 /* END MEDIA QUERIES */
