@@ -92,6 +92,10 @@
     align-items: self-end;
     margin-left: 0.3rem;
 	}
+
+	.questions .btn {
+    width: 50%;
+	}
 }
 
 @media (min-width: 576px) {
