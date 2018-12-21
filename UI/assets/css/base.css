@@ -13,7 +13,8 @@ a {
 
 #navigation {
 	z-index: 1;
-	background: #F1F1F2;
+	background: #ffffff;
+	/* background: #F1F1F2; */
 	width: 100%;
 	height: auto;
 	padding: 1rem 2rem;
@@ -23,7 +24,7 @@ a {
 }
 
 #nav-brand img {
-	height: 50px;
+	height: 40px;
 	width: 100%;
 }
 
@@ -41,7 +42,7 @@ a {
 	z-index: 9999;
 	width: 350px;
 	/* box-shadow: 9px -1px 29px 1px; */
-	box-shadow: 13px 0px 22px -10px rgba(35,31,41,0.44);
+	box-shadow: 13px 0px 22px -10px rgba(35, 31, 41, 0.44);
 	padding: 20px;
 	list-style-type: none;
 }
@@ -55,7 +56,7 @@ a {
 	color: #F1F1F2;
 }
 
-.navbar-side li:hover > a {
+.navbar-side li:hover>a {
 	color: #F1F1F2;
 }
 
@@ -111,6 +112,25 @@ a {
 	border: 2px solid #221F28;
 }
 
+.btn {
+	background: #221F28;
+	color: #F1F1F2;
+	padding: 0.8rem 1.2rem;
+	line-height: 9px;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 12px;
+	border-radius: 50px;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	display: block;
+	transition: all .5s ease;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	border: 2px solid #221F28;
+	text-align: center;
+}
+
 .cta-btn {
 	background: #F1F1F2;
 	color: #221F28;
@@ -129,6 +149,10 @@ a {
 	-webkit-transition: all .5s ease;
 	-moz-transition: all .5s ease;
 	border: 2px solid #F1F1F2;
+}
+
+.btn.sm {
+	width: 40%
 }
 
 .box-sh-dark {
@@ -240,9 +264,9 @@ a {
 }
 
 .card {
-	border-radius: .25rem;
+	border-radius: .45rem;
 	background: #ffffff;
-	box-shadow: 0 15px 30px 0 rgba(0,0,0,.11), 0 5px 15px 0 rgba(0,0,0,.08);
+	box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
 }
 
 .mauto {
@@ -305,7 +329,8 @@ form .reg-btn {
 	width: 350px;
 }
 
-#login-form h3 {
+#login-form h3,
+#q-wrapper h3 {
 	color: #221F28;
 	text-transform: uppercase;
 	font-weight: 800;
@@ -326,6 +351,21 @@ form .reg-btn {
 	background: #ffffff;
 }
 
+.input textarea {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	font-family: 'Circular-Light';
+	font-size: 0.8rem;
+	border: 1px solid #C5CFD9;
+	background: #ffffff;
+}
+
+.input select {
+	border: 1px solid #C5CFD9;
+	padding: 0.4rem 0.5rem;
+	height: 2rem;
+}
+
 .b-rsm {
 	border-radius: 8px;
 }
@@ -334,8 +374,8 @@ form .reg-btn {
 	display: none;
 }
 
-#menu img{
-	height: 40px;
+#menu img {
+	height: 30px;
 }
 
 img {
@@ -396,17 +436,18 @@ footer h3 {
 @media all and (max-width: 1050px) {
 	.navbar {
 		grid-template-columns: 20% 60%;
-    grid-gap: 20%;
+		grid-gap: 20%;
 	}
 }
 
 @media all and (max-width: 350px) {
 	img {
 		height: 12rem;
-    width: auto;
+		width: auto;
 	}
+
 	.social-links img {
-    height: 40px;
+		height: 40px;
 	}
 }
 
@@ -414,9 +455,11 @@ footer h3 {
 	.social-links {
 		margin-top: 25px;
 	}
+
 	.info-about {
 		margin-bottom: 25px;
 	}
+
 	.nav-menu {
 		flex-wrap: wrap;
 	}
@@ -425,13 +468,15 @@ footer h3 {
 		flex-basis: 50%;
 	}
 
-	.info-section .container, .info-platform .container, .info-expl .container {
+	.info-section .container,
+	.info-platform .container,
+	.info-expl .container {
 		grid-template-columns: 1fr;
 	}
 
 	footer .container {
-    grid-template-columns: 1fr;
-    grid-gap: 10px;
+		grid-template-columns: 1fr;
+		grid-gap: 10px;
 	}
 }
 

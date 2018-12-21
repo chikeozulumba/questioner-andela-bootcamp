@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../../assets/css/base.css">
+	<link rel="stylesheet" href="../../assets/css/format.css">
+	<title>Add Question | QUESTIONER - ANDELA BOOTCAMP</title>
+</head>
+
+<body>
+	<!-- Navigation Section Starts -->
+	<section id="navigation">
+		<nav class="navbar">
+			<a id="nav-brand">
+				<img src="../../assets/imgs/logo.svg" alt="">
+			</a>
+			<ul class="nav-menu">
+				<li><a href="#!">Meetups</a></li>
+				<li><a href="#!">Pricing</a></li>
+				<li><a href="#!">Login</a></li>
+				<li><a class="reg-btn box-sh-dark" href="#!">Join Questioner</a></li>
+			</ul>
+			<a id="menu" href="">
+				<img src="../../assets/imgs/menu.svg" alt="">
+			</a>
+		</nav>
+	</section>
+	<!-- Navigation Section Ends -->
+
+	<!-- SideBar Nav -->
+	<ul id="sidebar" class="navbar-side side-hidden">
+		<li><a href="#!">Meetups</a></li>
+		<li><a href="#!">Pricing</a></li>
+		<li><a href="#!">Login</a></li>
+		<li><a class="" href="#!">Join Questioner</a></li>
+	</ul>
+	<!-- End SideBar Nav -->
+	<section class="container">
+		<div id="q-wrapper" class="card mauto m4 p3">
+			<form action="/" method="POST">
+				<div class="container">
+					<h3 class="md-text">Ask Your Question</h3>
+					<div class="m1 input">
+						<label class="m1" for="name">Title <span class="is-danger">*</span></label>
+						<input class="p1 b-rsm" type="text" name="title" placeholder="Start your question with 'What', 'Why', 'If' etc.">
+					</div>
+					<div class="m1 input">
+						<label class="m1" for="name">Description <span class="is-danger">*</span></label>
+						<textarea class="p1 b-rsm" name="description" placeholder="Make your question easier to understand" rows="4" cols="50"></textarea>
+					</div>
+					<div class="m1 input">
+						<label class="m1" for="name">Add a link</label>
+						<input class="p1 b-rsm" type="url" name="link" placeholder="Eplain the scope of your question by including a link">
+					</div>
+					<div class="m1 input">
+						<label class="m1" for="name">Choose your meetup <span class="is-danger">*</span></label>
+						<select name="selected-meetup" id="meetup">
+							<option value="#">Choose ...</option>
+							<option value="#meetup-1">ALC 3.0</option>
+							<option value="#meetup-2">GDG Lagos</option>
+							<option value="#meetup-3">ForLoop Africa</option>
+							<option value="#meetup-4">Laravel</option>
+						</select>
+					</div>
+					<div class="m2 input">
+						<a class="btn sm box-sh-dark" href="#!">Submit</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<footer class="bg-secondary">
+		<div class="container">
+			<div class="info-about">
+				<h3 class="md-text">Interested in Questioner?</h3>
+				<div class="social-links">
+					<a href="#!"><img src="../../assets/imgs/icons/facebook.svg" alt=""></a>
+					<a href="#!"><img src="../../assets/imgs/icons/instagram.svg" alt=""></a>
+					<a href="#!"><img src="../../assets/imgs/icons/twitter.svg" alt=""></a>
+					<a href="#!"><img src="../../assets/imgs/icons/linkedin.svg" alt=""></a>
+				</div>
+			</div>
+			<div class="additional-info">
+				<h3 class="md-text">Questioner Goals</h3>
+				<p class="sm-text">
+					We create a safe space for others to ask for help.
+					We ask for help when we’re stuck and motivate others to do the same.
+				</p>
+				<p class="sm-text">
+					We create space for psychological safety in all our interactions by encouraging peers to be open and honest about
+					their experiences.
+				</p>
+			</div>
+		</div>
+	</footer>
+	<script src="../../assets/js/index.js"></script>
+</body>
+
+</html>
