@@ -7,7 +7,8 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" href="../../assets/css/base.css">
 	<link rel="stylesheet" href="../../assets/css/format.css">
-	<title>Add Question | QUESTIONER - ANDELA BOOTCAMP</title>
+	<link rel="stylesheet" href="../../assets/css/questions.css">
+	<title>View Questions | QUESTIONER - ANDELA BOOTCAMP</title>
 </head>
 
 <body>
@@ -38,38 +39,48 @@
 		<li><a class="" href="#!">Join Questioner</a></li>
 	</ul>
 	<!-- End SideBar Nav -->
-	<section class="container w-auto">
-		<div id="q-wrapper" class="card mauto m4 p3">
-			<form action="/" method="POST">
-				<div class="container">
-					<h3 class="md-text">Ask Your Question</h3>
-					<div class="m1 input">
-						<label class="m1" for="name">Title <span class="is-danger">*</span></label>
-						<input class="p1 b-rsm" type="text" name="title" placeholder="Start your question with 'What', 'Why', 'If' etc.">
+	<section id="questions" class="ptb-5 mauto">
+		<div class="questions container card-lg">
+			<div class="media pall-1">
+					<img class="img" src="https://via.placeholder.com/150" alt="">
+					<div>
+							<span>
+								<a href="#!"><img src="../../assets/imgs/icons/upvote.svg" alt=""></a><br>
+								2.3k
+							</span>
+							<span>
+								<a href="#!"><img src="../../assets/imgs/icons/downvote.svg" alt=""></a> <br>
+								1.5k
+							</span>
 					</div>
-					<div class="m1 input">
-						<label class="m1" for="name">Description <span class="is-danger">*</span></label>
-						<textarea class="p1 b-rsm" name="description" placeholder="Make your question easier to understand" rows="4" cols="50"></textarea>
-					</div>
-					<div class="m1 input">
-						<label class="m1" for="name">Add a link</label>
-						<input class="p1 b-rsm" type="url" name="link" placeholder="Eplain the scope of your question by including a link">
-					</div>
-					<div class="m1 input">
-						<label class="m1" for="name">Choose your meetup <span class="is-danger">*</span></label>
-						<select name="selected-meetup" id="meetup">
-							<option value="#">Choose ...</option>
-							<option value="#meetup-1">ALC 3.0</option>
-							<option value="#meetup-2">GDG Lagos</option>
-							<option value="#meetup-3">ForLoop Africa</option>
-							<option value="#meetup-4">Laravel</option>
-						</select>
-					</div>
-					<div class="m2 input">
-						<a class="btn sm box-sh-dark" href="#!">Submit</a>
-					</div>
+			</div>
+			<div class="content pall-1">
+				<h3 class="md-text title">What is a Binary Search Tree?</h3>
+				<div class="desc">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet eos accusantium modi fuga obcaecati voluptas veritatis quidem tempore, libero ut, mollitia fugit nisi sint nobis quas quos praesentium maiores sapiente tempora earum.
 				</div>
-			</form>
+			</div>
+		</div>
+		<div class="questions container card-lg">
+			<div class="media pall-1">
+					<img class="img" src="https://via.placeholder.com/150" alt="">
+					<div>
+							<span>
+								<a href="#!"><img src="../../assets/imgs/icons/upvote.svg" alt=""></a><br>
+								2.3k
+							</span>
+							<span>
+								<a href="#!"><img src="../../assets/imgs/icons/downvote.svg" alt=""></a> <br>
+								1.5k
+							</span>
+					</div>
+			</div>
+			<div class="content pall-1">
+				<h3 class="md-text title">How do you find the missing number in a given integer array of 1 to 100?</h3>
+				<div class="desc">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet eos accusantium modi fuga obcaecati voluptas veritatis quidem tempore, libero ut, mollitia fugit nisi sint nobis quas quos praesentium maiores sapiente tempora earum.
+				</div>
+			</div>
 		</div>
 	</section>
 
