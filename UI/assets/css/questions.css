@@ -63,6 +63,14 @@
 	color: #221F28;
 }
 
+.intro a{
+	width: 30%;
+}
+
+.intro h3 {
+	color: #221F28;
+	margin-bottom: 1rem;
+}
 
 @media (max-width: 576px) {
 	.questions {
@@ -87,6 +95,10 @@
 
 	.questions .btn {
     width: 50%;
+	}
+
+	.intro a{
+		width: 45%;
 	}
 }
 
