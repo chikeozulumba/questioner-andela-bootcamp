@@ -6,8 +6,8 @@ import app from '../app';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('User should be able to Signup', () => {
-	it('should return status 201 user created', (done) => {
+describe('User should be able to visit Frontend pages', () => {
+	it('should return status 200', (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/')

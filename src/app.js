@@ -14,7 +14,7 @@ app.use('/api', Router);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('combined', {
-  skip: (req, res) => res.statusCode < 400,
+	skip: (req, res) => res.statusCode < 400,
 }));
 app.use(express.static('UI'));
 app.use('/UI', express.static(path.resolve(__dirname, '../../UI/')));
@@ -22,3 +22,5 @@ app.use('/UI', express.static(path.resolve(__dirname, '../../UI/')));
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT);
+
+export default app;
