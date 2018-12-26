@@ -4,6 +4,8 @@
   "description": "Andela Developer Challenge Cycle 40 Bootcamp",
   "main": "index.js",
   "scripts": {
+    "lint": "cd src && eslint *.js --fix",
+    "lint-fix": "eslint --fix ./src --ext .js --color",
     "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- "
   },
   "repository": {
