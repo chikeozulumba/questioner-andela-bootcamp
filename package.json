@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "cd src && eslint *.js --fix",
     "lint-fix": "eslint --fix ./src --ext .js --color",
-    "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- "
+    "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
+    "test": "nyc mocha --require babel-register src/tests/**/*spec.js --exit"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "nyc": "^13.1.0"
   }
 }
