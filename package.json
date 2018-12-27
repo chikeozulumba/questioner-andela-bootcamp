@@ -4,12 +4,12 @@
   "description": "Andela Developer Challenge Cycle 40 Bootcamp",
   "main": "index.js",
   "scripts": {
-    "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache mocha src/tests/**/*spec.js --timeout 10000 --exit",
+    "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "cd src && eslint *.js --fix",
     "lint-fix": "eslint --fix ./src --ext .js --color",
     "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
-    "test": "mocha --require babel-register src/tests/**/*spec.js --exit"
+    "test": "nyc mocha --require babel-register src/tests/**/*spec.js --exit"
   },
   "repository": {
     "type": "git",
