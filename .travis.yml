@@ -14,6 +14,6 @@ cache:
 after_success: 
  - npm run coveralls
  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
- env:
+env:
   global:
     - CC_TEST_REPORTER_ID=5460d8d46d6c882c0c1ca7fb2de4aa1a1fe0eb4c3db1b4529ed62b6581682d59
