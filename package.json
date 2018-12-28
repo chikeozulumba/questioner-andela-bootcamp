@@ -9,7 +9,7 @@
     "lint": "cd src && eslint *.js --fix",
     "lint-fix": "eslint --fix ./src --ext .js --color",
     "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
-    "test": "nyc mocha --require babel-register src/tests/**/*spec.js --exit"
+    "test": "nyc mocha src/tests/**/*spec.js --exit"
   },
   "repository": {
     "type": "git",
