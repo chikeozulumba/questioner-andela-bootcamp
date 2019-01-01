@@ -1,14 +1,11 @@
 import Validate from '../functions/validate';
 import { error4xx, response2xx } from '../functions/handlers';
-import { meetups } from '../mock/data.json';
 import Query from '../functions/query';
 
 const validateOptions = {
 	required: ['topic', 'Tags', 'happeningOn', 'createdOn', 'location'], // Required fields
 	format: ['topic'], // Check Format
 };
-
-const meetupData = meetups;
 
 /**
  * Create Meetup Class
@@ -20,9 +17,14 @@ class CreateMeetup {
 	 */
 	static create(req, res) {
 		let payload = req.body;
-		const validation = new Validate(payload, validateOptions);
-		if (!validation.init()) return error4xx(res, 400, false, validation.errorMsg);
-		payload = validation.prepareContent();
+		const validation = Validate.init(payload, validateOptions);
+		console.log(validation);
+		if (validation !== true && typeof validation === 'string') return error4xx(res, 400, false, validation);
+
+		const params = {
+			arrays: ['Tags', 'images'],
+		};
+		payload = Validate.prepareContent(payload, params);
 		// ADD TO MEETUPS DATA
 		const query = new Query(payload);
 		// SAVE MEETUP
