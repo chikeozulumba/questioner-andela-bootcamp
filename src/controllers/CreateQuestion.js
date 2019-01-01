@@ -3,14 +3,14 @@ import { error4xx, response2xx } from '../functions/handlers';
 import Query from '../functions/query';
 
 const validateOptions = {
-	required: ['topic', 'Tags', 'happeningOn', 'createdOn', 'location'], // Required fields
-	format: ['topic'], // Check Format
+	required: ['title', 'body'], // Required fields
+	format: ['title'], // Check Format
 };
 
 /**
  * Create Meetup Class
  */
-class CreateMeetup {
+class CreateQuestion {
 	/**
 	 * @param {object} req Controls Meetup Request
 	 * @param {object} res Controls to Meetup Response
@@ -18,15 +18,13 @@ class CreateMeetup {
 	static create(req, res) {
 		let payload = req.body;
 		const validation = Validate.init(payload, validateOptions);
-		console.log(validation);
 		if (validation !== true && typeof validation === 'string') return error4xx(res, 400, false, validation);
-
 		const params = {
-			arrays: ['Tags', 'images'],
+			arrays: [],
 		};
 		payload = Validate.prepareContent(payload, params);
 		// ADD TO MEETUPS DATA
-		const query = new Query(payload, 'meetups', ['topic']);
+		const query = new Query(payload, 'questions', ['title']);
 		// SAVE MEETUP
 		return query.save()
 			.then(docs => response2xx(res, 200, true, docs))
@@ -34,4 +32,4 @@ class CreateMeetup {
 	}
 }
 
-export default CreateMeetup;
+export default CreateQuestion;
