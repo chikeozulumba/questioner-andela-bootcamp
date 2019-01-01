@@ -16,7 +16,6 @@ class Query {
 		this.collections = [...meetups];
 	}
 
-	// `'${param}' name already exists on the database.` this.errorMsg = `'${param}' name already exists on collection.`;
 	async unique(payload, params) {
 		return new Promise((resolve, reject) => {
 			params.forEach((param) => {
