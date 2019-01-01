@@ -3,7 +3,7 @@ import { error4xx, response2xx } from '../functions/handlers';
 import Query from '../functions/query';
 
 const validateOptions = {
-	required: ['topic', 'Tags', 'happeningOn', 'createdOn', 'location'], // Required fields
+	required: ['topic', 'Tags', 'happeningOn', 'location'], // Required fields
 	format: ['topic'], // Check Format
 };
 

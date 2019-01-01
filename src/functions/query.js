@@ -1,3 +1,4 @@
+import moment from 'moment';
 import data from '../mock/data';
 
 const stringValidation = /^([a-zA-Z0-9,.!? @_-]+)$/;
@@ -39,22 +40,23 @@ class Query {
 	}
 
 	getID() {
-		return this.collections.reduce((acc, desc, i) => {
-			if (acc === undefined || acc.id !== desc.id) return i + 1;
-			return this.collections.length + 1;
-		});
+		return this.collections.length + 1;
 	}
 
 	// PREPARE FOR MEETUP
 	prepareMeetup() {
 		const length = this.collections.length;
 		this.payload.id = this.getID();
+		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
 		return this.payload;
 	}
 
 	prepareQuestions() {
 		const length = this.collections.length;
 		this.payload.id = this.getID();
+		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
+		this.payload.createdBy = 1;
+		this.payload.meetup = 1;
 		this.payload.votes = 0;
 		this.payload.upVoted = [];
 		this.payload.downVoted = [];
@@ -65,7 +67,7 @@ class Query {
 	// PREPARE FOR QUESTIONS
 	prepare() {
 		switch (this.collection) {
-		case 'meetup':
+		case 'meetups':
 			return this.prepareMeetup();
 		case 'questions':
 			return this.prepareQuestions();
