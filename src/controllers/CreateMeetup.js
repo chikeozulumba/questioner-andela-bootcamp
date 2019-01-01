@@ -5,7 +5,7 @@ import Query from '../functions/query';
 
 const validateOptions = {
 	required: ['topic', 'Tags', 'happeningOn', 'createdOn', 'location'], // Required fields
-	format: ['topic'], // Check Format
+	format: ['topic'], // Check Format,
 };
 
 const meetupData = meetups;
@@ -17,12 +17,18 @@ class CreateMeetup {
 	/**
 	 * @param {object} req Controls Meetup Request
 	 * @param {object} res Controls to Meetup Response
+	 * @param {object} params Object data for formatting payload in prepareContent
 	 */
 	static create(req, res) {
 		let payload = req.body;
-		const validation = new Validate(payload, validateOptions);
-		if (!validation.init()) return error4xx(res, 400, false, validation.errorMsg);
-		payload = validation.prepareContent();
+		const validation = Validate.init(payload, validateOptions);
+		console.log(validation);
+		if (validation !== true && typeof validation === 'string') return error4xx(res, 400, false, validation);
+
+		const params = {
+			arrays: ['Tags', 'images'],
+		};
+		payload = Validate.prepareContent(payload, params);
 		// ADD TO MEETUPS DATA
 		const query = new Query(payload);
 		// SAVE MEETUP
