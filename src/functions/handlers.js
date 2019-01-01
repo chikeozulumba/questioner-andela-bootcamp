@@ -1,12 +1,3 @@
-export function errorResponse(response, code, status, message) {
-	return response.status(code).send({
-		status,
-		error: {
-			message,
-		},
-	});
-}
-
 export function error4xx(response, code, status, message) {
 	return response.status(code).send({
 		status,

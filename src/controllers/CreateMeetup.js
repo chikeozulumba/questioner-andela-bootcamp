@@ -1,5 +1,5 @@
 import Validate from '../functions/validate';
-import { errorResponse, error4xx, response2xx } from '../functions/handlers';
+import { error4xx, response2xx } from '../functions/handlers';
 import { meetups } from '../mock/data.json';
 import Query from '../functions/query';
 
@@ -21,7 +21,7 @@ class CreateMeetup {
 	static create(req, res) {
 		let payload = req.body;
 		const validation = new Validate(payload, validateOptions);
-		if (!validation.init()) return errorResponse(res, 400, false, validation.errorMsg);
+		if (!validation.init()) return error4xx(res, 400, false, validation.errorMsg);
 		payload = validation.prepareContent();
 		// ADD TO MEETUPS DATA
 		const query = new Query(payload);
