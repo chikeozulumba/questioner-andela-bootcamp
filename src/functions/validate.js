@@ -32,6 +32,14 @@ class Validate {
 		}
 		return true;
 	}
+
+	prepareContent() {
+		const arrays = ['Tags', 'images'];
+		Object.keys(this.body).forEach((key) => {
+			if (arrays.includes(key)) this.body[key] = this.body[key].split(',');
+		});
+		return this.body;
+	}
 }
 
 export default Validate;
