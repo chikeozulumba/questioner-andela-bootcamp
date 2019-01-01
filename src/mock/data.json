@@ -1,11 +1,22 @@
 {
 	"meetups": [{
 		"id": 1,
-		"createdOn": "11a",
+		"createdOn": "Monday, 31st December 2018",
 		"location": "Lagos",
 		"images": "http://localhost:5100/api/v1/image.png",
 		"topic": "Kubernetes@",
-		"happeningOn": "Monday, 31st December 2018",
+		"happeningOn": "Tuesday, 1st January 2019",
 		"Tags": ["api", "endpoints"]
+	}],
+	"questions": [{​
+		"id"​: 1,
+		"createdOn"​: "Monday, 31st December 2018",
+		"createdBy"​: 1,
+		"​meetup"​: 1,
+		"title"​: "What is Kubernetes?",
+		"body"​: "Kubernetes is an open-source container management tool which holds the responsibilities of container deployment, scaling & descaling of containers & load balancing. Being the Google’s brainchild, it offers excellent community and works brilliantly with all the cloud providers. So, we can say that Kubernetes is not a containerization platform, but it is a multi-container management solution.",
+		"​votes"​: 1,
+		"upVoted": [1],
+		"downVoted": [2]
 	}]
 }
