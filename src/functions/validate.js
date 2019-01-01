@@ -1,5 +1,5 @@
 const stringValidation = /^([a-zA-Z0-9,.!? @_-]+)$/;
-const required = (payload, options) => {
+const format = (payload, options) => {
 	if (typeof payload !== 'object') throw new Error(`Content must be of type 'object' not ${typeof body}`);
 	const fields = Object.entries(payload);
 	for (let i = 0; i < fields.length; i += 1) {
@@ -15,15 +15,27 @@ const required = (payload, options) => {
 };
 
 const prepareContent = (payload, params) => {
-	Object.keys(payload).forEach((key) => {
-		if (params.arrays.includes(key)) payload[key] = payload[key].split(',');
-	});
+	if (params !== null && params.arrays.length !== 0) {
+		Object.keys(payload).forEach((key) => {
+			if (params.arrays.includes(key)) payload[key] = payload[key].split(',');
+		});
+	}
 	return payload;
+};
+
+const required = (payload, options) => {
+	for (let i = 0; i < options.required.length; i += 1) {
+		const req = options.required[i];
+		if (payload[req] === undefined || payload[req] === null || payload[req] === '') return `'${req}' field is required.`;
+	}
+	return true;
 };
 
 const init = (payload, options) => {
 	if (options === null) return true;
-	return required(payload, options);
+	const checkRequiredFields = required(payload, options);
+	if (checkRequiredFields === true) return format(payload, options);
+	return checkRequiredFields;
 };
 
 const Validate = { init, prepareContent };
