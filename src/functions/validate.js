@@ -1,5 +1,4 @@
-const regex = /^[a-z0-9][a-z0-9-_]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/;
-const stringValidation = /^([a-zA-Z0-9,.!? _-]+@)$/;
+const stringValidation = /^([a-zA-Z0-9,.!? @_-]+)$/;
 class Validate {
 	/**
 	 * Required method
@@ -16,7 +15,7 @@ class Validate {
 
 	init() {
 		if (this.options !== null) return this.required();
-		return 'true init';
+		return true;
 	}
 
 	required() {

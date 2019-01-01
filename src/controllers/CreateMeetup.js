@@ -1,12 +1,14 @@
 import Validate from '../functions/validate';
-
-const regex = /^[a-z0-9][a-z0-9-_]+@([a-z]|[a-z0-9]?[a-z0-9-]+[a-z0-9])\.[a-z0-9]{2,10}(?:\.[a-z]{2,10})?$/;
-const stringValidation = /^([a-zA-Z0-9 _-]+)\d*[.,]?\d+$/;
+import { errorResponse, error4xx, response2xx } from '../functions/handlers';
+import { meetups } from '../mock/data.json';
+import Query from '../functions/query';
 
 const validateOptions = {
 	required: ['topic', 'Tags', 'happeningOn', 'createdOn', 'location'], // Required fields
 	format: ['topic'], // Check Format
 };
+
+const meetupData = meetups;
 
 /**
  * Create Meetup Class
@@ -17,8 +19,16 @@ class CreateMeetup {
 	 * @param {object} res Controls to Meetup Response
 	 */
 	static create(req, res) {
-		const validation = new Validate(req.body, validateOptions);
-		if (!validation.init()) return validation.errorMsg;
+		let payload = req.body;
+		const validation = new Validate(payload, validateOptions);
+		if (!validation.init()) return errorResponse(res, 400, false, validation.errorMsg);
+		payload = validation.prepareContent();
+		// ADD TO MEETUPS DATA
+		const query = new Query(payload);
+		// SAVE MEETUP
+		return query.save()
+			.then(docs => response2xx(res, 200, true, docs))
+			.catch(err => error4xx(res, 400, false, err));
 	}
 }
 
