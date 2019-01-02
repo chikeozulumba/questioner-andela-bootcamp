@@ -67,12 +67,10 @@ class Query {
 	// PREPARE FOR QUESTIONS
 	prepare() {
 		switch (this.collection) {
-		case 'meetups':
-			return this.prepareMeetup();
 		case 'questions':
 			return this.prepareQuestions();
 		default:
-			return this.payload;
+			return this.prepareMeetup();
 		}
 	}
 
