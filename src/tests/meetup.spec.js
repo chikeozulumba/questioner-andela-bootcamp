@@ -38,7 +38,7 @@ describe('Create new meetup', () => {
 				createdOn: 'Monday, 31st December 2018',
 				location: 'Lagos',
 				images: 'http://localhost:5100/api/v1/image.png',
-				topic: 'Kubernetes@',
+				topic: 'Kubernetes Conference @ Tech Zone',
 				happeningOn: 'Monday, 31st December 2018',
 				Tags: 'api, endpoints',
 			})
