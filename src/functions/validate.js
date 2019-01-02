@@ -26,7 +26,7 @@ const prepareContent = (payload, params) => {
 const required = (payload, options) => {
 	for (let i = 0; i < options.required.length; i += 1) {
 		const req = options.required[i];
-		if (payload[req] === undefined || payload[req] === null || payload[req] === '') return `'${req}' field is required.`;
+		if (payload[req] === undefined || payload[req] === null) return `'${req}' field is required.`;
 	}
 	return true;
 };
