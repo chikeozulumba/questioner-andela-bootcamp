@@ -4,7 +4,10 @@ import Validate from './validate';
 import Filters from './filters';
 
 const stringValidation = /^([a-zA-Z0-9,.!? @_-]+)$/;
-
+const user = {
+	id: 1,
+	name: 'Chike',
+};
 class Query {
 	/**
 	 * Required method
@@ -19,10 +22,13 @@ class Query {
 		this.fields = fields;
 		this.checkProp = Validate.checkType(this.payload, type);
 		this.results = null;
+		this.rsvp = {};
+		this.user = user;
 	}
 
 	async unique(payload, params) {
 		return new Promise((resolve, reject) => {
+			if (!params) resolve(true);
 			params.forEach((param) => {
 				this.collections.filter((collection) => {
 					if (collection[param] === payload[param]) {
@@ -55,6 +61,10 @@ class Query {
 		return this.collections.length + 1;
 	}
 
+	getUser() {
+		return this.user;
+	}
+
 	// PREPARE FOR MEETUP
 	prepareMeetup() {
 		const length = this.collections.length;
@@ -76,17 +86,27 @@ class Query {
 		return this.payload;
 	}
 
+	prepareRsvps() {
+		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
+		this.payload.id = this.getID();
+		this.payload.user = this.getUser().id;
+		return this.payload;
+	}
+
 	// PREPARE FOR QUESTIONS
 	prepare() {
 		switch (this.collection) {
 		case 'questions':
 			return this.prepareQuestions();
+		case 'rsvps':
+			return this.prepareRsvps();
 		default:
 			return this.prepareMeetup();
 		}
 	}
 
 	async addQuery() {
+		console.log(this.payload);
 		return new Promise((resolve, reject) => {
 			this.unique(this.payload, this.fields)
 				.then(res => resolve(this.prepare()))
