@@ -89,10 +89,14 @@ class Query {
 	getRecord() {
 		if (this.checkProp !== true) {
 			this.errorMsg = this.checkProp;
+			this.code = 400;
 			return false;
 		}
 		this.results = Filters.sortArrayById(this.collections, this.payload);
-		if (!this.results) this.errorMsg = 'Record not found';
+		if (!this.results) {
+			this.errorMsg = 'Record not found';
+			this.code = 404;
+		}
 		return this.results;
 	}
 
