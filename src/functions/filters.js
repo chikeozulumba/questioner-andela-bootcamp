@@ -6,7 +6,8 @@ const sortArrayById = (collection, id) => {
 	}
 	return null;
 };
+const last = array => array[array.length - 1];
 
-const Filters = { sortArrayById };
+const Filters = { sortArrayById, last };
 
 export default Filters;
