@@ -42,6 +42,12 @@ class CreateMeetup {
 		if (!queryRecords) return error4xx(res, 404, false, query.errorMsg);
 		return response2xx(res, 200, true, queryRecords);
 	}
+
+	static getAllRecords(req, res) {
+		const query = new Query(null, meetups, null, null);
+		const queryAllRecords = query.getAllRecords();
+		return response2xx(res, 200, true, queryAllRecords);
+	}
 }
 
 export default CreateMeetup;
