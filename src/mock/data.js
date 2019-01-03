@@ -9,6 +9,15 @@ module.exports = {
 		happeningOn: 'Tuesday, 1st January 2019',
 		startTime: '10: 00 am',
 		Tags: ['api', 'endpoints'],
+	}, {
+		id: 2,
+		createdOn: 'Monday, 3rd January 2018',
+		location: 'Lagos',
+		images: ['http://localhost:5100/api/v1/image.png'],
+		topic: 'Modern Javascript features',
+		happeningOn: 'Tuesday, 31st January 2019',
+		startTime: '3: 00 pm',
+		Tags: ['es6', 'mocha', 'endpoints'],
 	}],
 	questions: [{
 		id: 1,
@@ -43,5 +52,21 @@ module.exports = {
 		upVoted: [1],
 		downVoted: [9],
 		permitted: true,
+	}],
+	rsvps: [{
+		id: 1,
+		meetup: 1,
+		user: 1,
+		response: 'yes',
+	}, {
+		id: 2,
+		meetup: 1,
+		user: 1,
+		response: 'no',
+	}, {
+		id: 3,
+		meetup: 2,
+		user: 1,
+		response: 'maybe',
 	}],
 };
