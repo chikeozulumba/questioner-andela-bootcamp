@@ -43,6 +43,14 @@ class Query {
 		}).catch(err => Promise.reject(err));
 	}
 
+	async update(index) {
+		if (index !== -1) {
+			this.collections[index] = this.payload;
+			return this.payload;
+		}
+		return false;
+	}
+
 	getID() {
 		return this.collections.length + 1;
 	}
