@@ -95,6 +95,10 @@ class Query {
 		if (!this.results) this.errorMsg = 'Record not found';
 		return this.results;
 	}
+
+	getAllRecords() {
+		return this.collections;
+	}
 }
 
 export default Query;
