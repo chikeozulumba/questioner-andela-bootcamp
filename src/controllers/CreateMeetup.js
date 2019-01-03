@@ -39,7 +39,7 @@ class CreateMeetup {
 		const id = req.params.id;
 		const query = new Query(id, meetups, null, 'integer');
 		const queryRecords = query.getRecord();
-		if (!queryRecords) return error4xx(res, 404, false, query.errorMsg);
+		if (!queryRecords) return error4xx(res, query.code, false, query.errorMsg);
 		return response2xx(res, 200, true, queryRecords);
 	}
 

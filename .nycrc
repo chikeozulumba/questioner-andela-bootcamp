@@ -6,8 +6,7 @@
   "functions": 10,
   "branches": 50,
   "reporter": [
-    "lcov",
-    "text-lcov"
+    "lcov"
   ],
   "require": [
     "babel-register"

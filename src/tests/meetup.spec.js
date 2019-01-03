@@ -50,3 +50,55 @@ describe('Create new meetup', () => {
 			});
 	});
 });
+
+describe('Get SPECIFIC meetup record', () => {
+	it('should return status 200 with specific meetup record.', (done) => {
+		chai
+			.request(app)
+			.get('/api/v1/meetups/1')
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('boolean').and.to.be.true;
+				expect(res.body).to.have.property('data').and.to.be.an('object');
+				done();
+			});
+	});
+
+	it('should return status 404 when specific meetup record isn\'t found.', (done) => {
+		chai
+			.request(app)
+			.get('/api/v1/meetups/9999999')
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('boolean').and.to.be.false;
+				expect(res.body).to.have.property('error').and.to.have.property('message').and.to.be.a('string');
+				done();
+			});
+	});
+
+	it('should return status 400 when invalid parameter is passed.', (done) => {
+		chai
+			.request(app)
+			.get('/api/v1/meetups/q1jkekfbebjhrejb-1nsdjhjreh')
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body.status).to.be.a('boolean').and.to.be.false;
+				expect(res.body).to.have.property('error').and.to.have.property('message').and.to.be.a('string');
+				done();
+			});
+	});
+});
+
+describe('Get ALL meetup records', () => {
+	it('should return status 200 with all meetup records.', (done) => {
+		chai
+			.request(app)
+			.get('/api/v1/meetups/')
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('boolean').and.to.be.true;
+				expect(res.body).to.have.property('data').and.to.be.an('array');
+				done();
+			});
+	});
+});
