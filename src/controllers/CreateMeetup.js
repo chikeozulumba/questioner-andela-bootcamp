@@ -64,7 +64,7 @@ class CreateMeetup {
 		query.rsvp.id = id;
 		return query.save()
 			.then(docs => response2xx(res, 200, true, docs))
-			.catch(err => console.log(err));
+			.catch(err => error4xx(res, 400, false, err));
 	}
 }
 

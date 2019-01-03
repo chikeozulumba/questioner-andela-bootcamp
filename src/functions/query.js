@@ -67,7 +67,6 @@ class Query {
 
 	// PREPARE FOR MEETUP
 	prepareMeetup() {
-		const length = this.collections.length;
 		this.payload.id = this.getID();
 		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
 		return this.payload;
@@ -89,6 +88,7 @@ class Query {
 	prepareRsvps() {
 		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
 		this.payload.id = this.getID();
+		this.payload.meetup = parseInt(this.payload.meetup, 10);
 		this.payload.user = this.getUser().id;
 		return this.payload;
 	}
@@ -106,7 +106,6 @@ class Query {
 	}
 
 	async addQuery() {
-		console.log(this.payload);
 		return new Promise((resolve, reject) => {
 			this.unique(this.payload, this.fields)
 				.then(res => resolve(this.prepare()))
