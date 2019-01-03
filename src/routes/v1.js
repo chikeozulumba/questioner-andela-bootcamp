@@ -38,4 +38,16 @@ router.get('/meetups/:id', CreateMeetup.getRecord);
 
 router.get('/meetups/', CreateMeetup.getAllRecords);
 
+// @route PATCH /api/v1/questions/<question-id>/upvote
+// @desc  Upvote a question route
+// @access public
+
+router.patch('/questions/:id/upvote', CreateQuestion.vote);
+
+// @route PATCH /api/v1/questions/<question-id>/downvote
+// @desc  Downvote a question route
+// @access public
+
+router.patch('/questions/:id/downvote', CreateQuestion.vote);
+
 export default router;
