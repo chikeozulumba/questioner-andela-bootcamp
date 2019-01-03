@@ -7,6 +7,8 @@ const validateOptions = {
 	format: ['topic'], // Check Format
 };
 
+const meetups = 'meetups';
+
 /**
  * Create Meetup Class
  */
@@ -26,11 +28,19 @@ class CreateMeetup {
 		};
 		payload = Validate.prepareContent(payload, params);
 		// ADD TO MEETUPS DATA
-		const query = new Query(payload, 'meetups', ['topic']);
+		const query = new Query(payload, meetups, ['topic']);
 		// SAVE MEETUP
 		return query.save()
 			.then(docs => response2xx(res, 200, true, docs))
 			.catch(err => error4xx(res, 400, false, err));
+	}
+
+	static getRecord(req, res) {
+		const id = req.params.id;
+		const query = new Query(id, meetups, null, 'integer');
+		const queryRecords = query.getRecord();
+		if (!queryRecords) return error4xx(res, 404, false, query.errorMsg);
+		return response2xx(res, 200, true, queryRecords);
 	}
 }
 

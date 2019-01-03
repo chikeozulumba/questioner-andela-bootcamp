@@ -31,6 +31,18 @@ const required = (payload, options) => {
 	return true;
 };
 
+const checkType = (payload, type) => {
+	// eslint-disable-next-line valid-typeof
+	const integer = /^\d+$/;
+	switch (type) {
+	case 'integer':
+		if (!integer.test(payload)) return 'Parameter must be of type an integer';
+		return true;
+	default:
+		return `Parameter must be of type ${type}, not ${typeof payload}`;
+	}
+};
+
 const init = (payload, options) => {
 	if (options === null) return true;
 	const checkRequiredFields = required(payload, options);
@@ -38,6 +50,6 @@ const init = (payload, options) => {
 	return checkRequiredFields;
 };
 
-const Validate = { init, prepareContent };
+const Validate = { init, prepareContent, checkType };
 
 export default Validate;

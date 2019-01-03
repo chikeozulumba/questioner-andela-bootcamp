@@ -1,5 +1,7 @@
 import moment from 'moment';
 import data from '../mock/data';
+import Validate from './validate';
+import Filters from './filters';
 
 const stringValidation = /^([a-zA-Z0-9,.!? @_-]+)$/;
 
@@ -9,12 +11,14 @@ class Query {
 	 * @param {object} payload Object containig fields
 	 * @param {object} options Object containing additional options
 	 */
-	constructor(payload, collection, fields) {
+	constructor(payload, collection, fields = null, type = null) {
 		this.payload = payload;
 		this.errorMsg = null;
 		this.collection = collection;
 		this.collections = [...data[collection]];
 		this.fields = fields;
+		this.checkProp = Validate.checkType(this.payload, type);
+		this.results = null;
 	}
 
 	async unique(payload, params) {
@@ -80,6 +84,16 @@ class Query {
 				.then(res => resolve(this.prepare()))
 				.catch(err => reject(err));
 		});
+	}
+
+	getRecord() {
+		if (this.checkProp !== true) {
+			this.errorMsg = this.checkProp;
+			return false;
+		}
+		this.results = Filters.sortArrayById(this.collections, this.payload);
+		if (!this.results) this.errorMsg = 'Record not found';
+		return this.results;
 	}
 }
 
