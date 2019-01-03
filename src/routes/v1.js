@@ -26,4 +26,10 @@ router.post('/meetups', CreateMeetup.create);
 
 router.post('/questions', CreateQuestion.create);
 
+// @route GET /api/v1/meetups/<meetup-id>
+// @desc  Create question route
+// @access public
+
+router.get('/meetups/:id', CreateMeetup.getRecord);
+
 export default router;
