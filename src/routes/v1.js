@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
 import Meetup from '../controllers/Meetup';
-import CreateQuestion from '../controllers/Question';
+import Question from '../controllers/Question';
 
 const router = express.Router();
 router.use(express.static('UI'));
@@ -24,7 +24,7 @@ router.post('/meetups', Meetup.create);
 // @desc  Create question route
 // @access public
 
-router.post('/questions', CreateQuestion.create);
+router.post('/questions', Question.create);
 
 // @route GET /api/v1/meetups/<meetup-id>
 // @desc  Create question route
@@ -42,13 +42,13 @@ router.get('/meetups/', Meetup.getAllRecords);
 // @desc  Upvote a question route
 // @access public
 
-router.patch('/questions/:id/upvote', CreateQuestion.vote);
+router.patch('/questions/:id/upvote', Question.vote);
 
 // @route PATCH /api/v1/questions/<question-id>/downvote
 // @desc  Downvote a question route
 // @access public
 
-router.patch('/questions/:id/downvote', CreateQuestion.vote);
+router.patch('/questions/:id/downvote', Question.vote);
 
 // @route PATCH /api/v1/meetups/<meetup-id>/rsvp
 // @desc  RSVP for a meetup route
