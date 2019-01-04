@@ -60,6 +60,6 @@ router.post('/meetups/:id/rsvp', Meetup.rsvp);
 // @desc  Fetch all upcoming meetup records
 // @access public
 
-router.post('/meetups/upcoming/', Meetup.upcoming);
+router.get('/meetups/upcoming/asc', Meetup.upcoming);
 
 export default router;
