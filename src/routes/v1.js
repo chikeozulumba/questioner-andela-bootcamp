@@ -50,10 +50,16 @@ router.patch('/questions/:id/upvote', CreateQuestion.vote);
 
 router.patch('/questions/:id/downvote', CreateQuestion.vote);
 
-// @route PATCH /api/v1/questions/<question-id>/downvote
-// @desc  Downvote a question route
+// @route PATCH /api/v1/meetups/<meetup-id>/rsvp
+// @desc  RSVP for a meetup route
 // @access public
 
 router.post('/meetups/:id/rsvp', CreateMeetup.rsvp);
+
+// @route PATCH /api/v1/questions/<question-id>/downvote
+// @desc  Fetch all upcoming meetup records
+// @access public
+
+router.post('/meetups/upcoming/', CreateMeetup.upcoming);
 
 export default router;
