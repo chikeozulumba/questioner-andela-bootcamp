@@ -6,10 +6,7 @@ import app from '../app';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-// @route GET /api/v1/questions
-// @desc  Create question route
-
-describe('Create new question record', () => {
+describe('User can create a new question', () => {
 	it('should return status 200 with payload of newly created question record', (done) => {
 		chai
 			.request(app)
@@ -100,6 +97,61 @@ describe('Create new question record', () => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('boolean').and.to.be.false;
 				expect(res.body).to.have.property('error').and.to.be.a('string');
+				done();
+			});
+	});
+});
+
+describe('User can upvote or downvote a specific question', () => {
+	it('should return status 200 when User upvotes a question', (done) => {
+		chai
+			.request(app)
+			.patch('/api/v1/questions/1/upvote')
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('boolean').and.to.be.true;
+				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
+				done();
+			});
+	});
+
+	it('should return status 200 when User downvotes a question', (done) => {
+		chai
+			.request(app)
+			.patch('/api/v1/questions/1/downvote')
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('boolean').and.to.be.true;
+				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
+				done();
+			});
+	});
+
+	it('should return status 400 when User downvotes a question that doesn\'t exist', (done) => {
+		chai
+			.request(app)
+			.patch('/api/v1/questions/999999999999/downvote')
+			.end((err, res) => {
+				console.log(res.status);
+				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('boolean').and.to.be.false;
+				expect(res.body).to.have.property('error').and.to.be.an('string');
+				done();
+			});
+	});
+
+	it('should not be able to vote below 0 vote count', (done) => {
+		chai
+			.request(app)
+			.patch('/api/v1/questions/3/downvote')
+			.end((err, res) => {
+				console.log(res.status);
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
+				expect(res.body.data.votes).to.not.be.lessThan(0);
 				done();
 			});
 	});
