@@ -22,3 +22,7 @@ export function notFound(req, res, next) {
 	// default to plain-text. send()
 	return errorRxx(res, 404, false, 'Not found');
 }
+
+export function baseResponse(req, res) {
+	return res.status(200).send('<h1>Questioner Project</h1><br><a href="https://github.com/chikeozulumba/questioner-andela-bootcamp">Visit the Github page.</a>');
+}
