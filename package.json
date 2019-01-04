@@ -9,7 +9,7 @@
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint ./src/*.js",
-    "lint-fix": "eslint --fix ./src --ext .js --color",
+    "lint-fix": "node_modules/.bin/eslint --fix ./src --ext .js --color",
     "prod": "node_modules/.bin/nodemon server/app.js",
     "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
     "test": "nyc mocha src/tests/**/*spec.js --exit"
