@@ -2,8 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
-import CreateMeetup from '../controllers/CreateMeetup';
-import CreateQuestion from '../controllers/CreateQuestion';
+import Meetup from '../controllers/Meetup';
+import CreateQuestion from '../controllers/Question';
 
 const router = express.Router();
 router.use(express.static('UI'));
@@ -18,7 +18,7 @@ router.use(morgan('combined', {
 // @desc  Create meetup route
 // @access public
 
-router.post('/meetups', CreateMeetup.create);
+router.post('/meetups', Meetup.create);
 
 // @route GET /api/v1/questions
 // @desc  Create question route
@@ -30,13 +30,13 @@ router.post('/questions', CreateQuestion.create);
 // @desc  Create question route
 // @access public
 
-router.get('/meetups/:id', CreateMeetup.getRecord);
+router.get('/meetups/:id', Meetup.getRecord);
 
 // @route GET /api/v1/meetups/<meetup-id>
 // @desc  Create question route
 // @access public
 
-router.get('/meetups/', CreateMeetup.getAllRecords);
+router.get('/meetups/', Meetup.getAllRecords);
 
 // @route PATCH /api/v1/questions/<question-id>/upvote
 // @desc  Upvote a question route
@@ -54,12 +54,12 @@ router.patch('/questions/:id/downvote', CreateQuestion.vote);
 // @desc  RSVP for a meetup route
 // @access public
 
-router.post('/meetups/:id/rsvp', CreateMeetup.rsvp);
+router.post('/meetups/:id/rsvp', Meetup.rsvp);
 
 // @route PATCH /api/v1/questions/<question-id>/downvote
 // @desc  Fetch all upcoming meetup records
 // @access public
 
-router.post('/meetups/upcoming/', CreateMeetup.upcoming);
+router.post('/meetups/upcoming/', Meetup.upcoming);
 
 export default router;
