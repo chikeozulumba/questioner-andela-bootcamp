@@ -11,6 +11,7 @@
     "lint": "node_modules/.bin/eslint ./src/*.js",
     "lint-fix": "node_modules/.bin/eslint --fix ./src --ext .js --color",
     "prod": "node server/app.js",
+    "postinstall": "npm run build",
     "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
     "test": "nyc mocha src/tests/**/*spec.js --exit"
   },
