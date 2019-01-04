@@ -48,7 +48,7 @@ module.exports = {
 		meetup: 1,
 		title: 'What is Container Orchestration?',
 		body: 'Consider a scenario where you have 5-6 microservices for an application. Now, these microservices are put in individual containers, but won’t be able to communicate without container orchestration. So, as orchestration means the amalgamation of all instruments playing together in harmony in music, similarly container orchestration means all the services in individual containers working together to fulfill the needs of a single server.',
-		votes: 50,
+		votes: 0,
 		upVoted: [1],
 		downVoted: [9],
 		permitted: true,
