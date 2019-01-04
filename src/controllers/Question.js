@@ -11,7 +11,7 @@ const validateOptions = {
 /**
  * Create Meetup Class
  */
-class CreateQuestion {
+class Question {
 	/**
 	 * @param {object} req Controls Meetup Request
 	 * @param {object} res Controls to Meetup Response
@@ -57,4 +57,4 @@ class CreateQuestion {
 	}
 }
 
-export default CreateQuestion;
+export default Question;

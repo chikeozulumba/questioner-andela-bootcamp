@@ -14,7 +14,7 @@ const rsvps = 'rsvps';
 /**
  * Create Meetup Class
  */
-class CreateMeetup {
+class Meetup {
 	/**
 	 * @param {object} req Controls Meetup Request
 	 * @param {object} res Controls to Meetup Response
@@ -75,4 +75,4 @@ class CreateMeetup {
 	}
 }
 
-export default CreateMeetup;
+export default Meetup;

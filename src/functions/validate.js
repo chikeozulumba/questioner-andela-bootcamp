@@ -37,7 +37,7 @@ const checkType = (payload, type) => {
 	const integer = /^\d+$/;
 	switch (type) {
 	case 'integer':
-		if (!integer.test(payload)) return 'Parameter must be of type an integer';
+		if (!integer.test(payload)) return 'Parameter must be of type - integer';
 		return true;
 	default:
 		return `Parameter must be of type ${type}, not ${typeof payload}`;
