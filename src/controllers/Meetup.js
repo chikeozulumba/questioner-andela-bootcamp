@@ -1,5 +1,5 @@
 import Validate from '../functions/validate';
-import { error4xx, response2xx } from '../functions/handlers';
+import { errorRxx, response2xx } from '../functions/handlers';
 import Query from '../functions/query';
 import Filters from '../functions/filters';
 
@@ -22,7 +22,7 @@ class Meetup {
 	static create(req, res) {
 		let payload = req.body;
 		const validation = Validate.init(payload, validateOptions);
-		if (validation !== true && typeof validation === 'string') return error4xx(res, 400, false, validation);
+		if (validation !== true && typeof validation === 'string') return errorRxx(res, 400, false, validation);
 
 		const params = {
 			arrays: ['Tags', 'images'],
@@ -33,14 +33,14 @@ class Meetup {
 		// SAVE MEETUP
 		return query.save()
 			.then(docs => response2xx(res, 200, true, docs))
-			.catch(err => error4xx(res, 400, false, err));
+			.catch(err => errorRxx(res, query.code, false, err));
 	}
 
 	static getRecord(req, res) {
 		const id = req.params.id;
 		const query = new Query(id, meetups, null, 'integer');
 		const queryRecords = query.getRecord();
-		if (!queryRecords) return error4xx(res, query.code, false, query.errorMsg);
+		if (!queryRecords) return errorRxx(res, query.code, false, query.errorMsg);
 		return response2xx(res, 200, true, queryRecords);
 	}
 
@@ -59,13 +59,13 @@ class Meetup {
 			required: ['meetup', 'response'], // Required fields
 		};
 		const validation = Validate.init(payload, validateOptions);
-		if (validation !== true && typeof validation === 'string') return error4xx(res, 400, false, validation);
-		if (!queryRecords) return error4xx(res, query.code, false, query.errorMsg);
+		if (validation !== true && typeof validation === 'string') return errorRxx(res, 400, false, validation);
+		if (!queryRecords) return errorRxx(res, query.code, false, query.errorMsg);
 		query.payload = payload;
 		query.rsvp.id = id;
 		return query.save()
 			.then(docs => response2xx(res, 200, true, docs))
-			.catch(err => error4xx(res, 400, false, err));
+			.catch(err => errorRxx(res, 400, false, err));
 	}
 
 	static upcoming(req, res) {

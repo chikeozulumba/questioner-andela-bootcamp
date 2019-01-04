@@ -1,5 +1,5 @@
 import Validate from '../functions/validate';
-import { error4xx, error5xx, response2xx } from '../functions/handlers';
+import { errorRxx, response2xx } from '../functions/handlers';
 import Query from '../functions/query';
 import Filters from '../functions/filters';
 
@@ -19,7 +19,7 @@ class Question {
 	static create(req, res) {
 		let payload = req.body;
 		const validation = Validate.init(payload, validateOptions);
-		if (validation !== true && typeof validation === 'string') return error4xx(res, 400, false, validation);
+		if (validation !== true && typeof validation === 'string') return errorRxx(res, 400, false, validation);
 		const params = {
 			arrays: [],
 		};
@@ -29,7 +29,7 @@ class Question {
 		// SAVE MEETUP
 		return query.save()
 			.then(docs => response2xx(res, 200, true, docs))
-			.catch(err => error4xx(res, 400, false, err));
+			.catch(err => errorRxx(res, query.code, false, err));
 	}
 
 	static vote(req, res) {
@@ -37,23 +37,18 @@ class Question {
 		const path = Filters.last(req.url.split('/'));
 		const query = new Query(id, 'questions', null, 'integer');
 		const question = query.getRecord();
-		if (!question) error5xx(res, query.code, false, query.errorMsg);
-		switch (path) {
-		case 'upvote':
+		if (!question) errorRxx(res, query.code, false, query.errorMsg);
+		if (path === 'upvote') {
 			question.votes += 1;
-			break;
-		case 'downvote':
-			question.votes -= 1;
-			break;
-		default:
-			break;
+		} else {
+			if (question.votes !== 0) question.votes += 1;
+			question.votes = 0;
 		}
 		query.payload = question;
 		query.fields = ['title'];
 		const pos = id - 1;
-		return query.update(pos)
-			.then(docs => response2xx(res, 200, true, docs))
-			.catch(err => error5xx(res, 500, false, `Internal server error, unable to ${path.toUpperCase()}`));
+		if (query.update(pos)) response2xx(res, 200, true, query.payload);
+		return errorRxx(res, 500, false, `Internal server error, unable to ${path.toUpperCase()}`);
 	}
 }
 
