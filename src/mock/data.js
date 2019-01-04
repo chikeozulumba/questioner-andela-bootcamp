@@ -6,7 +6,7 @@ module.exports = {
 		location: 'Lagos',
 		images: ['http://localhost:5100/api/v1/image.png'],
 		topic: 'Kubernetes Conference @ Tech Zone',
-		happeningOn: 'Tuesday, 1st January 2019',
+		happeningOn: '2019-31-05',
 		startTime: '10: 00 am',
 		Tags: ['api', 'endpoints'],
 	}, {
@@ -15,7 +15,7 @@ module.exports = {
 		location: 'Lagos',
 		images: ['http://localhost:5100/api/v1/image.png'],
 		topic: 'Modern Javascript features',
-		happeningOn: 'Tuesday, 31st January 2019',
+		happeningOn: '2019-01-04',
 		startTime: '3: 00 pm',
 		Tags: ['es6', 'mocha', 'endpoints'],
 	}],
