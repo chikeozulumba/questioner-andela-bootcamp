@@ -1,9 +1,7 @@
-export function error4xx(response, code, status, message) {
+export function error4xx(response, code, status, error) {
 	return response.status(code).send({
 		status,
-		error: {
-			message,
-		},
+		error,
 	});
 }
 
