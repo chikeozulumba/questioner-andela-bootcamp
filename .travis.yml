@@ -26,6 +26,3 @@ deploy:
     branch: develop
   api_key:
     secure: "cfea0c04-66ca-4bd9-982d-2cf139eddca2"
-  run:
-    - "npm run build"
-    - restart
