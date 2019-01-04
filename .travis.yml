@@ -3,7 +3,7 @@ env:
     - CC_TEST_REPORTER_ID=5460d8d46d6c882c0c1ca7fb2de4aa1a1fe0eb4c3db1b4529ed62b6581682d59
 language: node_js
 node_js:
-  - "stable"
+  - "latest"
 
 before_script:
  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -18,3 +18,12 @@ cache:
 after_success: 
  - npm run coveralls
  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+deploy:
+  provider: heroku
+  app: questioner-andela
+  api_key:
+    secure: "cfea0c04-66ca-4bd9-982d-2cf139eddca2"
+  run:
+    - "npm run build"
+    - restart
+    - "node server/app.js"
