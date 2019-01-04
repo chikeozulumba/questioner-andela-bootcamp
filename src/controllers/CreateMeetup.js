@@ -1,6 +1,7 @@
 import Validate from '../functions/validate';
 import { error4xx, response2xx } from '../functions/handlers';
 import Query from '../functions/query';
+import Filters from '../functions/filters';
 
 let validateOptions = {
 	required: ['topic', 'Tags', 'happeningOn', 'location'], // Required fields
@@ -65,6 +66,12 @@ class CreateMeetup {
 		return query.save()
 			.then(docs => response2xx(res, 200, true, docs))
 			.catch(err => error4xx(res, 400, false, err));
+	}
+
+	static upcoming(req, res) {
+		const query = new Query(null, meetups, null, null);
+		const formatByDateAsc = Filters.date(query.getAllRecords());
+		return response2xx(res, 200, true, formatByDateAsc);
 	}
 }
 
