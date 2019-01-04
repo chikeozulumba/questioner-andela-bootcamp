@@ -4,11 +4,11 @@
   "description": "Andela Developer Challenge Cycle 40 Bootcamp",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && npm run lint && babel -d ./server ./src -s",
+    "build": "npm run clean && babel -d ./server ./src -s",
     "clean": "rm -rf server && mkdir server",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "eslint ./src/*.js",
+    "lint": "node_modules/.bin/eslint ./src/*.js",
     "lint-fix": "node_modules/.bin/eslint --fix ./src --ext .js --color",
     "prod": "node_modules/.bin/nodemon server/app.js",
     "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
