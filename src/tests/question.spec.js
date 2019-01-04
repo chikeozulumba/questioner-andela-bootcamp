@@ -37,7 +37,7 @@ describe('Create new question record', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.have.property('message').and.to.be.a('string');
+				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
@@ -51,7 +51,7 @@ describe('Create new question record', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.have.property('message').and.to.be.a('string');
+				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
@@ -67,7 +67,7 @@ describe('Create new question record', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.have.property('message').and.to.be.a('string');
+				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
@@ -83,7 +83,7 @@ describe('Create new question record', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.have.property('message').and.to.be.a('string');
+				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
@@ -99,7 +99,7 @@ describe('Create new question record', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.have.property('message').and.to.be.a('string');
+				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
