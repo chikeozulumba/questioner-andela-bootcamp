@@ -65,17 +65,23 @@ class Query {
 		return this.user;
 	}
 
+	// eslint-disable-next-line class-methods-use-this
+	addTImeStamp() {
+		const date = new Date();
+		const formatted = moment(date).format('MM-DD-YYYY');
+		return formatted;
+	}
+
 	// PREPARE FOR MEETUP
 	prepareMeetup() {
 		this.payload.id = this.getID();
-		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
+		this.payload.createdOn = this.addTImeStamp();
 		return this.payload;
 	}
 
 	prepareQuestions() {
-		const length = this.collections.length;
 		this.payload.id = this.getID();
-		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
+		this.payload.createdOn = this.addTImeStamp();
 		this.payload.createdBy = 1;
 		this.payload.meetup = 1;
 		this.payload.votes = 0;
@@ -86,7 +92,7 @@ class Query {
 	}
 
 	prepareRsvps() {
-		this.payload.createdOn = moment().format('MMMM Do YYYY, h:mm:ss a');
+		this.payload.createdOn = this.addTImeStamp();
 		this.payload.id = this.getID();
 		this.payload.meetup = parseInt(this.payload.meetup, 10);
 		this.payload.user = this.getUser().id;
