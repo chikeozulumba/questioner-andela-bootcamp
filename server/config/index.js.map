@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/config/index.js"],"names":["dotenv","config"],"mappings":";;;;;;AAAA;;;;;;kBAEeA,iBAAOC,MAAP,E","file":"index.js","sourcesContent":["import dotenv from 'dotenv';\n\nexport default dotenv.config();\n"]}
