@@ -6,8 +6,6 @@ import Meetup from '../controllers/Meetup';
 import Question from '../controllers/Question';
 
 const router = express.Router();
-router.use(express.static('UI'));
-router.use('/UI', express.static(path.resolve(__dirname, '../../UI/')));
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 router.use(morgan('combined', {
