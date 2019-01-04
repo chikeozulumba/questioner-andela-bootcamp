@@ -18,3 +18,15 @@ cache:
 after_success: 
  - npm run coveralls
  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+deploy:
+  provider: heroku
+  app: questioner-andela
+  on:
+    repo: chikeozulumba/questioner-andela-bootcamp
+    branch: develop
+  api_key:
+    secure: "cfea0c04-66ca-4bd9-982d-2cf139eddca2"
+  run:
+    - "npm run build"
+    - restart
+    - "node server/app.js"
