@@ -10,7 +10,7 @@
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "node_modules/.bin/eslint ./src/*.js",
     "lint-fix": "node_modules/.bin/eslint --fix ./src --ext .js --color",
-    "prod": "node_modules/.bin/nodemon server/app.js",
+    "prod": "node server/app.js",
     "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
     "test": "nyc mocha src/tests/**/*spec.js --exit"
   },
