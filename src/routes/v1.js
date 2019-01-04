@@ -1,9 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import path from 'path';
 import Meetup from '../controllers/Meetup';
 import Question from '../controllers/Question';
+import { baseResponse } from '../functions/handlers';
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -11,6 +11,9 @@ router.use(bodyParser.json());
 router.use(morgan('combined', {
 	skip: (req, res) => res.statusCode < 400,
 }));
+
+// Route to display info about the api
+router.get('/', baseResponse);
 
 // @route POST /api/v1/meetups
 // @desc  Create meetup
