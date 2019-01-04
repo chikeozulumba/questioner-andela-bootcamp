@@ -33,6 +33,7 @@ class Query {
 				this.collections.filter((collection) => {
 					if (collection[param] === payload[param]) {
 						this.errorMsg = `'${payload[param]}' as ${param.toUpperCase()} field title already in use.`;
+						this.code = 400;
 						return reject(this.errorMsg);
 					}
 					return resolve(true);
@@ -42,19 +43,15 @@ class Query {
 	}
 
 	async save() {
-		const save = this.addQuery();
-		return save.then((res) => {
+		return this.addQuery().then((res) => {
 			if (res) this.collections.push(this.payload);
 			return Promise.resolve(this.payload);
 		}).catch(err => Promise.reject(err));
 	}
 
-	async update(index) {
-		if (index !== -1) {
-			this.collections[index] = this.payload;
-			return this.payload;
-		}
-		return false;
+	update(index) {
+		this.collections[index] = this.payload;
+		return this.payload;
 	}
 
 	getID() {
