@@ -12,7 +12,6 @@ describe('User should be able to visit Frontend pages', () => {
 			.request(app)
 			.get('/api/v1/')
 			.end((err, res) => {
-				if (err) throw err;
 				expect(res).to.have.status(200);
 				done();
 			});
