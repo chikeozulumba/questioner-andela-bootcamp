@@ -16,7 +16,6 @@
         "max-len": [2, 300, 4],
         "prefer-destructuring": "off",
         "no-unused-vars": "off",
-        "no-param-reassign": 0,
-        "trailing-whitespace": 0
+        "no-param-reassign": 0
     }
 }
