@@ -5,7 +5,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
-import { notFound, baseResponse } from './functions/handlers';
+import { notFound, baseResponse } from './helpers/handlers';
 import Router from './routes/router';
 import Init from './models/Init';
 

@@ -1,7 +1,7 @@
-import Validate from '../functions/validate';
-import { errorRxx, response2xx } from '../functions/handlers';
-import Query from '../functions/query';
-import Filters from '../functions/filters';
+import Validate from '../helpers/validate';
+import { errorRxx, response2xx } from '../helpers/handlers';
+import Query from '../helpers/query';
+import Filters from '../helpers/filters';
 
 const validateOptions = {
 	required: ['title', 'body'], // Required fields

@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import Meetup from '../controllers/Meetup';
 import Question from '../controllers/Question';
-import { baseResponse } from '../functions/handlers';
+import { baseResponse } from '../helpers/handlers';
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
