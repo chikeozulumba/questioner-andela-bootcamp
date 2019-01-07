@@ -3,11 +3,22 @@ import './config/index';
 import 'babel-polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
-import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import { notFound, baseResponse } from './functions/handlers';
 import Router from './routes/router';
+import Init from './models/Init';
+
+// Instatiate DB
+(async () => {
+	try {
+		await Init();
+	} catch (e) {
+		console.log(e);
+	}
+})().catch((err) => {
+	console.log(err);
+});
 
 const app = express();
 app.use(cors());
