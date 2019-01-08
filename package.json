@@ -8,10 +8,10 @@
     "clean": "rm -rf build && mkdir build",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "heroku-postbuild": "npm run build",
     "lint": "node_modules/.bin/eslint ./server/*.js",
     "lint-fix": "node_modules/.bin/eslint --fix ./server --ext .js --color",
     "prod": "node build/app.js",
-    "heroku-postbuild": "npm run build",
     "start": "node_modules/.bin/nodemon server/app.js --exec babel-node -- ",
     "test": "nyc mocha server/tests/**/*spec.js --exit"
   },

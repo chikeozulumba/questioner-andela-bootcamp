@@ -18,12 +18,12 @@
   "report-dir": "./coverage",
 
   "include": [
-    "src/**/*.js"
+    "server/**/*.js"
   ],
   "exclude": [
     "**/node_modules/**",
     "**/coverage/**",
     "**/UI/**",
-    "**/server/**"
+    "**/.nyc_output/**"
   ]
 }
