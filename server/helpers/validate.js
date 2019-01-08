@@ -25,10 +25,12 @@ const prepareContent = (payload, params) => {
 };
 
 const required = (payload, options) => {
+	const missing = [];
 	for (let i = 0; i < options.required.length; i += 1) {
 		const req = options.required[i];
-		if (payload[req] === undefined || payload[req] === null) return `'${req}' field is required.`;
+		if (payload[req] === undefined || payload[req] === null) missing.push(req);
 	}
+	if (missing.length > 0) return `Please confirm, '${missing.join(', ')}' field(s) are required`;
 	return true;
 };
 
@@ -51,6 +53,8 @@ const init = (payload, options) => {
 	return checkRequiredFields;
 };
 
-const Validate = { init, prepareContent, checkType };
+const Validate = {
+	init, prepareContent, checkType, required,
+};
 
 export default Validate;

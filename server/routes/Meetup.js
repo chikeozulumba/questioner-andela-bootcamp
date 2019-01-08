@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import Meetup from '../controllers/Meetup';
+import Validator from '../helpers/validate';
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
