@@ -11,7 +11,7 @@
     "lint": "node_modules/.bin/eslint ./server/*.js",
     "lint-fix": "node_modules/.bin/eslint --fix ./server --ext .js --color",
     "prod": "node build/app.js",
-    "postinstall": "npm run build",
+    "heroku-postbuild": "npm run build",
     "start": "node_modules/.bin/nodemon server/app.js --exec babel-node -- ",
     "test": "nyc mocha server/tests/**/*spec.js --exit"
   },
