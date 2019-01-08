@@ -1,14 +1,7 @@
 import express from 'express';
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
 import Question from '../controllers/Question';
 
 const router = express.Router();
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-router.use(morgan('combined', {
-	skip: (req, res) => res.statusCode < 400,
-}));
 
 // @route POST /api/v1/questions
 // @desc  Create question

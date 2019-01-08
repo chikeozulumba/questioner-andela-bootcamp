@@ -23,13 +23,10 @@ import Init from './models/Init';
 
 const app = express();
 app.use(cors());
-app.use('/api/v1', Meetup);
-app.use('/api/v1', Question);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(morgan('combined', {
-	skip: (req, res) => res.statusCode < 400,
-}));
+app.use('/api/v1', Meetup);
+app.use('/api/v1', Question);
 
 // Home route
 app.get('/', baseResponse);
@@ -37,8 +34,8 @@ app.get('/', baseResponse);
 app.get('/api/v1', baseResponse);
 // Handle 404 errors on routes
 app.use(notFound);
-const PORT = process.env.PORT || 3001;
 
+const PORT = 5100;
 app.listen(PORT);
 
 export default app;
