@@ -336,6 +336,10 @@ a {
 	padding-bottom: 0.6rem;
 }
 
+.t-al {
+	text-align: center !important;
+}
+
 form label {
 	font-weight: 600;
 	text-transform: uppercase;
