@@ -14,8 +14,7 @@
 	<meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="../styles/base.css">
 	<link rel="stylesheet" href="../styles/format.css">
-	<link rel="stylesheet" href="../styles/profile.css">
-	<title>Your Profile | QUESTIONER - ANDELA BOOTCAMP</title>
+	<title>Add Meetup | QUESTIONER - ANDELA BOOTCAMP</title>
 </head>
 
 <body>
@@ -45,45 +44,39 @@
 		<li><a href="./login.html">Login</a></li>
 		<li><a class="" href="./register.html">Join Questioner</a></li>
 	</ul>
-
-	<div class="container">
-		<div id="v-wrapper">
-			<div class="profile card">
-				<img class="img mauto" src="https://via.placeholder.com/150" alt="">
-				<div class="divider"></div>
-				<div class="stats m1">
-					<span>
-						<h3 class="sm-text">40</h3>
-						Answers
-					</span>
-					<span>
-						<h3 class="sm-text">35</h3>
-						Comments
-					</span>
-				</div>
-			</div>
-			<div class="meetups">
-				<div class="questions card-lg">
-					<div class="content pall-1">
-						<h3 class="md-text title">How do you find the missing number in a given integer array of 1 to 100?</h3>
-						<div class="divider"></div>
-						<div class="stats m1">
-							<h3 class="sm-text">35 <span>Comments</span></h3>
-						</div>
+	<!-- End SideBar Nav -->
+	<section class="container w-auto">
+		<div id="q-wrapper" class="card mauto m4 p3">
+			<form action="/" method="POST">
+				<div class="container">
+					<h3 class="md-text">Create New Meetup</h3>
+					<div class="m1 input">
+						<label class="m1" for="name">Topic <span class="is-danger">*</span></label>
+						<input class="p1 b-rsm" type="text" name="topic" placeholder="Enter topic of meetup">
+					</div>
+					<div class="m1 input">
+						<label class="m1" for="name">Location <span class="is-danger">*</span></label>
+						<input class="p1 b-rsm" name="location" placeholder="Enter location">
+					</div>
+					<div class="m1 input">
+						<label class="m1" for="name">Images </label>
+						<input class="p1 b-rsm" name="images" placeholder="Enter image(s) link, seperated by commas">
+					</div>
+					<div class="m1 input">
+						<label class="m1" for="name">Tags <span class="is-danger">*</span></label>
+						<input class="p1 b-rsm" type="text" name="tags" placeholder="Seperate with comma">
+					</div>
+					<div class="m1 input">
+						<label class="m1" for="name">Happening On <span class="is-danger">*</span></label>
+						<input class="p1 b-rsm" type="date" name="happeningOn">
+					</div>
+					<div class="m2 input">
+						<a class="btn sm box-sh-dark" href="./meetup.html">Create</a>
 					</div>
 				</div>
-				<div class="questions card-lg">
-					<div class="content pall-1">
-						<h3 class="md-text title">What is a Binary Search Tree?</h3>
-						<div class="divider"></div>
-						<div class="stats m1">
-							<h3 class="sm-text">10 <span>Comments</span></h3>
-						</div>
-					</div>
-				</div>
-			</div>
+			</form>
 		</div>
-	</div>
+	</section>
 
 	<footer class="bg-secondary">
 		<div class="container">
@@ -111,4 +104,5 @@
 	</footer>
 	<script src="../scripts/index.js"></script>
 </body>
+
 </html>

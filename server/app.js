@@ -5,8 +5,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
-import { notFound, baseResponse } from './functions/handlers';
-import Router from './routes/router';
+import { notFound, baseResponse } from './helpers/handlers';
+import Meetup from './routes/Meetup';
+import Question from './routes/Question';
 import Init from './models/Init';
 
 // Instatiate DB
@@ -22,20 +23,19 @@ import Init from './models/Init';
 
 const app = express();
 app.use(cors());
-app.use('/api', Router);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(morgan('combined', {
-	skip: (req, res) => res.statusCode < 400,
-}));
-// Route to display info about the api
-app.get('/', baseResponse);
+app.use('/api/v1', Meetup);
+app.use('/api/v1', Question);
 
+// Home route
+app.get('/', baseResponse);
+// Base API route
+app.get('/api/v1', baseResponse);
 // Handle 404 errors on routes
 app.use(notFound);
 
-const PORT = process.env.PORT || 3001;
-
+const PORT = 5100;
 app.listen(PORT);
 
 export default app;

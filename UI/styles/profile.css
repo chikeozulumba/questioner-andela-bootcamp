@@ -8,8 +8,12 @@
 .profile {
 	justify-content: center;
 	display: grid;
-	padding: 20px 10px;
+	padding: 20px 0px;
 	height: 200px;
+}
+
+#v-wrapper > div.profile.card > div.divider {
+	width: 100%;
 }
 
 .stats {
@@ -64,8 +68,8 @@ span .sm-text {
 
 	.profile {
 		padding: 20px 10px;
-    height: auto;
-    grid-template-columns: 1fr 2fr;
+		height: auto;
+		grid-template-columns: 1fr 2fr;
 	}
 
 	.stats {

@@ -1,7 +1,7 @@
-import Validate from '../functions/validate';
-import { errorRxx, response2xx } from '../functions/handlers';
-import Query from '../functions/query';
-import Filters from '../functions/filters';
+import Validate from '../helpers/validate';
+import { errorRxx, response2xx } from '../helpers/handlers';
+import Query from '../helpers/query';
+import Filters from '../helpers/filters';
 
 const validateOptions = {
 	required: ['title', 'body'], // Required fields
@@ -37,7 +37,7 @@ class Question {
 		const path = Filters.last(req.url.split('/'));
 		const query = new Query(id, 'questions', null, 'integer');
 		const question = query.getRecord();
-		if (!question) errorRxx(res, query.code, false, query.errorMsg);
+		if (!question) return errorRxx(res, query.code, false, query.errorMsg);
 		if (path === 'upvote') {
 			question.votes += 1;
 		} else {
@@ -47,7 +47,7 @@ class Question {
 		query.payload = question;
 		query.fields = ['title'];
 		const pos = id - 1;
-		if (query.update(pos)) response2xx(res, 200, true, query.payload);
+		if (query.update(pos)) return response2xx(res, 200, true, query.payload);
 		return errorRxx(res, 500, false, `Internal server error, unable to ${path.toUpperCase()}`);
 	}
 }

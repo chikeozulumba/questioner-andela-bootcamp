@@ -4,16 +4,16 @@
   "description": "Andela Developer Challenge Cycle 40 Bootcamp",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && babel -d ./server ./src -s",
-    "clean": "rm -rf server && mkdir server",
+    "build": "npm run clean && babel -d ./build ./server -s",
+    "clean": "rm -rf build && mkdir build",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "node_modules/.bin/eslint ./src/*.js",
-    "lint-fix": "node_modules/.bin/eslint --fix ./src --ext .js --color",
-    "prod": "node server/app.js",
-    "postinstall": "npm run build",
-    "start": "node_modules/.bin/nodemon src/app.js --exec babel-node -- ",
-    "test": "nyc mocha src/tests/**/*spec.js --exit"
+    "heroku-postbuild": "npm run build",
+    "lint": "node_modules/.bin/eslint ./server/*.js",
+    "lint-fix": "node_modules/.bin/eslint --fix ./server --ext .js --color",
+    "prod": "node build/app.js",
+    "start": "node_modules/.bin/nodemon server/app.js --exec babel-node -- ",
+    "test": "nyc mocha server/tests/**/*spec.js --exit"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "joi": "^14.3.1",
     "moment": "^2.23.0",
     "morgan": "^1.9.1",
     "pg": "^7.7.1"

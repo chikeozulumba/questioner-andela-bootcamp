@@ -2,5 +2,5 @@
 .vscode/
 .nyc_output/
 coverage/
-server/
+build/
 .env

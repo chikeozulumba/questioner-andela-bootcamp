@@ -336,6 +336,10 @@ a {
 	padding-bottom: 0.6rem;
 }
 
+.t-al {
+	text-align: center !important;
+}
+
 form label {
 	font-weight: 600;
 	text-transform: uppercase;
@@ -356,7 +360,8 @@ form .reg-btn {
 	color: #221F28;
 	text-transform: uppercase;
 	font-weight: 800;
-	border-bottom: 4px solid #221F28;
+	text-align: center;
+	/* border-bottom: 4px solid #221F28; */
 }
 
 .input {
@@ -534,6 +539,14 @@ footer h3 {
 		margin-bottom: 1rem;
 		font-weight: 100;
 		font-size: 1.2rem;
+	}
+
+	form label {
+		font-family: 'Circular-Light';
+	}
+
+	.f-bold {
+		font-family: 'Circular-Book' !important;
 	}
 
 	.bg-text {
