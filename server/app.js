@@ -31,9 +31,12 @@ app.use(morgan('combined', {
 	skip: (req, res) => res.statusCode < 400,
 }));
 
+// Home route
+app.get('/', baseResponse);
+// Base API route
+app.get('/api/v1', baseResponse);
 // Handle 404 errors on routes
 app.use(notFound);
-
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT);
