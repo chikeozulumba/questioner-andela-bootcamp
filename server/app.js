@@ -35,7 +35,7 @@ app.get('/api/v1', baseResponse);
 // Handle 404 errors on routes
 app.use(notFound);
 
-const PORT = 5100;
+const PORT = process.env.PORT || 5100;
 app.listen(PORT);
 
 export default app;
