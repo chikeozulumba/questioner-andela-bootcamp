@@ -19,6 +19,15 @@
 	margin-bottom: 2rem;
 }
 
+.meetups:hover {
+	cursor: pointer;
+	transform: scale(1.009, 1.009);
+	-webkit-box-shadow: 2px 2px 20px 0px rgba(128, 128, 128, 0.74);
+	-moz-box-shadow: 2px 2px 20px 0px rgba(128, 128, 128, 0.74);
+	box-shadow: 2px 2px 20px 0px rgba(128, 128, 128, 0.74);
+	transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
 .media {
 	grid-template-columns: 1fr 1fr;
 	display: grid;
@@ -42,7 +51,7 @@
 .meetups span {
 	font-weight: 600;
 	font-family: "Circular-Book";
-	color: green;
+	color: #00cea0;
 	font-size: 0.7rem;
 }
 
@@ -68,6 +77,18 @@
 .intro h3 {
 	color: #221F28;
 	margin-bottom: 1rem;
+}
+
+.user h3.sm-text {
+	color: #393541;
+	font-weight: 400;
+	font-family: 'Circular-Book';
+	font-size: 0.8rem;
+	margin-bottom: 0;
+}
+
+.user span {
+	font-size: 0.8rem;
 }
 
 h3.sm-text {
@@ -102,6 +123,10 @@ h3.sm-text {
 
 	.rsvp {
 		text-align: left;
+	}
+
+	.user h3.sm-text {
+		margin-bottom: 1rem;
 	}
 }
 

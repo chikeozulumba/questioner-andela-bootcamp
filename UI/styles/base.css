@@ -191,10 +191,6 @@ a {
 	width: 40% !important;
 }
 
-.w-auto {
-	/* width: 40% !important; */
-}
-
 .hero-text {
 	height: 100%;
 }
@@ -248,6 +244,12 @@ a {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	/* padding: 50px; */
+}
+
+.side {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	position: relative;
 }
 
 .info-section p,
@@ -367,6 +369,7 @@ form .reg-btn {
 .input {
 	display: grid;
 	grid-template-columns: 1fr;
+	margin-top: 10px;
 }
 
 .input input {
@@ -446,7 +449,7 @@ footer h3 {
 }
 
 .b-danger {
-	background: #ff0000cf !important;
+	background: #F01D43 !important;
 }
 
 .b-mild {
@@ -455,7 +458,26 @@ footer h3 {
 }
 
 .b-success {
-	background: #008000b0 !important;
+	background: #00cea0 !important;
+}
+
+.b-wicked {
+	background: #6a1b9a !important;
+}
+
+.header {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+}
+
+.hover-lg:hover {
+	cursor: pointer;
+	transform: scale(1.009, 1.009);
+	-webkit-box-shadow: 2px 2px 20px 0px rgba(128, 128, 128, 0.74);
+	-moz-box-shadow: 2px 2px 20px 0px rgba(128, 128, 128, 0.74);
+	box-shadow: 2px 2px 20px 0px rgba(128, 128, 128, 0.74);
+	transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 /* MEDIA QUERIES */
@@ -530,6 +552,18 @@ footer h3 {
 	}
 }
 
+@media all and (min-width: 576px) {
+	.hide-lg {
+		display: none !important;
+	}
+}
+
+@media all and (max-width: 576px) {
+	.hide-sm {
+		display: none !important;
+	}
+}
+
 @media all and (max-width: 450px) {
 	.container {
 		width: 80%;
@@ -587,17 +621,17 @@ footer h3 {
 
 @media (min-width: 768px) {
 	.w-auto {
-		width: 70% !important;
+		width: 40% !important;
 	}
 
 	.container {
-		width: 65%;
+		width: 85%;
 	}
 }
 
 @media (min-width: 992px) {
 	.w-auto {
-		width: 50% !important;
+		width: 35% !important;
 	}
 
 	.container {
