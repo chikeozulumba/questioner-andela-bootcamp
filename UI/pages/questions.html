@@ -22,7 +22,7 @@
 	<!-- Navigation Section Starts -->
 	<section id="navigation">
 		<nav class="navbar">
-			<a href="/UI"  id="nav-brand">
+			<a href="/UI" id="nav-brand">
 				<img src="../assets/imgs/logo.svg" alt="">
 			</a>
 			<ul class="nav-menu">
@@ -46,151 +46,199 @@
 		<li><a class="" href="./register.html">Join Questioner</a></li>
 	</ul>
 	<!-- End SideBar Nav -->
-	<section id="questions" class="ptb-5 mauto">
-		<div class="questions container card-lg">
-			<div class="media pall-1">
-				<img class="img" src="https://via.placeholder.com/150" alt="">
-				<div>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a><br>
-						2.3k
-					</span>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a> <br>
-						1.5k
-					</span>
+	<div id="details" class="container ptb-5 mauto">
+		<div class="side">
+			<div class="content card">
+				<h3 class="md-text">DevOps Lagos Meetup</h3>
+				<ul class="list-items">
+					<li>
+						<img src="../assets/imgs/icons/calendar.svg" alt="">
+						<span>January 23rd, 2019</span>
+					</li>
+					<li>
+						<img src="../assets/imgs/icons/maps.svg" alt="">
+						<span>Andela EPIC Towers, Illupeju, Lagos.</span>
+					</li>
+					<li>
+						<img src="../assets/imgs/icons/time.svg" alt="">
+						<span>10: 00a.m</span>
+					</li>
+					<li>
+						<img src="../assets/imgs/icons/people.svg" alt="">
+						<span>149 Persons</span>
+					</li>
+					<li>
+						<img src="../assets/imgs/icons/hastag.svg" alt="">
+						<span>This group is a chance to meet fellow minded individuals, from people that have been doing DevOps for a
+							long time
+							to new starters!</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div id="questions">
+			<div class="header questions card">
+				<h3 class="md-text title">5 Questions</h3>
+				<a href="./post.html" class="sm-text">Ask Question</a>
+			</div>
+			<div class="questions card-lg hover-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title f-bold">How is Kubernetes related to Docker?</h3>
+					<div class="divider"></div>
+					<div class="q-actions">
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a>
+							500
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a>
+							7.9k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+							1k
+						</span>
+					</div>
+					<div class="comments">
+						<p class="sm-text">Klopp <span>What is Kubernetes?</span> </p>
+						<p class="sm-text">Dijk <span>Ask Salah, he knows 😈</span> </p>
+						<p class="sm-text">Salah <span>It is ...</span> </p>
+						<p class="sm-text">Origi <span>🚶🏻</span> </p>
+					</div>
+					<a href="!#" class="sm-text">[Read 15 comments]</a>
+					<div class="input">
+						<textarea name="comment" cols="auto" rows="1" placeholder="Leave a reply"></textarea>
+						<a href="./meetup.html" class="btn">Reply</a>
+					</div>
 				</div>
 			</div>
-			<div class="content pall-1">
-				<h3 class="md-text title f-bold">How is Kubernetes related to Docker?</h3>
-				<div class="desc">
-					It’s a known fact that Docker provides the lifecycle management of containers and a Docker image builds the
-					runtime containers. But, since these individual containers have to communicate, Kubernetes is used. So, Docker
-					builds the containers and these containers communicate with each other via Kubernetes. So, containers running on
-					multiple hosts can be manually linked and orchestrated using Kubernetes.
+			<div class="questions card-lg hover-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title f-bold">What is Container Orchestration?</h3>
+					<div class="divider"></div>
+					<div class="q-actions">
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a>
+							2k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a>
+							7.9k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+							300
+						</span>
+					</div>
+					<div class="comments">
+						<p class="sm-text">Klopp <span>Liverpool Champions!</span> </p>
+						<p class="sm-text">Guardiola <span>Will you shut up</span> </p>
+						<p class="sm-text">Klopp <span>😈</span> </p>
+						<p class="sm-text">Sarri <span>🚶🏻</span> </p>
+					</div>
+					<a href="!#" class="sm-text">[Read 15 comments]</a>
+					<div class="input">
+						<textarea name="comment" cols="auto" rows="1" placeholder="Leave a reply"></textarea>
+						<a href="./meetup.html" class="btn">Reply</a>
+					</div>
 				</div>
-				<div class="divider"></div>
-				<div class="input">
-					<textarea name="comment" cols="auto" placeholder="Leave your comment"></textarea>
-					<a href="#!submit" class="btn">Submit</a>
+			</div>
+			<div class="questions card-lg hover-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title f-bold">How does Kubernetes simplify containerized Deployment?</h3>
+					<div class="divider"></div>
+					<div class="q-actions">
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a>
+							1.3k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a>
+							7.9k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+							20
+						</span>
+					</div>
+					<div class="comments">
+						<p class="sm-text">Klopp <span>What is Kubernetes?</span> </p>
+						<p class="sm-text">Dijk <span>Ask Salah, he knows 😈</span> </p>
+						<p class="sm-text">Salah <span>It is ...</span> </p>
+						<p class="sm-text">Origi <span>🚶🏻</span> </p>
+					</div>
+					<a href="!#" class="sm-text">[Read 15 comments]</a>
+					<div class="input">
+						<textarea name="comment" cols="auto" rows="1" placeholder="Leave a reply"></textarea>
+						<a href="./meetup.html" class="btn">Reply</a>
+					</div>
+				</div>
+			</div>
+			<div class="questions card-lg hover-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title f-bold">What is Heapster?</h3>
+					<div class="divider"></div>
+					<div class="q-actions">
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a>
+							52k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a>
+							7.9k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+							261
+						</span>
+					</div>
+					<div class="comments">
+						<p class="sm-text">Klopp <span>What is Kubernetes?</span> </p>
+						<p class="sm-text">Dijk <span>Ask Salah, he knows 😈</span> </p>
+						<p class="sm-text">Salah <span>It is ...</span> </p>
+						<p class="sm-text">Origi <span>🚶🏻</span> </p>
+					</div>
+					<a href="!#" class="sm-text">[Read 15 comments]</a>
+					<div class="input">
+						<textarea name="comment" cols="auto" rows="1" placeholder="Leave a reply"></textarea>
+						<a href="./meetup.html" class="btn">Reply</a>
+					</div>
+				</div>
+			</div>
+			<div class="questions card-lg hover-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title f-bold">What is Minikube?</h3>
+					<div class="divider"></div>
+					<div class="q-actions">
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a>
+							1k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a>
+							7.9k
+						</span>
+						<span>
+							<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+							10k
+						</span>
+					</div>
+					<div class="comments">
+						<p class="sm-text">Klopp <span>What is Minikube?</span> </p>
+						<p class="sm-text">Dijk <span>Ask Salah, he knows 😈</span> </p>
+						<p class="sm-text">Salah <span>It is ...</span> </p>
+						<p class="sm-text">Origi <span>🚶🏻</span> </p>
+					</div>
+					<a href="!#" class="sm-text">[Read 15 comments]</a>
+					<div class="input">
+						<textarea name="comment" cols="auto" rows="1" placeholder="Leave a reply"></textarea>
+						<a href="./meetup.html" class="btn">Reply</a>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="questions container card-lg">
-			<div class="media pall-1">
-				<img class="img" src="https://via.placeholder.com/150" alt="">
-				<div>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a><br>
-						2.3k
-					</span>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a> <br>
-						1.5k
-					</span>
-				</div>
-			</div>
-			<div class="content pall-1">
-				<h3 class="md-text title f-bold">What is Container Orchestration?</h3>
-				<div class="desc">
-					Consider a scenario where you have 5-6 microservices for an application. Now, these microservices are put in
-					individual containers, but won’t be able to communicate without container orchestration. So, as orchestration
-					means the amalgamation of all instruments playing together in harmony in music, similarly container orchestration
-					means all the services in individual containers working together to fulfill the needs of a single server.
-				</div>
-				<div class="divider"></div>
-				<div class="input">
-					<textarea name="comment" cols="auto" placeholder="Leave your comment"></textarea>
-					<a href="#!submit" class="btn">Submit</a>
-				</div>
-			</div>
-		</div>
-		<div class="questions container card-lg">
-			<div class="media pall-1">
-				<img class="img" src="https://via.placeholder.com/150" alt="">
-				<div>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a><br>
-						5.5k
-					</span>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a> <br>
-						1k
-					</span>
-				</div>
-			</div>
-			<div class="content pall-1">
-				<h3 class="md-text title f-bold">How does Kubernetes simplify containerized Deployment?</h3>
-				<div class="desc">
-					As a typical application would have a cluster of containers running across multiple hosts, all these containers
-					would need to talk to each other. So, to do this you need something big that would load balance, scale & monitor
-					the containers. Since Kubernetes is cloud-agnostic and can run on any public/private providers it must be your
-					choice simplify containerized deployment.
-				</div>
-				<div class="divider"></div>
-				<div class="input">
-					<textarea name="comment" cols="auto" placeholder="Leave your comment"></textarea>
-					<a href="#!submit" class="btn">Submit</a>
-				</div>
-			</div>
-		</div>
-		<div class="questions container card-lg">
-			<div class="media pall-1">
-				<img class="img" src="https://via.placeholder.com/150" alt="">
-				<div>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a><br>
-						1.3k
-					</span>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a> <br>
-						0.9k
-					</span>
-				</div>
-			</div>
-			<div class="content pall-1">
-				<h3 class="md-text title f-bold">What is Heapster?</h3>
-				<div class="desc">
-					Heapster is a cluster-wide aggregator of data provided by Kubelet running on each node. This container management
-					tool is supported natively on Kubernetes cluster and runs as a pod, just like any other pod in the cluster. So, it
-					basically discovers all nodes in the cluster and queries usage information from the Kubernetes nodes in the
-					cluster, via on-machine Kubernetes agent.
-				</div>
-				<div class="divider"></div>
-				<div class="input">
-					<textarea name="comment" cols="auto" placeholder="Leave your comment"></textarea>
-					<a href="#!submit" class="btn">Submit</a>
-				</div>
-			</div>
-		</div>
-		<div class="questions container card-lg">
-			<div class="media pall-1">
-				<img class="img" src="https://via.placeholder.com/150" alt="">
-				<div>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/upvote.svg" alt=""></a><br>
-						500
-					</span>
-					<span>
-						<a href="#!"><img src="../assets/imgs/icons/downvote.svg" alt=""></a> <br>
-						7.9k
-					</span>
-				</div>
-			</div>
-			<div class="content pall-1">
-				<h3 class="md-text title f-bold">What is Minikube?</h3>
-				<div class="desc">
-					Minikube is a tool that makes it easy to run Kubernetes locally. This runs a single-node Kubernetes cluster inside
-					a virtual machine.
-				</div>
-				<div class="divider"></div>
-				<div class="input">
-					<textarea name="comment" cols="auto" placeholder="Leave your comment"></textarea>
-					<a href="#!submit" class="btn">Submit</a>
-				</div>
-			</div>
-		</div>
-	</section>
+	</div>
 
 	<footer class="bg-secondary">
 		<div class="container">
@@ -218,4 +266,5 @@
 	</footer>
 	<script src="../scripts/index.js"></script>
 </body>
+
 </html>

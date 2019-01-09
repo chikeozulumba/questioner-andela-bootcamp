@@ -15,14 +15,14 @@
 	<link rel="stylesheet" href="../styles/base.css">
 	<link rel="stylesheet" href="../styles/format.css">
 	<link rel="stylesheet" href="../styles/profile.css">
-	<title>Your Profile | QUESTIONER - ANDELA BOOTCAMP</title>
+	<title>User Profile | QUESTIONER - ANDELA BOOTCAMP</title>
 </head>
 
 <body>
 	<!-- Navigation Section Starts -->
 	<section id="navigation">
 		<nav class="navbar">
-			<a href="/UI"  id="nav-brand">
+			<a href="/UI" id="nav-brand">
 				<img src="../assets/imgs/logo.svg" alt="">
 			</a>
 			<ul class="nav-menu">
@@ -50,8 +50,21 @@
 		<div id="v-wrapper">
 			<div class="profile card">
 				<img class="img mauto" src="https://via.placeholder.com/150" alt="">
+				<div class="bio">
+					<h3 class="username sm-text">John Doe</h3>
+					<div class="hide-lg stats m1">
+						<span>
+							<h3 class="sm-text">40</h3>
+							Answered
+						</span>
+						<span>
+							<h3 class="sm-text">35</h3>
+							Commented
+						</span>
+					</div>
+				</div>
 				<div class="divider"></div>
-				<div class="stats m1">
+				<div class="hide-sm stats m1">
 					<span>
 						<h3 class="sm-text">40</h3>
 						Answers
@@ -65,19 +78,93 @@
 			<div class="meetups">
 				<div class="questions card-lg">
 					<div class="content pall-1">
-						<h3 class="md-text title">How do you find the missing number in a given integer array of 1 to 100?</h3>
+						<h3 class="md-text title">How is Kubernetes related to Docker?</h3>
+						<a class="q-link" href="./meetup.html">
+							<h3 class="sm-text">DevOps Lagos Meetup</h3>
+						</a>
 						<div class="divider"></div>
-						<div class="stats m1">
-							<h3 class="sm-text">35 <span>Comments</span></h3>
+						<div class="q-actions">
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+								261
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/tag.svg" alt=""></a>
+								Kubernetes, GCP, AWS
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/pointer.svg" alt=""></a>
+								Greece
+							</span>
 						</div>
 					</div>
 				</div>
 				<div class="questions card-lg">
 					<div class="content pall-1">
-						<h3 class="md-text title">What is a Binary Search Tree?</h3>
+						<h3 class="md-text title">What is Container Orchestration?</h3>
+						<a class="q-link" href="./meetup.html">
+							<h3 class="sm-text">GDG Lagos Meetup</h3>
+						</a>
 						<div class="divider"></div>
-						<div class="stats m1">
-							<h3 class="sm-text">10 <span>Comments</span></h3>
+						<div class="q-actions">
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+								45
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/tag.svg" alt=""></a>
+								API, React
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/pointer.svg" alt=""></a>
+								Lagos
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="questions card-lg">
+					<div class="content pall-1">
+						<h3 class="md-text title">How does Kubernetes simplify containerized Deployment?</h3>
+						<a class="q-link" href="./meetup.html">
+							<h3 class="sm-text">ALC 4.0 Meetup</h3>
+						</a>
+						<div class="divider"></div>
+						<div class="q-actions">
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+								509
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/tag.svg" alt=""></a>
+								ES6, Eslint, Babel, Webpack
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/pointer.svg" alt=""></a>
+								Kuala Lumpur
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="questions card-lg">
+					<div class="content pall-1">
+						<h3 class="md-text title">What is Heapster?</h3>
+						<a class="q-link" href="./meetup.html">
+							<h3 class="sm-text">Paystack Meetup</h3>
+						</a>
+						<div class="divider"></div>
+						<div class="q-actions">
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/comment.svg" alt=""></a>
+								33k
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/tag.svg" alt=""></a>
+								AI, Machine Learning, VR
+							</span>
+							<span>
+								<a href="#!"><img src="../assets/imgs/icons/pointer.svg" alt=""></a>
+								Enugu
+							</span>
 						</div>
 					</div>
 				</div>
@@ -111,4 +198,5 @@
 	</footer>
 	<script src="../scripts/index.js"></script>
 </body>
+
 </html>
