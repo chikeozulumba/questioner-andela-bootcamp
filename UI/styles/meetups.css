@@ -1,0 +1,125 @@
+.ptb-5 {
+	padding: 50px 0;
+}
+
+.pall-1 {
+	padding: 1rem;
+}
+
+.highlight {
+	margin: 1rem 0;
+	font-style: italic;
+	font-family: 'Circular-Book';
+	font-weight: 400;
+}
+
+.meetups {
+	padding: 1rem 2rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+.media {
+	grid-template-columns: 1fr 1fr;
+	display: grid;
+}
+
+.media div {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: self-end;
+}
+
+.meetups .img {
+	height: 100px;
+	border-radius: 50%;
+}
+
+.meetups a>img {
+	height: 1rem;
+}
+
+.meetups span {
+	font-weight: 600;
+	font-family: "Circular-Book";
+	color: green;
+	font-size: 0.7rem;
+}
+
+.meetups textarea {
+	border-radius: 0.25rem;
+	resize: none;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
+
+.meetups .btn {
+	width: 30%;
+}
+
+.title {
+	color: #221F28;
+}
+
+.intro a {
+	width: 30%;
+}
+
+.intro h3 {
+	color: #221F28;
+	margin-bottom: 1rem;
+}
+
+h3.sm-text {
+	color: #393541;
+	font-weight: 800;
+}
+
+p.sm-text {
+	color: inherit;
+}
+
+.stats {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.rsvp {
+	text-align: right;
+}
+
+.rsvp span {
+	padding: 0.6rem 0.9rem;
+	color: white;
+	border-radius: 6px;
+}
+
+@media screen and (max-width: 425px) {
+	.stats {
+		grid-template-columns: 1fr !important;
+	}
+
+	.rsvp {
+		text-align: left;
+	}
+}
+
+@media screen and (max-width: 562px) {
+	.stats {
+		grid-template-columns: 1fr 2fr;
+	}
+}
+
+@media (min-width: 576px) {
+	.media div {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		/* align-items: self-end; */
+		margin-left: 0.3rem;
+	}
+
+	.media {
+		grid-template-columns: 1fr;
+		grid-gap: 10px;
+	}
+}

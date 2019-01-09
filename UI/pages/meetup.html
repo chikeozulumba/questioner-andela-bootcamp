@@ -14,7 +14,7 @@
 	<meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="../styles/base.css">
 	<link rel="stylesheet" href="../styles/format.css">
-	<link rel="stylesheet" href="../styles/questions.css">
+	<link rel="stylesheet" href="../styles/meetups.css">
 	<title>Manage Meetup | QUESTIONER - ANDELA BOOTCAMP</title>
 </head>
 
@@ -22,7 +22,7 @@
 	<!-- Navigation Section Starts -->
 	<section id="navigation">
 		<nav class="navbar">
-			<a href="/UI"  id="nav-brand">
+			<a href="/UI" id="nav-brand">
 				<img src="../assets/imgs/logo.svg" alt="">
 			</a>
 			<ul class="nav-menu">
@@ -46,38 +46,97 @@
 		<li><a class="" href="./register.html">Join Questioner</a></li>
 	</ul>
 	<!-- End SideBar Nav -->
-	<section id="meetups" class="container card m3 ptb-5 mauto">
-		<div class="intro container">
-			<h3 class="md-text">Meetups</h3>
+	<section class="m3 container">
+		<div class="intro">
 			<a href="" class="btn">Create</a>
 		</div>
-		<table>
-			<thead>
-				<tr>
-					<th>No.</th>
-					<th>Title</th>
-					<th>Attendees</th>
-					<th>Date</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td data-column="No.">1</td>
-					<td data-column="Title">ALC Meetup 3.0</td>
-					<td data-column="Attendees">7</td>
-					<td data-column="Date">August, 20th 2016</td>
-					<td data-column="Date"><a href="#!" class="btn">Delete</a></td>
-				</tr>
-				<tr>
-					<td data-column="No.">2</td>
-					<td data-column="Title">GDG Lagos</td>
-					<td data-column="Attendees">7</td>
-					<td data-column="Date">August, 31th 2016</td>
-					<td data-column="Delete"><a href="#!" class="btn">Delete</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<div id="meetups">
+			<div class="meetups card-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title">DevOps Lagos Meetup</h3>
+					<p class="sm-text">
+						This group is a chance to meet fellow minded individuals, from people that have been doing DevOps for a long time
+						to
+						new starters!
+					</p>
+					<p class="sm-text">
+						We will try to cover anything and everything about DevOps including Automation, Orchestration, Containers,
+						Virtualisation, Service Discovery, Continuous Integration and Continuous Delivery.
+					</p>
+					<div class="divider"></div>
+					<div class="stats m1">
+						<h3 class="sm-text">19 <span>RSVPs</span></h3>
+						<div class="rsvp">
+							<span class="b-success">Yes</span>
+							<span class="b-danger">No</span>
+							<span class="b-mild">Maybe</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="meetups card-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title">Laravel Nigeria</h3>
+					<p class="sm-text">
+						This is a group for developers in Nigeria interested in Laravel. Come, let's reason together, though your code be
+						as
+						scarlet, it shall be smooth like Laravel
+					</p>
+					<div class="divider"></div>
+					<div class="stats m1">
+						<h3 class="sm-text">99 <span>RSVPs</span></h3>
+						<div class="rsvp">
+							<span class="b-success">Yes</span>
+							<span class="b-danger">No</span>
+							<span class="b-mild">Maybe</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="meetups card-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title">GDG-Ikorodu</h3>
+					<p class="sm-text">
+						This is a developer group that foster learning of Google’s technologies. It is for developers, designers, tech
+						enthusiasts, and newbies living in/around Ikorodu who are interested in learning about Google technologies. This
+						meetup
+						group is for developers interested in resources and technology from Google Developers.
+					</p>
+					<div class="divider"></div>
+					<div class="stats m1">
+						<h3 class="sm-text">20 <span>RSVPs</span></h3>
+						<div class="rsvp">
+							<span class="b-success">Yes</span>
+							<span class="b-danger">No</span>
+							<span class="b-mild">Maybe</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="meetups card-lg">
+				<div class="content pall-1">
+					<h3 class="md-text title">Blockchain Technology Initiative</h3>
+					<p class="sm-text">
+						Blockchain Technology Initiative is a close-knit group created for passionate economic revolutionaries,
+						go-getters,
+						dynamic entrepreneurs & creative thinkers based on Blockchain technology.
+					</p>
+					<p class="sm-text">In case you don’t know, Blockchain
+						technology
+						is a distributed ledger that provides a way for information to be recorded and shared by a community.
+					</p>
+					<div class="divider"></div>
+					<div class="stats m1">
+						<h3 class="sm-text">99 <span>RSVPs</span></h3>
+						<div class="rsvp">
+							<span class="b-success">Yes</span>
+							<span class="b-danger">No</span>
+							<span class="b-mild">Maybe</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<footer class="bg-secondary">
@@ -106,4 +165,5 @@
 	</footer>
 	<script src="../scripts/index.js"></script>
 </body>
+
 </html>
