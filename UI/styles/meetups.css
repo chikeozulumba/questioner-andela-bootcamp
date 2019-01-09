@@ -75,7 +75,7 @@ h3.sm-text {
 	font-weight: 800;
 }
 
-p.sm-text {
+#meetups p.sm-text {
 	color: inherit;
 }
 
@@ -92,6 +92,7 @@ p.sm-text {
 	padding: 0.6rem 0.9rem;
 	color: white;
 	border-radius: 6px;
+	cursor: pointer;
 }
 
 @media screen and (max-width: 425px) {
