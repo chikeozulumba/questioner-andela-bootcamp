@@ -1,36 +1,52 @@
 import express from 'express';
+import { MeetupValidation, ValidateInteger, RSVPValidation } from '../middlewares/validator';
 import Meetup from '../controllers/Meetup';
 
 const router = express.Router();
 
-// @route POST /api/v1/meetups
-// @desc  Create meetup
-// @access public
+/**
+ * @name CreateMeetup
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Create a meetup
+ */
+router.post('/meetups', [MeetupValidation], Meetup.create);
 
-router.post('/meetups', Meetup.create);
+/**
+* @name GetSpecificMeetup
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Get specific meetup record
+*/
+router.get('/meetups/:id', [ValidateInteger], Meetup.getRecord);
 
-// @route GET /api/v1/meetups/<meetup-id>
-// @desc  Get Specific Meetup record
-// @access public
-
-router.get('/meetups/:id', Meetup.getRecord);
-
-// @route GET /api/v1/meetups/
-// @desc  Get all meetups
-// @access public
-
+/**
+* @name GetAllMeetup
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Get all meetup record
+*/
 router.get('/meetups/', Meetup.getAllRecords);
 
-// @route PATCH /api/v1/meetups/<meetup-id>/rsvp
-// @desc  RSVP for a meetup
-// @access public
+/**
+* @name RSVP
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description RSVP for a specific meetup record
+*/
+router.post('/meetups/:id/rsvp', [ValidateInteger, RSVPValidation], Meetup.rsvp);
 
-router.post('/meetups/:id/rsvp', Meetup.rsvp);
-
-// @route PATCH /api/v1/meetups/upcoming
-// @desc  Fetch all upcoming meetup records
-// @access public
-
+/**
+* @name GetUpcomingMeetups
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Get all upcoming meetup record
+*/
 router.get('/meetups/upcoming/asc', Meetup.upcoming);
 
 export default router;

@@ -17,7 +17,7 @@ describe('User can create a new question', () => {
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(200);
-				expect(res.body.status).to.be.an('boolean').and.to.be.true;
+				expect(res.body.status).to.be.a('number').and.to.equals(200);
 				expect(res.body).to.be.an('object');
 				done();
 			});
@@ -33,7 +33,7 @@ describe('User can create a new question', () => {
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('boolean').and.to.be.false;
+				expect(res.body.status).to.be.a('number').and.to.equals(400);
 				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
@@ -47,8 +47,8 @@ describe('User can create a new question', () => {
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.be.a('string');
+				expect(res.body.status).to.be.a('number').and.to.equals(400);
+				expect(res.body).to.have.property('error').and.to.be.a('object');
 				done();
 			});
 	});
@@ -63,8 +63,8 @@ describe('User can create a new question', () => {
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.be.a('string');
+				expect(res.body.status).to.be.a('number').and.to.equals(400);
+				expect(res.body).to.have.property('error').and.to.be.a('object');
 				done();
 			});
 	});
@@ -79,8 +79,8 @@ describe('User can create a new question', () => {
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.be.a('string');
+				expect(res.body.status).to.be.a('number').and.to.equals(400);
+				expect(res.body).to.have.property('error').and.to.be.a('object');
 				done();
 			});
 	});
@@ -95,8 +95,8 @@ describe('User can create a new question', () => {
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('boolean').and.to.be.false;
-				expect(res.body).to.have.property('error').and.to.be.a('string');
+				expect(res.body.status).to.be.a('number').and.to.equals(400);
+				expect(res.body).to.have.property('error').and.to.be.a('object');
 				done();
 			});
 	});
@@ -109,7 +109,7 @@ describe('User can upvote or downvote a specific question', () => {
 			.patch('/api/v1/questions/1/upvote')
 			.end((err, res) => {
 				expect(res).to.have.status(200);
-				expect(res.body.status).to.be.a('boolean').and.to.be.true;
+				expect(res.body.status).to.be.a('number').and.to.equal(200);
 				expect(res.body).to.have.property('data').and.to.be.an('object');
 				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
 				done();
@@ -122,7 +122,7 @@ describe('User can upvote or downvote a specific question', () => {
 			.patch('/api/v1/questions/1/downvote')
 			.end((err, res) => {
 				expect(res).to.have.status(200);
-				expect(res.body.status).to.be.a('boolean').and.to.be.true;
+				expect(res.body.status).to.be.a('number').and.to.equal(200);
 				expect(res.body).to.have.property('data').and.to.be.an('object');
 				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
 				done();
@@ -136,7 +136,7 @@ describe('User can upvote or downvote a specific question', () => {
 			.end((err, res) => {
 				console.log(res.status);
 				expect(res).to.have.status(404);
-				expect(res.body.status).to.be.a('boolean').and.to.be.false;
+				expect(res.body.status).to.be.a('number').and.to.equal(404);
 				expect(res.body).to.have.property('error').and.to.be.an('string');
 				done();
 			});

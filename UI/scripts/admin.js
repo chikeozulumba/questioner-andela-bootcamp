@@ -1,5 +1,5 @@
 (() => {
-	const meetups = document.getElementsByClassName('questions');
+	const meetups = document.getElementsByClassName('meetups');
 	for (let i = 0; i < meetups.length; i++) {
 		const meetup = meetups[i];
 		meetup.addEventListener('click', (e) => {
