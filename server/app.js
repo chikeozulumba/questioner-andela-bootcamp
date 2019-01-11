@@ -8,23 +8,14 @@ import cors from 'cors';
 import { notFound, baseResponse } from './helpers/handlers';
 import Meetup from './routes/Meetup';
 import Question from './routes/Question';
-import Init from './models/Init';
+import User from './routes/User';
 
-// Instatiate DB
-(async () => {
-	try {
-		await Init();
-	} catch (e) {
-		console.log(e);
-	}
-})().catch((err) => {
-	console.log(err);
-});
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use('/api/v1', User);
 app.use('/api/v1', Meetup);
 app.use('/api/v1', Question);
 

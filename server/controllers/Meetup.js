@@ -71,7 +71,7 @@ class Meetup {
 		const payload = req.body;
 		const query = new Query(id, rsvps, null, 'integer');
 		const queryRecords = query.getRecord();
-		if (!queryRecords) return errorRxx(res, query.code, false, query.errorMsg);
+		if (!queryRecords) return errorRxx(res, query.code, query.errorMsg);
 		query.payload = payload;
 		query.rsvp.id = id;
 		return query.save()
