@@ -1,6 +1,11 @@
 import db from '../config/database';
 
-// Create Users Table
+
+/**
+ * @name User
+ * @returns {array}
+ * @description Create User table on database
+ */
 const User = async () => {
 	const client = await db.connect();
 	try {
