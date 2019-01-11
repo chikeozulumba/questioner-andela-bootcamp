@@ -1,5 +1,12 @@
 import moment from 'moment';
 
+/**
+ * Sort an Array by ID
+ * @param {array} collection
+ * @param {integer} id
+ * @returns {object}
+ * @returns {null}
+ */
 const sortArrayById = (collection, id) => {
 	id = parseInt(id, 10);
 	for (let i = 0; i < collection.length; i += 1) {
@@ -9,6 +16,11 @@ const sortArrayById = (collection, id) => {
 	return null;
 };
 
+/**
+ * Sort an Array by date
+ * @param {array} array
+ * @returns {array}
+ */
 const date = (array) => {
 	array.sort((current, next) => {
 		const currentDate = moment(current.happeningOn, 'YYYY-DD-MM').format();
@@ -17,6 +29,12 @@ const date = (array) => {
 	});
 	return array;
 };
+
+/**
+ * Get last item in an array
+ * @param {array} array
+ * @returns {array}
+ */
 const last = array => array[array.length - 1];
 
 const Filters = { sortArrayById, last, date };
