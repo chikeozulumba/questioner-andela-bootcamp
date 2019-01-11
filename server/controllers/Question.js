@@ -13,13 +13,16 @@ const validateOptions = {
  */
 class Question {
 	/**
-	 * @param {object} req Controls Meetup Request
-	 * @param {object} res Controls to Meetup Response
-	 */
+ * @name Create
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Create a question record
+ */
 	static create(req, res) {
 		let payload = req.body;
 		const validation = Validate.init(payload, validateOptions);
-		if (validation !== true && typeof validation === 'string') return errorRxx(res, 400, false, validation);
+		if (validation !== true && typeof validation === 'string') return errorRxx(res, 400, validation);
 		const params = {
 			arrays: [],
 		};
@@ -28,16 +31,23 @@ class Question {
 		const query = new Query(payload, 'questions', ['title']);
 		// SAVE MEETUP
 		return query.save()
-			.then(docs => response2xx(res, 200, true, docs))
-			.catch(err => errorRxx(res, query.code, false, err));
+			.then(docs => response2xx(res, 200, docs))
+			.catch(err => errorRxx(res, query.code, err));
 	}
 
+	/**
+ * @name Vote
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Vote on a question
+ */
 	static vote(req, res) {
 		const id = req.params.id;
 		const path = Filters.last(req.url.split('/'));
 		const query = new Query(id, 'questions', null, 'integer');
 		const question = query.getRecord();
-		if (!question) return errorRxx(res, query.code, false, query.errorMsg);
+		if (!question) return errorRxx(res, query.code, query.errorMsg);
 		if (path === 'upvote') {
 			question.votes += 1;
 		} else {
@@ -47,8 +57,8 @@ class Question {
 		query.payload = question;
 		query.fields = ['title'];
 		const pos = id - 1;
-		if (query.update(pos)) return response2xx(res, 200, true, query.payload);
-		return errorRxx(res, 500, false, `Internal server error, unable to ${path.toUpperCase()}`);
+		if (query.update(pos)) return response2xx(res, 200, query.payload);
+		return errorRxx(res, 500, `Internal server error, unable to ${path.toUpperCase()}`);
 	}
 }
 
