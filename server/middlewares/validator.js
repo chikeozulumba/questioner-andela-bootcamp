@@ -16,8 +16,8 @@ const phoneValidation = 'regex:/^[a-zA-Z0-9-().s+]{10,15}$/';
 export const UserValidation = (req, res, next) => {
 	const payload = req.body;
 	let schema = {
-		firstName: ['required', nameValidation, 'min:3', 'max:255'],
-		lastName: ['required', nameValidation, 'min:3', 'max:255'],
+		firstName: ['required', nameValidation, 'string', 'min:3', 'max:255'],
+		lastName: ['required', nameValidation, 'string', 'min:3', 'max:255'],
 		phone: ['required', phoneValidation],
 		password: ['required', stringValidation, 'min:6'],
 		email: 'required|email',
