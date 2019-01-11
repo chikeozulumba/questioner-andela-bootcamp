@@ -471,6 +471,10 @@ footer h3 {
 	align-items: center;
 }
 
+.hover-t:hover {
+	color: purple;
+}
+
 .hover-lg:hover {
 	cursor: pointer;
 	transform: scale(1.009, 1.009);
