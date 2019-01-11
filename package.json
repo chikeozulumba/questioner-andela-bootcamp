@@ -11,6 +11,7 @@
     "heroku-postbuild": "npm run build",
     "lint": "node_modules/.bin/eslint ./server/*.js",
     "lint-fix": "node_modules/.bin/eslint --fix ./server --ext .js --color",
+    "migrations": "babel-node ./server/migrations/drop.js && babel-node ./server/migrations/init.js --",
     "prod": "node build/app.js",
     "start": "node_modules/.bin/nodemon server/app.js --exec babel-node -- ",
     "test": "nyc mocha server/tests/**/*spec.js --exit"
@@ -27,11 +28,13 @@
   },
   "homepage": "https://github.com/chikeozulumba/questioner-andela#readme",
   "dependencies": {
+    "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.4.0",
     "moment": "^2.23.0",
     "morgan": "^1.9.1",
     "pg": "^7.7.1",
