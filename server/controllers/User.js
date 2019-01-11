@@ -18,6 +18,20 @@ class User {
 		if (!await UserQuery.createNewUser()) return errorRxx(res, 500, 'Your details could not be saved, try again.');
 		return response2xx(res, 201, UserQuery.result);
 	}
+
+	/**
+ * @name SignIn
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description User can sign in
+ */
+	static async signIn(req, res) {
+		const user = req.user;
+		if (comparePassword(user.password, req.body.password)) return errorRxx(res, 403, 'Passwords don\'t match');
+		user.token = generateToken(user.id);
+		return response2xx(res, 200, user);
+	}
 }
 
 export default User;
