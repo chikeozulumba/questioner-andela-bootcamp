@@ -5,7 +5,7 @@ module.exports = {
 		createdOn: 'Monday, 31st December 2018',
 		location: 'Lagos',
 		images: ['http://localhost:5100/api/v1/image.png'],
-		topic: 'Kubernetes Conference @ Tech Zone',
+		topic: 'Kubernetes Conference Tech Zone',
 		happeningOn: '2019-31-05',
 		startTime: '10: 00 am',
 		Tags: ['api', 'endpoints'],

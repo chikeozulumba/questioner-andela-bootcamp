@@ -1,6 +1,7 @@
 import Validator from 'validatorjs';
 import { errorRxx } from '../helpers/handlers';
 
+const stringValidation = 'regex:/^([a-zA-Z0-9,.!? @_-]+)$/';
 /**
  * @name MeetupValidation
  * @param {object} req
@@ -13,7 +14,7 @@ import { errorRxx } from '../helpers/handlers';
 export const MeetupValidation = (req, res, next) => {
 	const payload = req.body;
 	const schema = {
-		topic: 'required|alpha',
+		topic: ['required', stringValidation, 'min:3', 'max:255'],
 		tags: 'required|string',
 		location: 'required|string',
 		images: 'string',
@@ -37,7 +38,7 @@ export const MeetupValidation = (req, res, next) => {
 export const QuestionValidation = (req, res, next) => {
 	const payload = req.body;
 	const schema = {
-		title: 'required|alpha_num',
+		title: ['required', stringValidation, 'min:3', 'max:255'],
 		body: 'required|string',
 	};
 	const validator = new Validator(payload, schema);

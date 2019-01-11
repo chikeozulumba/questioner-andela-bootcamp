@@ -1,4 +1,4 @@
-import Validate from '../helpers/validate';
+import { prepareContent } from '../helpers/validate';
 import { errorRxx, response2xx } from '../helpers/handlers';
 import Query from '../helpers/query';
 import Filters from '../helpers/filters';
@@ -21,15 +21,11 @@ class Question {
  */
 	static create(req, res) {
 		let payload = req.body;
-		const validation = Validate.init(payload, validateOptions);
-		if (validation !== true && typeof validation === 'string') return errorRxx(res, 400, validation);
 		const params = {
 			arrays: [],
 		};
-		payload = Validate.prepareContent(payload, params);
-		// ADD TO MEETUPS DATA
+		payload = prepareContent(payload, params);
 		const query = new Query(payload, 'questions', ['title']);
-		// SAVE MEETUP
 		return query.save()
 			.then(docs => response2xx(res, 200, docs))
 			.catch(err => errorRxx(res, query.code, err));

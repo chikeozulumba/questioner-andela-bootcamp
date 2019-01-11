@@ -1,4 +1,4 @@
-import Validate from '../helpers/validate';
+import { prepareContent } from '../helpers/validate';
 import { errorRxx, response2xx } from '../helpers/handlers';
 import Query from '../helpers/query';
 import Filters from '../helpers/filters';
@@ -22,7 +22,7 @@ class Meetup {
 		const params = {
 			arrays: ['Tags', 'images'],
 		};
-		payload = Validate.prepareContent(payload, params);
+		payload = prepareContent(payload, params);
 		// ADD TO MEETUPS DATA
 		const query = new Query(payload, meetups, ['topic']);
 		// SAVE MEETUP
