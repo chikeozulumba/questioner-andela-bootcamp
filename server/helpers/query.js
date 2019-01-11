@@ -1,18 +1,21 @@
 import moment from 'moment';
 import data from '../mock/data';
-import Validate from './validate';
+import { checkType } from './validate';
 import Filters from './filters';
 
-const stringValidation = /^([a-zA-Z0-9,.!? @_-]+)$/;
 const user = {
 	id: 1,
 	name: 'Chike',
 };
 class Query {
 	/**
-	 * Required method
-	 * @param {object} payload Object containig fields
-	 * @param {object} options Object containing additional options
+	 * @name Query
+	 * @param {object} payload
+	 * @param {array} collections
+	 * @param {array} fields
+	 * @param {array} type
+	 * @returns {object}
+	 * @description Running queries on the collections
 	 */
 	constructor(payload, collection, fields = null, type = null) {
 		this.payload = payload;
@@ -20,12 +23,19 @@ class Query {
 		this.collection = collection;
 		this.collections = [...data[collection]];
 		this.fields = fields;
-		this.checkProp = Validate.checkType(this.payload, type);
+		this.checkProp = checkType(this.payload, type);
 		this.results = null;
 		this.rsvp = {};
 		this.user = user;
 	}
 
+	/**
+	 * @name Unique
+	 * @param {object} payload
+	 * @param {array} params
+	 * @returns {object}
+	 * @description Ensuring payload fields are unique on the database collection.
+	 */
 	async unique(payload, params) {
 		return new Promise((resolve, reject) => {
 			if (!params) resolve(true);
@@ -42,6 +52,13 @@ class Query {
 		});
 	}
 
+	/**
+	 * @name Save
+	 * @param {object} payload
+	 * @param {array} params
+	 * @returns {promise}
+	 * @description Saving payload to database collection.
+	 */
 	async save() {
 		return this.addQuery().then((res) => {
 			if (res) this.collections.push(this.payload);
@@ -49,19 +66,40 @@ class Query {
 		}).catch(err => Promise.reject(err));
 	}
 
+	/**
+	 * @name Update
+	 * @param {integer} index
+	 * @returns {object}
+	 * @description Updating payload to the database collection.
+	 */
 	update(index) {
 		this.collections[index] = this.payload;
 		return this.payload;
 	}
 
+	/**
+	* @name getID
+	* @returns {integer}
+	* @description Create an ID for the payload before saving
+	*/
 	getID() {
 		return this.collections.length + 1;
 	}
 
+	/**
+	* @name getUser
+	* @returns {object}
+	* @description Returns an object that contains the user details
+	*/
 	getUser() {
 		return this.user;
 	}
 
+	/**
+	* @name addTImeStamp
+	* @returns {date}
+	* @description Returns current date
+	*/
 	// eslint-disable-next-line class-methods-use-this
 	addTImeStamp() {
 		const date = new Date();
@@ -69,13 +107,22 @@ class Query {
 		return formatted;
 	}
 
-	// PREPARE FOR MEETUP
+	/**
+	* @name prepareMeetup
+	* @returns {object}
+	* @description Adds required fields to the payload
+	*/
 	prepareMeetup() {
 		this.payload.id = this.getID();
 		this.payload.createdOn = this.addTImeStamp();
 		return this.payload;
 	}
 
+	/**
+	* @name prepareQuestions
+	* @returns {object}
+	* @description Adds required fields to the payload
+	*/
 	prepareQuestions() {
 		this.payload.id = this.getID();
 		this.payload.createdOn = this.addTImeStamp();
@@ -88,15 +135,24 @@ class Query {
 		return this.payload;
 	}
 
+	/**
+	* @name prepareRsvps
+	* @returns {object}
+	* @description Prepare RSVP payload
+	*/
 	prepareRsvps() {
 		this.payload.createdOn = this.addTImeStamp();
 		this.payload.id = this.getID();
-		this.payload.meetup = parseInt(this.payload.meetup, 10);
+		this.payload.meetup = parseInt(this.rsvp.id, 10);
 		this.payload.user = this.getUser().id;
 		return this.payload;
 	}
 
-	// PREPARE FOR QUESTIONS
+	/**
+	* @name prepare
+	* @returns {method}
+	* @description Prepare dynamic queries
+	*/
 	prepare() {
 		switch (this.collection) {
 		case 'questions':
@@ -108,6 +164,11 @@ class Query {
 		}
 	}
 
+	/**
+	* @name addQuery
+	* @returns {promise}
+	* @description Add New Record Meetup/Question
+	*/
 	async addQuery() {
 		return new Promise((resolve, reject) => {
 			this.unique(this.payload, this.fields)
@@ -116,6 +177,11 @@ class Query {
 		});
 	}
 
+	/**
+	* @name getRecord
+	* @returns {array}
+	* @description Return specific record
+	*/
 	getRecord() {
 		if (this.checkProp !== true) {
 			this.errorMsg = this.checkProp;
@@ -130,6 +196,11 @@ class Query {
 		return this.results;
 	}
 
+	/**
+	* @name getAllRecords
+	* @returns {array}
+	* @description Get all records from collection
+	*/
 	getAllRecords() {
 		return this.collections;
 	}
