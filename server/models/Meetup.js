@@ -1,5 +1,5 @@
 import db from '../config/database';
-import { createNewMeetup } from './index';
+import { createNewMeetup, getMeetupByID } from './index';
 
 export default class Meetup {
 	constructor(payload) {
@@ -17,6 +17,17 @@ export default class Meetup {
 		try {
 			const { rows } = await db.query(createNewMeetup, values);
 			this.result = rows[0];
+			return true;
+		} catch (error) {
+			this.error = error.stack;
+			return false;
+		}
+	}
+
+	async getMeetupById() {
+		try {
+			const { rows } = await db.query(getMeetupByID, [this.payload]);
+			this.result = rows;
 			return true;
 		} catch (error) {
 			this.error = error.stack;
