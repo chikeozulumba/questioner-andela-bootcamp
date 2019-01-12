@@ -21,6 +21,6 @@ router.post('/auth/signup', [UserValidation], User.create);
  * @returns {object}
  * @description Sign in existing User
  */
-router.post('/auth/signin', [UserValidation, Auth.verifyCSRF], User.signIn);
+router.post('/auth/signin', [UserValidation], User.signIn);
 
 export default router;
