@@ -41,7 +41,7 @@ class Meetup {
 		const id = req.params.id;
 		const MeetupQuery = new MeetupModel(id);
 		const getMeetup = await MeetupQuery.getMeetupById();
-		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, kindly try again.');
+		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
 		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
 		return response2xx(res, 200, MeetupQuery.result);
 	}
@@ -53,10 +53,11 @@ class Meetup {
  * @returns {object}
  * @description Return all meetup records
  */
-	static getAllRecords(req, res) {
-		const query = new Query(null, meetups, null, null);
-		const queryAllRecords = query.getAllRecords();
-		return response2xx(res, 200, queryAllRecords);
+	static async getAllRecords(req, res) {
+		const MeetupQuery = new MeetupModel();
+		const getAllMeetup = await MeetupQuery.getAllMeetup();
+		if (!getAllMeetup) return errorRxx(res, 500, 'Error in retrieving all meetups, try again.');
+		return response2xx(res, 200, MeetupQuery.result);
 	}
 
 	/**
