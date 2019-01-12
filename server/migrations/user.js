@@ -20,6 +20,7 @@ const User = async () => {
           PRIMARY KEY(id, email)
       );`;
 		await client.query(query);
+		console.info('Created USERS tables');
 	} catch (error) {
 		throw error;
 	} finally {
