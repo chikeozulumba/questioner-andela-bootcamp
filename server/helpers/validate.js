@@ -8,7 +8,10 @@
 export const prepareContent = (payload, params) => {
 	if (params !== null && params.arrays.length !== 0) {
 		Object.keys(payload).forEach((key) => {
-			if (params.arrays.includes(key)) payload[key] = payload[key].split(',');
+			if (params.arrays.includes(key)) {
+				payload[key] = payload[key].split(',');
+				payload[key] = payload[key].map(el => el.trim());
+			}
 		});
 	}
 	return payload;
