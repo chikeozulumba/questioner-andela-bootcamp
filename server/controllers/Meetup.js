@@ -2,6 +2,7 @@ import { prepareContent } from '../helpers/validate';
 import { errorRxx, response2xx } from '../helpers/handlers';
 import Query from '../helpers/query';
 import Filters from '../helpers/filters';
+import MeetupModel from '../models/Meetup';
 
 const meetups = 'meetups';
 const rsvps = 'rsvps';
@@ -17,18 +18,16 @@ class Meetup {
  * @returns {object}
  * @description Create a meetup
  */
-	static create(req, res) {
+	static async create(req, res) {
 		let payload = req.body;
 		const params = {
-			arrays: ['Tags', 'images'],
+			arrays: ['tags', 'images'],
 		};
 		payload = prepareContent(payload, params);
-		// ADD TO MEETUPS DATA
-		const query = new Query(payload, meetups, ['topic']);
-		// SAVE MEETUP
-		return query.save()
-			.then(docs => response2xx(res, 200, docs))
-			.catch(err => errorRxx(res, query.code, err));
+		const MeetupQuery = new MeetupModel(payload);
+		const create = await MeetupQuery.createMeetup();
+		if (!create) return errorRxx(res, 500, 'Error in saving meetup, kindly try again.');
+		return response2xx(res, 201, MeetupQuery.result);
 	}
 
 	/**
