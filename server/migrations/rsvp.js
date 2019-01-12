@@ -12,7 +12,8 @@ const RSVP = async () => {
           id SERIAL UNIQUE, 
           meetup INTEGER NOT NULL, 
           user_id INTEGER NOT NULL, 
-          response VARCHAR(255) NOT NULL,
+					response VARCHAR(255) NOT NULL,
+					timestamp TIMESTAMPTZ DEFAULT NOW(), 
           PRIMARY KEY(id, meetup)
       );`;
 		await client.query(query);
