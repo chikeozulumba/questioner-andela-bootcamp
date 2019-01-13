@@ -2,7 +2,7 @@ import { prepareContent } from '../helpers/validate';
 import { errorRxx, response2xx } from '../helpers/handlers';
 import Query from '../helpers/query';
 import Filters from '../helpers/filters';
-import MeetupModel from '../models/Meetup';
+import Model from '../models/Meetup';
 
 const meetups = 'meetups';
 const rsvps = 'rsvps';
@@ -24,7 +24,7 @@ class Meetup {
 			arrays: ['tags', 'images'],
 		};
 		payload = prepareContent(payload, params);
-		const MeetupQuery = new MeetupModel(payload);
+		const MeetupQuery = new Model(payload);
 		const create = await MeetupQuery.createMeetup();
 		if (!create) return errorRxx(res, 500, 'Error in saving meetup, kindly try again.');
 		return response2xx(res, 201, MeetupQuery.result);
@@ -39,7 +39,7 @@ class Meetup {
  */
 	static async getRecord(req, res) {
 		const id = req.params.id;
-		const MeetupQuery = new MeetupModel(id);
+		const MeetupQuery = new Model(id);
 		const getMeetup = await MeetupQuery.getMeetupById();
 		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
 		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
@@ -54,7 +54,7 @@ class Meetup {
  * @description Return all meetup records
  */
 	static async getAllRecords(req, res) {
-		const MeetupQuery = new MeetupModel();
+		const MeetupQuery = new Model();
 		const getAllMeetup = await MeetupQuery.getAllMeetups();
 		if (!getAllMeetup) return errorRxx(res, 500, 'Error in retrieving all meetups, try again.');
 		return response2xx(res, 200, MeetupQuery.result);
@@ -68,9 +68,8 @@ class Meetup {
  * @description RSVP for a meetup
  */
 	static async rsvp(req, res) {
-		const MeetupQuery = new MeetupModel(req.params.id);
+		const MeetupQuery = new Model(req.params.id);
 		const getMeetup = await MeetupQuery.getMeetupById();
-		// return console.log(MeetupQuery.result)
 		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
 		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
 		MeetupQuery.payload = req.body;
@@ -86,9 +85,11 @@ class Meetup {
  * @returns {object}
  * @description Return all upcoming meetup records
  */
-	static upcoming(req, res) {
-		const query = new Query(null, meetups, null, null);
-		const formatByDateAsc = Filters.date(query.getAllRecords());
+	static async upcoming(req, res) {
+		const MeetupQuery = new Model();
+		const results = await MeetupQuery.getAllMeetups();
+		if (!results) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
+		const formatByDateAsc = Filters.date(MeetupQuery.result);
 		return response2xx(res, 200, formatByDateAsc);
 	}
 }
