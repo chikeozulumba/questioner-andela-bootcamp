@@ -11,4 +11,5 @@ export const createNewQuestion = 'INSERT INTO questions(title, body, meetup, cre
 export const checkIfUpvoted = 'SELECT * FROM questions WHERE $1 = ANY (upvotes) AND id = $2';
 export const checkIfDownvoted = 'SELECT * FROM questions WHERE $1 = ANY (downvotes) AND id = $2';
 export const addVote = (field, value, id) => `UPDATE questions SET ${field} = array_append(${field}, ${value}) WHERE id = ${id} returning *`;
-export const removeVote = (field, value, id) => `UPDATE questions SET ${field} = array_remove(${field}, ${value}) WHERE id = ${id} returning *`;
+export const removeVote = (field, value, id) => `UPDATE questions SET ${field} = array_remove($
+ 

@@ -13,7 +13,7 @@ export default class User {
 		const {
 			firstName, lastName, email, phone, password,
 		} = this.payload;
-		const values = [firstName, lastName, email, phone, hashPassword(password)];
+		const values = [firstName, lastName, email, phone, hashPassword(password)];                                                                                                                                                                                                               
 		try {
 			const { rows } = await db.query(createNewUser, values);
 			this.result = rows[0];

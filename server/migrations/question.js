@@ -18,7 +18,7 @@ const Question = async () => {
           downvotes INTEGER [],
           comments TEXT [],
           reports INTEGER [],
-          ispermitted BOOLEAN DEFAULT true,
+          ispermitted BOOLEAN DEFAULT true,                                                                               
           createdOn TIMESTAMPTZ DEFAULT NOW(), 
           PRIMARY KEY(id)
       );`;
