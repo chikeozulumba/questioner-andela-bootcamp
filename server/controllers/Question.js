@@ -1,7 +1,9 @@
-import { prepareContent } from '../helpers/validate';
+import moment from 'moment';
 import { errorRxx, response2xx } from '../helpers/handlers';
 import Query from '../helpers/query';
 import Filters from '../helpers/filters';
+import Model from '../models/Question';
+
 
 const validateOptions = {
 	required: ['title', 'body'], // Required fields
@@ -19,16 +21,14 @@ class Question {
  * @returns {object}
  * @description Create a question record
  */
-	static create(req, res) {
-		let payload = req.body;
-		const params = {
-			arrays: [],
-		};
-		payload = prepareContent(payload, params);
-		const query = new Query(payload, 'questions', ['title']);
-		return query.save()
-			.then(docs => response2xx(res, 200, docs))
-			.catch(err => errorRxx(res, query.code, err));
+	static async create(req, res) {
+		const payload = req.body;
+		payload.meetup = 1;
+		payload.createdBy = req.user !== undefined ? req.user.id : 1;
+		const QuestionQuery = new Model(payload);
+		const saveQuestion = await QuestionQuery.createQuestion();
+		if (!saveQuestion) return errorRxx(res, 500, 'Your details could not be saved, try again.');
+		return response2xx(res, 201, QuestionQuery.result);
 	}
 
 	/**
@@ -38,23 +38,23 @@ class Question {
  * @returns {object}
  * @description Vote on a question
  */
-	static vote(req, res) {
+	static async vote(req, res) {
 		const id = req.params.id;
+		const user = req.user !== undefined ? req.user.id : 1;
 		const path = Filters.last(req.url.split('/'));
-		const query = new Query(id, 'questions', null, 'integer');
-		const question = query.getRecord();
-		if (!question) return errorRxx(res, query.code, query.errorMsg);
-		if (path === 'upvote') {
-			question.votes += 1;
-		} else {
-			if (question.votes !== 0) question.votes += 1;
-			question.votes = 0;
-		}
-		query.payload = question;
-		query.fields = ['title'];
-		const pos = id - 1;
-		if (query.update(pos)) return response2xx(res, 200, query.payload);
-		return errorRxx(res, 500, `Internal server error, unable to ${path.toUpperCase()}`);
+		const QuestionQuery = new Model(id);
+		const question = await QuestionQuery.getQuestionById();
+		if (!question) return errorRxx(res, 500, `Internal server error, could not ${path}`);
+		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question not found, check request parameters');
+		if (path === 'upvote') await QuestionQuery.upVote(user);
+		else await QuestionQuery.downVote(user);
+		const result = QuestionQuery.result;
+		if (result.upvotes.length > result.downvotes.length) result.votes = result.upvotes.length - result.downvotes.length;
+		else result.votes = 0;
+		delete result.upvotes;
+		delete result.downvotes;
+		result.createdon = moment(result.createdon).format('MMMM Do YYYY, h:mm:ss a');
+		return response2xx(res, 201, result, `${Filters.jsUcfirst(path)} successful!`);
 	}
 }
 

@@ -13,11 +13,12 @@ const Question = async () => {
           createdBy INTEGER NOT NULL, 
           meetup INTEGER NOT NULL, 
           title VARCHAR(255) NOT NULL, 
-          body TEXT NOT NULL, 
-          votes INTEGER DEFAULT 0, 
+          body TEXT NOT NULL,
           upvotes INTEGER [],
           downvotes INTEGER [],
           comments TEXT [],
+          reports INTEGER [],
+          ispermitted BOOLEAN DEFAULT true,
           createdOn TIMESTAMPTZ DEFAULT NOW(), 
           PRIMARY KEY(id)
       );`;
