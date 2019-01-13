@@ -67,19 +67,17 @@ class Meetup {
  * @returns {object}
  * @description RSVP for a meetup
  */
-	static rsvp(req, res) {
-		const id = req.params.id;
-		const payload = req.body;
-		const query = new Query(id, rsvps, null, 'integer');
-		const queryRecords = query.getRecord();
-		if (!queryRecords) return errorRxx(res, query.code, query.errorMsg);
-		query.payload = payload;
-		query.rsvp.id = id;
-		return query.save()
-			.then(docs => response2xx(res, 200, docs))
-			.catch(err => errorRxx(res, 400, err));
+	static async rsvp(req, res) {
+		const MeetupQuery = new MeetupModel(req.params.id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		// return console.log(MeetupQuery.result)
+		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
+		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		MeetupQuery.payload = req.body;
+		const createRSVP = await MeetupQuery.rsvpMeetup(req.params.id, 8);
+		if (!createRSVP && MeetupQuery.exists) return errorRxx(res, 403, 'You are already on RSVP for this event.');
+		return response2xx(res, 200, MeetupQuery.result);
 	}
-
 
 	/**
  * @name upcoming
