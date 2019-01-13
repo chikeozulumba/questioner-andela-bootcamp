@@ -14,6 +14,15 @@ const router = express.Router();
 router.post('/meetups', [MeetupValidation], Meetup.create);
 
 /**
+* @name GetUpcomingMeetups
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Get all upcoming meetup record
+*/
+router.get('/meetups/upcoming', Meetup.upcoming);
+
+/**
 * @name GetSpecificMeetup
 * @param {object} req
 * @param {object} res
@@ -39,14 +48,5 @@ router.get('/meetups/', Meetup.getAllRecords);
 * @description RSVP for a specific meetup record
 */
 router.post('/meetups/:id/rsvp', [ValidateInteger, RSVPValidation], Meetup.rsvp);
-
-/**
-* @name GetUpcomingMeetups
-* @param {object} req
-* @param {object} res
-* @returns {object}
-* @description Get all upcoming meetup record
-*/
-router.get('/meetups/upcoming/asc', Meetup.upcoming);
 
 export default router;

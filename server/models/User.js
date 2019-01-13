@@ -13,10 +13,9 @@ export default class User {
 		const {
 			firstName, lastName, email, phone, password,
 		} = this.payload;
-		const values = [firstName, lastName, email, phone, hashPassword(password)];
-		const queryString = createNewUser;
+		const values = [firstName, lastName, email, phone, hashPassword(password)];                                                                                                                                                                                                               
 		try {
-			const { rows } = await db.query(queryString, values);
+			const { rows } = await db.query(createNewUser, values);
 			this.result = rows[0];
 			this.result.token = generateToken(this.result.id);
 			return true;
@@ -28,9 +27,8 @@ export default class User {
 
 	async getUserByEmail() {
 		const email = this.payload.email;
-		const queryString = getUserByEmail;
 		try {
-			const { rows, rowCount } = await db.query(queryString, [email]);
+			const { rows, rowCount } = await db.query(getUserByEmail, [email]);
 			this.result = rows;
 			this.rowCount = rowCount;
 			return true;

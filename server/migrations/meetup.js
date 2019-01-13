@@ -19,7 +19,6 @@ const Meetup = async () => {
           PRIMARY KEY(id)
       );`;
 		await client.query(query);
-		console.info('Created MEETUPS tables');
 	} catch (error) {
 		throw error;
 	} finally {

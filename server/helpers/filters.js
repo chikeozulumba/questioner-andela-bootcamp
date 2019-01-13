@@ -36,7 +36,9 @@ const date = (array) => {
  * @returns {array}
  */
 const last = array => array[array.length - 1];
-
-const Filters = { sortArrayById, last, date };
+const jsUcfirst = string => string.charAt(0).toUpperCase() + string.slice(1);
+const Filters = {
+	sortArrayById, last, date, jsUcfirst,
+};
 
 export default Filters;
