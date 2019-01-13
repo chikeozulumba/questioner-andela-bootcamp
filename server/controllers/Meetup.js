@@ -55,7 +55,7 @@ class Meetup {
  */
 	static async getAllRecords(req, res) {
 		const MeetupQuery = new MeetupModel();
-		const getAllMeetup = await MeetupQuery.getAllMeetup();
+		const getAllMeetup = await MeetupQuery.getAllMeetups();
 		if (!getAllMeetup) return errorRxx(res, 500, 'Error in retrieving all meetups, try again.');
 		return response2xx(res, 200, MeetupQuery.result);
 	}
