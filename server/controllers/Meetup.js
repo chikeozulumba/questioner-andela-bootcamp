@@ -66,7 +66,7 @@ class Meetup {
  * @param {object} res
  * @returns {object}
  * @description RSVP for a meetup
- */                                                                                                                         
+ */
 	static async rsvp(req, res) {
 		const MeetupQuery = new Model(req.params.id);
 		const getMeetup = await MeetupQuery.getMeetupById();
