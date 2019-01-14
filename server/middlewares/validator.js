@@ -96,7 +96,10 @@ export const RSVPValidation = (req, res, next) => {
 	};
 	const validator = new Validator(payload, schema);
 	const errors = validator.errors.all();
-	if (validator.fails()) return errorRxx(res, 400, errors);
+	if (validator.fails()) {
+		req.rsvpErrors = true;
+		req.rsvErrorMsg = errors;
+	}
 	return next();
 };
 
