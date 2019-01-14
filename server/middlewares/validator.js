@@ -90,6 +90,7 @@ export const QuestionValidation = (req, res, next) => {
  */
 export const RSVPValidation = (req, res, next) => {
 	const payload = req.body;
+	req.body.response = req.body.response.toLowerCase();
 	const schema = {
 		response: ['required', { in: ['yes', 'no', 'maybe'] }],
 	};
