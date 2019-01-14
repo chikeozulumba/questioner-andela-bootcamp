@@ -484,6 +484,10 @@ footer h3 {
 	transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+.visibility {
+	visibility: hidden;
+}
+
 /* MEDIA QUERIES */
 @media all and (max-width: 850px) {
 	.navbar {
