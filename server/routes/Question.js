@@ -31,4 +31,31 @@ router.patch('/questions/:id/upvote', [ValidateInteger], Question.vote);
 */
 router.patch('/questions/:id/downvote', [ValidateInteger], Question.vote);
 
+/**
+* @name AddComment
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Add comment to a question
+*/
+router.post('/questions/:id/comment', [ValidateInteger], Question.addComment);
+
+/**
+* @name EditComment
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Edit comment on a question
+*/
+router.patch('/questions/:id/comment', [ValidateInteger], Question.editComment);
+
+/**
+* @name DeleteComment
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Delete comment on a question
+*/
+router.delete('/questions/:id/comment', [ValidateInteger], Question.deleteComment);
+
 export default router;
