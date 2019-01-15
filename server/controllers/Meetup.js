@@ -1,7 +1,6 @@
 import { prepareContent } from '../helpers/validate';
 import { errorRxx, response2xx } from '../helpers/handlers';
-import Query from '../helpers/query';
-import Filters from '../helpers/filters';
+import { date } from '../helpers/filters';
 import Model from '../models/Meetup';
 
 const meetups = 'meetups';
@@ -90,7 +89,7 @@ class Meetup {
 		const MeetupQuery = new Model();
 		const results = await MeetupQuery.getAllMeetups();
 		if (!results) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
-		const formatByDateAsc = Filters.date(MeetupQuery.result);
+		const formatByDateAsc = date(MeetupQuery.result);
 		return response2xx(res, 200, formatByDateAsc);
 	}
 }
