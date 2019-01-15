@@ -125,18 +125,6 @@ describe('User can upvote or downvote a specific question', () => {
 			});
 	});
 
-	it('should return status 500 when User downvotes a question that is impossible to exist', (done) => {
-		chai
-			.request(app)
-			.patch('/api/v1/questions/999999999999/downvote')
-			.end((err, res) => {
-				expect(res).to.have.status(500);
-				expect(res.body.status).to.be.a('number').and.to.equal(500);
-				expect(res.body).to.have.property('error').and.to.be.an('string');
-				done();
-			});
-	});
-
 	it('should not be able to vote below 0 vote count', (done) => {
 		chai
 			.request(app)
