@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 // @desc  Create meetup route
 
 describe('User can create a new meetup', () => {
-	it('should return status 200 with payload of newly created meetup record', (done) => {
+	it('should return status 201 with payload of newly created meetup record', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
@@ -23,7 +23,7 @@ describe('User can create a new meetup', () => {
 				tags: 'api, endpoints',
 			})
 			.end((err, res) => {
-				expect(res).to.have.status(200);
+				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number');
 				expect(res.body.data).to.be.an('object');
 				done();
@@ -110,14 +110,33 @@ describe('User can RSVP for a meetup', () => {
 			.send({
 				response: 'yes',
 				meetup: 1,
+				user: Math.random(100, 9999999),
 			})
 			.end((err, res) => {
-				expect(res).to.have.status(200);
-				expect(res.body.status).to.be.a('number').and.to.equals(200);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res).to.have.status(201);
+				expect(res.body.status).to.be.a('number').and.to.equals(201);
+				expect(res.body).to.have.property('data').and.to.be.an('array');
 				done();
 			});
 	});
+
+	it('should return status 403 when user is already on rsvp record.', (done) => {
+		chai
+			.request(app)
+			.post('/api/v1/meetups/1/rsvp')
+			.send({
+				response: 'yes',
+				meetup: 1,
+				user: 1,
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body.status).to.be.a('number').and.to.equals(403);
+				expect(res.body).to.have.property('error').and.to.be.a('string');
+				done();
+			});
+	});
+
 	it('should return status 400 when required field(s) is/are missing.', (done) => {
 		chai
 			.request(app)
@@ -140,9 +159,9 @@ describe('User can RSVP for a meetup', () => {
 				meetup: 1,
 			})
 			.end((err, res) => {
-				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('number').and.to.equals(400);
-				expect(res.body).to.have.property('error').and.to.be.an('object');
+				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('number').and.to.equals(404);
+				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
@@ -152,7 +171,7 @@ describe('User can can get all upcoming meetups', () => {
 	it('should return status 200 all upcoming meetup records.', (done) => {
 		chai
 			.request(app)
-			.get('/api/v1/meetups/upcoming/asc')
+			.get('/api/v1/meetups/upcoming')
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);

@@ -7,7 +7,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('User can create a new question', () => {
-	it('should return status 200 with payload of newly created question record', (done) => {
+	it('should return status 200 with content of newly created question record', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/questions')
@@ -16,25 +16,9 @@ describe('User can create a new question', () => {
 				body: 'Multiple Kubernetes clusters can be managed as a single cluster with the help of federated clusters.',
 			})
 			.end((err, res) => {
-				expect(res).to.have.status(200);
-				expect(res.body.status).to.be.a('number').and.to.equals(200);
+				expect(res).to.have.status(201);
+				expect(res.body.status).to.be.a('number').and.to.equals(201);
 				expect(res.body).to.be.an('object');
-				done();
-			});
-	});
-
-	it('should return status 400 when fields\' titles already exist on the collection.', (done) => {
-		chai
-			.request(app)
-			.post('/api/v1/questions')
-			.send({
-				title: 'What is Kubernetes?',
-				body: 'Multiple Kubernetes clusters can be managed as a single cluster with the help of federated clusters.',
-			})
-			.end((err, res) => {
-				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('number').and.to.equals(400);
-				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
@@ -132,11 +116,22 @@ describe('User can upvote or downvote a specific question', () => {
 	it('should return status 400 when User downvotes a question that doesn\'t exist', (done) => {
 		chai
 			.request(app)
-			.patch('/api/v1/questions/999999999999/downvote')
+			.patch('/api/v1/questions/222222222/downvote')
 			.end((err, res) => {
-				console.log(res.status);
 				expect(res).to.have.status(404);
 				expect(res.body.status).to.be.a('number').and.to.equal(404);
+				expect(res.body).to.have.property('error').and.to.be.an('string');
+				done();
+			});
+	});
+
+	it('should return status 500 when User downvotes a question that is impossible to exist', (done) => {
+		chai
+			.request(app)
+			.patch('/api/v1/questions/999999999999/downvote')
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body.status).to.be.a('number').and.to.equal(500);
 				expect(res.body).to.have.property('error').and.to.be.an('string');
 				done();
 			});
