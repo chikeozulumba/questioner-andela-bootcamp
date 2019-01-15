@@ -12,6 +12,7 @@ const Comment = async () => {
           id SERIAL UNIQUE, 
           userid INTEGER NOT NULL, 
           meetup INTEGER NOT NULL, 
+          question INTEGER NOT NULL, 
           comment TEXT NOT NULL,
           createdon TIMESTAMPTZ DEFAULT NOW(),
           PRIMARY KEY(id)
