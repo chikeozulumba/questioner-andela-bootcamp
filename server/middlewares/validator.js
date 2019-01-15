@@ -90,12 +90,16 @@ export const QuestionValidation = (req, res, next) => {
  */
 export const RSVPValidation = (req, res, next) => {
 	const payload = req.body;
+	if (req.body.response !== undefined) req.body.response = req.body.response.toLowerCase();
 	const schema = {
 		response: ['required', { in: ['yes', 'no', 'maybe'] }],
 	};
 	const validator = new Validator(payload, schema);
 	const errors = validator.errors.all();
-	if (validator.fails()) return errorRxx(res, 400, errors);
+	if (validator.fails()) {
+		req.rsvpErrors = true;
+		req.rsvErrorMsg = errors;
+	}
 	return next();
 };
 
