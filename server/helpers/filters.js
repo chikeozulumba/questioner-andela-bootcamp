@@ -7,7 +7,7 @@ import moment from 'moment';
  * @returns {object}
  * @returns {null}
  */
-const sortArrayById = (collection, id) => {
+export const sortArrayById = (collection, id) => {
 	id = parseInt(id, 10);
 	for (let i = 0; i < collection.length; i += 1) {
 		const col = collection[i];
@@ -21,7 +21,7 @@ const sortArrayById = (collection, id) => {
  * @param {array} array
  * @returns {array}
  */
-const date = (array) => {
+export const date = (array) => {
 	array.sort((current, next) => {
 		const currentDate = moment(current.happeningOn, 'YYYY-DD-MM').format();
 		const nextDate = moment(next.happeningOn, 'YYYY-DD-MM').format();
@@ -35,10 +35,6 @@ const date = (array) => {
  * @param {array} array
  * @returns {array}
  */
-const last = array => array[array.length - 1];
-const jsUcfirst = string => string.charAt(0).toUpperCase() + string.slice(1);
-const Filters = {
-	sortArrayById, last, date, jsUcfirst,
-};
-
-export default Filters;
+export const last = array => array[array.length - 1];
+export const jsUcfirst = string => string.charAt(0).toUpperCase() + string.slice(1);
+export const friendlyDate = rawDate => moment(rawDate).format('MMMM Do YYYY, h:mm:ss a');
