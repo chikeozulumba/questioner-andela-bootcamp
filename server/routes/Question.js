@@ -1,5 +1,7 @@
 import express from 'express';
-import { QuestionValidation, ValidateInteger } from '../middlewares/validator';
+import {
+	QuestionValidation, ValidateInteger, ValidateComment, ValidateCommentUpdate,
+} from '../middlewares/validator';
 import Question from '../controllers/Question';
 
 const router = express.Router();
@@ -38,7 +40,7 @@ router.patch('/questions/:id/downvote', [ValidateInteger], Question.vote);
 * @returns {object}
 * @description Add comment to a question
 */
-router.post('/questions/:id/comment', [ValidateInteger], Question.addComment);
+router.post('/questions/:id/comment', [ValidateInteger, ValidateComment], Question.addComment);
 
 /**
 * @name EditComment
@@ -47,7 +49,7 @@ router.post('/questions/:id/comment', [ValidateInteger], Question.addComment);
 * @returns {object}
 * @description Edit comment on a question
 */
-router.patch('/questions/:id/comment', [ValidateInteger], Question.editComment);
+router.patch('/questions/:id/comment', [ValidateInteger, ValidateCommentUpdate], Question.editComment);
 
 /**
 * @name DeleteComment
