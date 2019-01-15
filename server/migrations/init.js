@@ -14,7 +14,7 @@ import dropAllTables from './drop';
 	await Question();
 	await RSVP();
 	await Comment();
-	await Foreign();
+	// await Foreign();
 	console.log('###############################################################');
 	console.log('                   DONE, MIGRATION COMPLETE!                   ');
 	console.log('###############################################################');
