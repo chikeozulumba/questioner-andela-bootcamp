@@ -8,7 +8,7 @@ import dropAllTables from './drop';
 
 // Instatiate DB
 (async () => {
-	// await dropAllTables();
+	await dropAllTables();
 	await User();
 	await Meetup();
 	await Question();
