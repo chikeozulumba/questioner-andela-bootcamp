@@ -49,12 +49,12 @@ class Question {
 		if (path === 'upvote') await QuestionQuery.upVote(user);
 		else await QuestionQuery.downVote(user);
 		const result = QuestionQuery.result;
-		if (result.upvotes.length > result.downvotes.length) result.votes = result.upvotes.length - result.downvotes.length;
+		if (result.upvotes !== null && result.upvotes.length > result.downvotes.length) result.votes = result.upvotes.length - result.downvotes.length;
 		else result.votes = 0;
 		delete result.upvotes;
 		delete result.downvotes;
 		result.createdon = moment(result.createdon).format('MMMM Do YYYY, h:mm:ss a');
-		return response2xx(res, 201, result, `${Filters.jsUcfirst(path)} successful!`);
+		return response2xx(res, 200, result, `${Filters.jsUcfirst(path)} successful!`);
 	}
 }
 

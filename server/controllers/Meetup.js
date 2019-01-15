@@ -43,7 +43,7 @@ class Meetup {
 		const getMeetup = await MeetupQuery.getMeetupById();
 		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
 		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
-		return response2xx(res, 200, MeetupQuery.result);
+		return response2xx(res, 200, MeetupQuery.result[0]);
 	}
 
 	/**
@@ -74,9 +74,9 @@ class Meetup {
 		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
 		if (req.rsvpErrors) return errorRxx(res, 400, req.rsvErrorMsg);
 		MeetupQuery.payload = req.body;
-		const createRSVP = await MeetupQuery.rsvpMeetup(req.params.id, 8);
-		if (!createRSVP && MeetupQuery.exists) return errorRxx(res, 403, 'You are already on RSVP for this event.');
-		return response2xx(res, 200, MeetupQuery.result);
+		const createRSVP = await MeetupQuery.rsvpMeetup(req.params.id, req.body.user.id);
+		if (!createRSVP && MeetupQuery.exists) return errorRxx(res, 409, 'You are already on RSVP for this event.');
+		return response2xx(res, 201, MeetupQuery.result);
 	}
 
 	/**
