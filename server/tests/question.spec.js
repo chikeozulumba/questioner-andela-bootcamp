@@ -8,17 +8,20 @@ chai.use(chaiHttp);
 
 describe('User can create a new question', () => {
 	it('should return status 200 with content of newly created question record', (done) => {
+		const payload = {
+			title: 'What are federated clusters?',
+			body: 'Multiple Kubernetes clusters can be managed as a single cluster with the help of federated clusters.',
+		};
 		chai
 			.request(app)
 			.post('/api/v1/questions')
-			.send({
-				title: 'What are federated clusters?',
-				body: 'Multiple Kubernetes clusters can be managed as a single cluster with the help of federated clusters.',
-			})
+			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number').and.to.equals(201);
 				expect(res.body).to.be.an('object');
+				expect(payload.title).to.be.equal(res.body.data.title);
+				expect(payload.body).to.be.equal(res.body.data.body);
 				done();
 			});
 	});

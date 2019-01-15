@@ -11,21 +11,24 @@ chai.use(chaiHttp);
 
 describe('User can create a new meetup', () => {
 	it('should return status 201 with payload of newly created meetup record', (done) => {
+		const payload = {
+			createdOn: 'Monday, 31st December 2018',
+			location: 'Lagos',
+			images: 'http://localhost:5100/api/v1/image.png',
+			topic: 'Kubernetesa',
+			happeningOn: 'Monday, 31st December 2018',
+			tags: 'api, endpoints',
+		};
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
-			.send({
-				createdOn: 'Monday, 31st December 2018',
-				location: 'Lagos',
-				images: 'http://localhost:5100/api/v1/image.png',
-				topic: 'Kubernetesa',
-				happeningOn: 'Monday, 31st December 2018',
-				tags: 'api, endpoints',
-			})
+			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number');
 				expect(res.body.data).to.be.an('object');
+				expect(payload.topic).to.be.equal(res.body.data.topic);
+				expect(payload.tags.split(',').length).to.be.equal(res.body.data.tags.length);
 				done();
 			});
 	});
@@ -120,18 +123,20 @@ describe('User can RSVP for a meetup', () => {
 			});
 	});
 
-	it('should return status 403 when user is already on rsvp record.', (done) => {
+	it('should return status 409 when user is already on rsvp record.', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
 			.send({
 				response: 'yes',
 				meetup: 1,
-				user: 1,
+				user: {
+					id: 1,
+				},
 			})
 			.end((err, res) => {
-				expect(res).to.have.status(403);
-				expect(res.body.status).to.be.a('number').and.to.equals(403);
+				expect(res).to.have.status(409);
+				expect(res.body.status).to.be.a('number').and.to.equals(409);
 				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
