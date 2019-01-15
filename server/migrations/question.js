@@ -16,7 +16,6 @@ const Question = async () => {
           body TEXT NOT NULL,
           upvotes INTEGER [],
           downvotes INTEGER [],
-          comments TEXT [],
           reports INTEGER [],
           ispermitted BOOLEAN DEFAULT true,                                                                               
           createdOn TIMESTAMPTZ DEFAULT NOW(), 
