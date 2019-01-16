@@ -30,6 +30,7 @@ export default class Comment {
 		try {
 			const { rows } = await db.query(updateComment(comment, this.payload, user));
 			this.result = rows[0];
+			console.log(rows[0]);
 			return true;
 		} catch (error) {
 			this.error = error.stack;
