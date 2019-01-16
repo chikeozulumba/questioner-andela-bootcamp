@@ -15,7 +15,7 @@ const Seeders = async () => {
 		const meetups = 'INSERT INTO meetups(userid, topic, location, tags, images, happeningOn) VALUES($1, $2, $3, $4, $5, $6)';
 		const questions = 'INSERT INTO questions(title, body, meetup, createdBy, upvotes, downvotes) VALUES($1, $2, $3, $4, $5, $6)';
 		const rsvps = 'INSERT INTO rsvps(meetup, user_id, response) VALUES($1, $2, $3)';
-		const comments = 'INSERT INTO comments(userid, meetup, question, comment) VALUES($1, $2, $3, $4)';
+		const comments = 'INSERT INTO comments(userid, meetupid, questionid, comment) VALUES($1, $2, $3, $4)';
 
 		// USERS
 		await client.query(users, ['Chike', 'Ozulumba', 'cheikkk@gmail.com', '+2348131976306', hashPassword('AdakuNwanne')]);

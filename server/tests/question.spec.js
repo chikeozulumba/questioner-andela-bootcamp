@@ -34,7 +34,7 @@ before((done) => {
 		});
 });
 
-describe('User can create a new question', () => {
+describe('POST /api/v1/questions', () => {
 	it('should return status 200 with content of newly created question record', (done) => {
 		const payload = {
 			title: 'What are federated clusters?',
@@ -122,7 +122,7 @@ describe('User can create a new question', () => {
 	});
 });
 
-describe('User can upvote or downvote a specific question', () => {
+describe('PATCH /api/v1/upvote', () => {
 	it('should return status 200 when User upvotes a question', (done) => {
 		chai
 			.request(app)
@@ -136,7 +136,9 @@ describe('User can upvote or downvote a specific question', () => {
 				done();
 			});
 	});
+});
 
+describe('PATCH /api/v1/downvote', () => {
 	it('should return status 200 when User downvotes a question', (done) => {
 		chai
 			.request(app)
@@ -170,7 +172,6 @@ describe('User can upvote or downvote a specific question', () => {
 			.patch('/api/v1/questions/3/downvote')
 			.set('Authorization', userToken)
 			.end((err, res) => {
-				console.log(res.status);
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('data').and.to.be.an('object');
 				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
@@ -180,7 +181,7 @@ describe('User can upvote or downvote a specific question', () => {
 	});
 });
 
-describe('User can add comments to a particular question', () => {
+describe('POST /api/v1/questions/:id/comment', () => {
 	it('should return status 201 when User adds a comment to a question', (done) => {
 		const payload = {
 			comment: 'You are God',
@@ -199,7 +200,9 @@ describe('User can add comments to a particular question', () => {
 				done();
 			});
 	});
+});
 
+describe('PATCH /api/v1/questions/comments/:id', () => {
 	it('should return status 202 when User edits a comment to a question', (done) => {
 		const payload = {
 			comment: 'You are God alone!',
@@ -218,7 +221,9 @@ describe('User can add comments to a particular question', () => {
 				done();
 			});
 	});
+});
 
+describe('DELETE /api/v1/questions/comments/:id', () => {
 	it('should return status 200 when an Admin User attempts to delete a comment', (done) => {
 		chai
 			.request(app)

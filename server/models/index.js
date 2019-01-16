@@ -12,7 +12,7 @@ export const checkIfUpvoted = 'SELECT * FROM questions WHERE $1 = ANY (upvotes) 
 export const checkIfDownvoted = 'SELECT * FROM questions WHERE $1 = ANY (downvotes) AND id = $2';
 export const addVote = (field, value, id) => `UPDATE questions SET ${field} = array_append(${field}, ${value}) WHERE id = ${id} returning *`;
 export const removeVote = (field, value, id) => `UPDATE questions SET ${field} = array_remove(${field}, ${value}) WHERE id = ${id} returning *`;
-export const createNewComment = 'INSERT INTO comments(userid, meetup, question, comment) VALUES($1, $2, $3, $4) returning *';
+export const createNewComment = 'INSERT INTO comments(userid, meetupid, questionid, comment) VALUES($1, $2, $3, $4) returning *';
 export const getCommentByID = 'SELECT * FROM comments WHERE id = $1';
 export const getCommentByIDwithUser = 'SELECT * FROM comments WHERE id = $1 AND userid = $2';
 // export const updateComment = 'UPDATE comments SET comment = $1 WHERE id = $2 AND userid = $3 returning *;';
