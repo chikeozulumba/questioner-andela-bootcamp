@@ -17,8 +17,8 @@ const Foreign = async () => {
 		const meetups = `ALTER TABLE meetups
 			ADD FOREIGN KEY (userid) REFERENCES public.users (id) ON DELETE CASCADE;`;
 		await client.query(meetups);
-		await client.query(comments);
 		await client.query(questions);
+		await client.query(comments);
 		await client.query(rsvps);
 	} catch (error) {
 		throw error;

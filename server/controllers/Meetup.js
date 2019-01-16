@@ -23,6 +23,7 @@ class Meetup {
 			arrays: ['tags', 'images'],
 		};
 		payload = prepareContent(payload, params);
+		payload.userid = 1;
 		const MeetupQuery = new Model(payload);
 		const create = await MeetupQuery.createMeetup();
 		if (!create) return errorRxx(res, 500, 'Error in saving meetup, kindly try again.');
