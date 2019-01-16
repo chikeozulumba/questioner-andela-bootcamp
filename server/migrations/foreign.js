@@ -9,7 +9,7 @@ const Foreign = async () => {
 	const client = await db.connect();
 	try {
 		const comments = `ALTER TABLE comments
-			ADD FOREIGN KEY (question) REFERENCES public.questions (id), ADD FOREIGN KEY (meetup) REFERENCES public.meetups (id), ADD FOREIGN KEY (userid) REFERENCES public.users (id) ON DELETE CASCADE;`;
+			ADD FOREIGN KEY (questionid) REFERENCES public.questions (id), ADD FOREIGN KEY (meetupid) REFERENCES public.meetups (id), ADD FOREIGN KEY (userid) REFERENCES public.users (id) ON DELETE CASCADE;`;
 		const questions = `ALTER TABLE questions
 			ADD FOREIGN KEY (createdby) REFERENCES public.users (id), ADD FOREIGN KEY (meetup) REFERENCES public.meetups (id) ON DELETE CASCADE;`;
 		const rsvps = `ALTER TABLE rsvps
