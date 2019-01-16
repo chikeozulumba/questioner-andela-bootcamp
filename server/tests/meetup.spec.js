@@ -124,16 +124,14 @@ describe('User can RSVP for a meetup', () => {
 	});
 
 	it('should return status 409 when user is already on rsvp record.', (done) => {
+		const payload = {
+			response: 'yes',
+			user: 2,
+		};
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
-			.send({
-				response: 'yes',
-				meetup: 1,
-				user: {
-					id: 1,
-				},
-			})
+			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(409);
 				expect(res.body.status).to.be.a('number').and.to.equals(409);

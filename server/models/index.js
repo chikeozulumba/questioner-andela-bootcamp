@@ -17,3 +17,4 @@ export const getCommentByID = 'SELECT * FROM comments WHERE id = $1';
 // export const updateComment = 'UPDATE comments SET comment = $1 WHERE id = $2 AND userid = $3 returning *;';
 
 export const updateComment = (field, commentId, userId) => `UPDATE comments SET comment = '${field}' WHERE id = ${commentId} AND userid = ${userId} returning *;`;
+export const deleteComment = 'DELETE FROM comments WHERE id = $1;';

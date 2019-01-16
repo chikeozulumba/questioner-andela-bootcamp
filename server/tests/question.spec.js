@@ -142,3 +142,53 @@ describe('User can upvote or downvote a specific question', () => {
 			});
 	});
 });
+
+describe('User can add comments to a particular question', () => {
+	it('should return status 201 when User adds a comment to a question', (done) => {
+		const payload = {
+			comment: 'You are God',
+			meetup: 1,
+		};
+		chai
+			.request(app)
+			.post('/api/v1/questions/1/comment')
+			.send(payload)
+			.end((err, res) => {
+				expect(res).to.have.status(201);
+				expect(res.body.status).to.be.a('number').and.to.equal(201);
+				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res.body.data.comment).to.be.a('string').and.to.be.equal(payload.comment);
+				done();
+			});
+	});
+
+	it('should return status 202 when User edits a comment to a question', (done) => {
+		const payload = {
+			comment: 'You are God alone!',
+			meetup: 1,
+		};
+		chai
+			.request(app)
+			.patch('/api/v1/questions/1/comment')
+			.send(payload)
+			.end((err, res) => {
+				expect(res).to.have.status(202);
+				expect(res.body.status).to.be.a('number').and.to.equal(202);
+				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res.body.data.comment).to.be.a('string').and.to.be.equal(payload.comment);
+				done();
+			});
+	});
+
+	it('should return status 200 when an Admin User deletes a comment to a question', (done) => {
+		chai
+			.request(app)
+			.delete('/api/v1/questions/1/comment')
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('number').and.to.equal(200);
+				expect(res.body).to.have.property('data').and.to.be.an('string');
+				done();
+			});
+	});
+});

@@ -72,7 +72,7 @@ export default class Meetup {
 	async userHasActed(meetupId, userId, table, field, compare) {
 		const queryString = `SELECT * FROM ${table} WHERE ${field} = $1 AND ${compare} = $2`;
 		try {
-			const { rows } = await db.query(queryString, [userId, meetupId]);
+			const { rows } = await db.query(queryString, [parseInt(userId, 10), parseInt(meetupId, 10)]);
 			if (rows.length > 0) return 1;
 			return true;
 		} catch (error) {

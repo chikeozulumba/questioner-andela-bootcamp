@@ -14,7 +14,7 @@ class Question {
  * @param {object} req
  * @param {object} res
  * @returns {object}
- * @description Create a question record
+ * @description Create a Comment record
  */
 	static async create(req, res) {
 		const payload = req.body;
@@ -80,7 +80,7 @@ class Question {
 		const QuestionQuery = new Model(id);
 		const question = await QuestionQuery.getQuestionById();
 		if (!question) return errorRxx(res, 500, 'Internal server error, try again');
-		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question record not available, check request parameters');
+		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
 		const payload = {
 			id, user, meetup, comment,
 		};
@@ -104,11 +104,11 @@ class Question {
 		const CommentQuery = new CommentModel(id);
 		const comment = await CommentQuery.getCommentById();
 		if (!comment) return errorRxx(res, 500, 'Internal server error, try again');
-		if (CommentQuery.result.length === 0) return errorRxx(res, 404, 'Question record not available, check request parameters');
+		if (CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
 		const updateComment = await CommentQuery.updateComment(req.body.comment, user);
 		if (!updateComment) return errorRxx(res, 500, 'Your details could not be saved, try again.');
 		CommentQuery.result.createdon = friendlyDate(CommentQuery.result.createdon);
-		return response2xx(res, 201, CommentQuery.result);
+		return response2xx(res, 202, CommentQuery.result);
 	}
 
 	/**
@@ -120,15 +120,13 @@ class Question {
  */
 	static async deleteComment(req, res) {
 		const id = req.params.id;
-		const user = req.user !== undefined ? req.user.id : 1;
-		const QuestionQuery = new Model(id);
-		const question = await QuestionQuery.getQuestionById();
-		if (!question) return errorRxx(res, 500, 'Internal server error, try again');
-		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question record available, check request parameters');
 		const CommentQuery = new CommentModel(id);
-		const saveComment = await CommentQuery.createComment();
-		if (!saveComment) return errorRxx(res, 500, 'Your details could not be saved, try again.');
-		return response2xx(res, 201, saveComment.result);
+		const comment = await CommentQuery.getCommentById();
+		if (!comment) return errorRxx(res, 500, 'Internal server error, try again');
+		if (CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
+		const deleteComment = await CommentQuery.deleteComment();
+		if (!deleteComment) return errorRxx(res, 500, 'Comment could not be deleted.');
+		return response2xx(res, 200, 'Comment deleted successfully.');
 	}
 }
 
