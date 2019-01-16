@@ -11,7 +11,8 @@ const Comment = async () => {
 		const query = `CREATE TABLE IF NOT EXISTS comments (
           id SERIAL UNIQUE, 
           userid INTEGER NOT NULL, 
-          meetup INTEGER NOT NULL, 
+          meetupid INTEGER NOT NULL, 
+          questionid INTEGER NOT NULL, 
           comment TEXT NOT NULL,
           createdon TIMESTAMPTZ DEFAULT NOW(),
           PRIMARY KEY(id)

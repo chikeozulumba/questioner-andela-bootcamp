@@ -13,10 +13,10 @@ export default class Meetup {
 
 	async createMeetup() {
 		const {
-			topic, location, tags, images, happeningOn,
+			userid, topic, location, tags, images, happeningOn,
 		} = this.payload;
 
-		const values = [topic, location, tags, images, happeningOn];
+		const values = [userid, topic, location, tags, images, happeningOn];
 		try {
 			const { rows } = await db.query(createNewMeetup, values);
 			this.result = rows[0];
@@ -72,7 +72,7 @@ export default class Meetup {
 	async userHasActed(meetupId, userId, table, field, compare) {
 		const queryString = `SELECT * FROM ${table} WHERE ${field} = $1 AND ${compare} = $2`;
 		try {
-			const { rows } = await db.query(queryString, [userId, meetupId]);
+			const { rows } = await db.query(queryString, [parseInt(userId, 10), parseInt(meetupId, 10)]);
 			if (rows.length > 0) return 1;
 			return true;
 		} catch (error) {

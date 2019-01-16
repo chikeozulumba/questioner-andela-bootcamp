@@ -124,3 +124,40 @@ export const ValidateInteger = (req, res, next) => {
 	if (validator.fails()) return errorRxx(res, 400, errors);
 	return next();
 };
+
+/**
+ * @name ValidateComment
+ * @param {object} req
+ * @param {object} res
+ * @returns {function} next
+ * @returns {function|error} next
+ * @description Validates comments in request fields
+ */
+export const ValidateComment = (req, res, next) => {
+	const schema = {
+		comment: ['required', stringValidation, 'string', 'min:0'],
+		meetup: ['required', 'integer'],
+	};
+	const validator = new Validator(req.body, schema);
+	const errors = validator.errors.all();
+	if (validator.fails()) return errorRxx(res, 400, errors);
+	return next();
+};
+
+/**
+ * @name ValidateCommentUpdate
+ * @param {object} req
+ * @param {object} res
+ * @returns {function} next
+ * @returns {function|error} next
+ * @description Validates comments in request fields
+ */
+export const ValidateCommentUpdate = (req, res, next) => {
+	const schema = {
+		comment: ['required', stringValidation, 'string', 'min:0'],
+	};
+	const validator = new Validator(req.body, schema);
+	const errors = validator.errors.all();
+	if (validator.fails()) return errorRxx(res, 400, errors);
+	return next();
+};

@@ -1,7 +1,6 @@
 import { prepareContent } from '../helpers/validate';
 import { errorRxx, response2xx } from '../helpers/handlers';
-import Query from '../helpers/query';
-import Filters from '../helpers/filters';
+import { date } from '../helpers/filters';
 import Model from '../models/Meetup';
 
 const meetups = 'meetups';
@@ -24,6 +23,7 @@ class Meetup {
 			arrays: ['tags', 'images'],
 		};
 		payload = prepareContent(payload, params);
+		payload.userid = 1;
 		const MeetupQuery = new Model(payload);
 		const create = await MeetupQuery.createMeetup();
 		if (!create) return errorRxx(res, 500, 'Error in saving meetup, kindly try again.');
@@ -68,13 +68,14 @@ class Meetup {
  * @description RSVP for a meetup
  */
 	static async rsvp(req, res) {
+		const user = req.body.user || 1;
 		const MeetupQuery = new Model(req.params.id);
 		const getMeetup = await MeetupQuery.getMeetupById();
 		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
 		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
 		if (req.rsvpErrors) return errorRxx(res, 400, req.rsvErrorMsg);
 		MeetupQuery.payload = req.body;
-		const createRSVP = await MeetupQuery.rsvpMeetup(req.params.id, req.body.user.id);
+		const createRSVP = await MeetupQuery.rsvpMeetup(req.params.id, user);
 		if (!createRSVP && MeetupQuery.exists) return errorRxx(res, 409, 'You are already on RSVP for this event.');
 		return response2xx(res, 201, MeetupQuery.result);
 	}
@@ -90,7 +91,7 @@ class Meetup {
 		const MeetupQuery = new Model();
 		const results = await MeetupQuery.getAllMeetups();
 		if (!results) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
-		const formatByDateAsc = Filters.date(MeetupQuery.result);
+		const formatByDateAsc = date(MeetupQuery.result);
 		return response2xx(res, 200, formatByDateAsc);
 	}
 }

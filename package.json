@@ -14,7 +14,7 @@
     "migrations": "babel-node ./server/migrations/drop.js && babel-node ./server/migrations/init.js --",
     "prod": "node build/app.js",
     "start": "node_modules/.bin/nodemon server/app.js --exec babel-node -- ",
-    "test": "nyc mocha server/tests/**/*spec.js --exit"
+    "test": "npm run migrations && nyc mocha server/tests/**/*spec.js --exit"
   },
   "repository": {
     "type": "git",
