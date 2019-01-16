@@ -37,6 +37,16 @@ const Seeders = async () => {
 		// COMMENTS
 		await client.query(comments, [1, 2, 1, 'You should normally use only the derived']);
 		await client.query(comments, [2, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [2, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [2, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [2, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [3, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [3, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [3, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [3, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [3, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [3, 1, 2, 'You should normally use only the derived']);
+		await client.query(comments, [3, 1, 2, 'You should normally use only the derived']);
 	} catch (error) {
 		throw error;
 	} finally {

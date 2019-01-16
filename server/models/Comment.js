@@ -1,6 +1,6 @@
 import db from '../config/database';
 import {
-	createNewComment, getCommentByID, updateComment, deleteComment,
+	createNewComment, getCommentByID, updateComment, deleteComment, getCommentByIDwithUser,
 } from './index';
 
 export default class Comment {
@@ -37,11 +37,26 @@ export default class Comment {
 		}
 	}
 
-	async getCommentById() {
+	async getCommentById(user = null) {
 		try {
-			const { rows } = await db.query(getCommentByID, [this.payload]);
+			const query = getCommentByID;
+			const values = [this.payload];
+			const { rows } = await db.query(query, values);
 			this.result = rows;
 			return true;
+		} catch (error) {
+			this.error = error.stack;
+			return false;
+		}
+	}
+
+	async getCommentByIDwithUser(user = null) {
+		try {
+			const query = getCommentByIDwithUser;
+			const values = [this.payload, user];
+			const { rows } = await db.query(query, values);
+			this.result = rows;
+			return this.result;
 		} catch (error) {
 			this.error = error.stack;
 			return false;

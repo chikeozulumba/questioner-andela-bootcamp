@@ -76,17 +76,17 @@ class Question {
 		const id = req.params.id;
 		const comment = req.body.comment;
 		const meetup = req.body.meetup;
-		const user = req.user !== undefined ? req.user.id : 1;
+		const user = req.user.id;
 		const QuestionQuery = new Model(id);
 		const question = await QuestionQuery.getQuestionById();
 		if (!question) return errorRxx(res, 500, 'Internal server error, try again');
-		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
+		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question record not available, check request parameters');
 		const payload = {
 			id, user, meetup, comment,
 		};
 		const CommentQuery = new CommentModel(payload);
 		const saveComment = await CommentQuery.createComment();
-		if (!saveComment) return errorRxx(res, 500, 'Your details could not be saved, try again.');
+		if (!saveComment) return errorRxx(res, 500, 'Your comment could not be saved, try again.');
 		CommentQuery.result.createdon = friendlyDate(CommentQuery.result.createdon);
 		return response2xx(res, 201, CommentQuery.result);
 	}
@@ -102,9 +102,8 @@ class Question {
 		const id = parseInt(req.params.id, 10);
 		const user = req.user.id;
 		const CommentQuery = new CommentModel(id);
-		const comment = await CommentQuery.getCommentById();
-		if (!comment) return errorRxx(res, 500, 'Internal server error, try again');
-		if (CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
+		const comment = await CommentQuery.getCommentById(user);
+		if (comment && CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
 		const updateComment = await CommentQuery.updateComment(req.body.comment, user);
 		if (!updateComment) return errorRxx(res, 500, 'Your details could not be saved, try again.');
 		CommentQuery.result.createdon = friendlyDate(CommentQuery.result.createdon);
