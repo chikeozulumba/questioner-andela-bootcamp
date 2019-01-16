@@ -252,7 +252,7 @@ describe('DELETE /api/v1/meetups/:id', () => {
 	it('should return status 200 for an Admin to delete meetup record', (done) => {
 		chai
 			.request(app)
-			.delete('/api/v1/meetups/2')
+			.delete('/api/v1/meetups/5')
 			.set('Authorization', adminToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
