@@ -50,4 +50,13 @@ router.get('/meetups/', [Auth.verifyCSRF], Meetup.getAllRecords);
 */
 router.post('/meetups/:id/rsvp', [ValidateInteger, RSVPValidation, Auth.verifyCSRF], Meetup.rsvp);
 
+/**
+* @name Delete-Meetup
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description RSVP for a specific meetup record
+*/
+router.delete('/meetups/:id', [ValidateInteger, Auth.verifyCSRF, Auth.isAdmin], Meetup.delete);
+
 export default router;
