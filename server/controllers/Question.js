@@ -19,7 +19,7 @@ class Question {
 	static async create(req, res) {
 		const payload = req.body;
 		payload.meetup = 1;
-		payload.createdBy = req.user !== undefined ? req.user.id : 1;
+		payload.createdBy = req.user.id;
 		const QuestionQuery = new Model(payload);
 		const saveQuestion = await QuestionQuery.createQuestion();
 		if (!saveQuestion) return errorRxx(res, 500, 'Your details could not be saved, try again.');
@@ -48,7 +48,7 @@ class Question {
  * @description Vote on a question
  */
 	static async vote(req, res) {
-		const user = req.user !== undefined ? req.user.id : 1;
+		const user = req.user.id;
 		const path = last(req.url.split('/'));
 		const QuestionQuery = new Model(req.params.id);
 		const question = await QuestionQuery.getQuestionById();

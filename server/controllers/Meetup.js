@@ -68,7 +68,7 @@ class Meetup {
  * @description RSVP for a meetup
  */
 	static async rsvp(req, res) {
-		const user = req.body.user || 1;
+		const user = req.user.id;
 		const MeetupQuery = new Model(req.params.id);
 		const getMeetup = await MeetupQuery.getMeetupById();
 		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
@@ -76,6 +76,7 @@ class Meetup {
 		if (req.rsvpErrors) return errorRxx(res, 400, req.rsvErrorMsg);
 		MeetupQuery.payload = req.body;
 		const createRSVP = await MeetupQuery.rsvpMeetup(req.params.id, user);
+		if (MeetupQuery.error !== null) return errorRxx(res, 500, 'An error occured while processing your RSVP.');
 		if (!createRSVP && MeetupQuery.exists) return errorRxx(res, 409, 'You are already on RSVP for this event.');
 		return response2xx(res, 201, MeetupQuery.result);
 	}
