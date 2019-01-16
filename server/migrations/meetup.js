@@ -10,6 +10,7 @@ const Meetup = async () => {
 	try {
 		const query = `CREATE TABLE IF NOT EXISTS meetups (
           id SERIAL UNIQUE, 
+          userid INTEGER NOT NULL, 
           topic VARCHAR(255) NOT NULL, 
           location VARCHAR(255) NOT NULL, 
           images TEXT [], 

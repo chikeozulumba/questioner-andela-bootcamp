@@ -11,7 +11,7 @@ const Seeders = async () => {
 	const client = await db.connect();
 	try {
 		const users = 'INSERT INTO users(firstname, lastname, email, phone, password) VALUES($1, $2, $3, $4, $5)';
-		const meetups = 'INSERT INTO meetups(topic, location, tags, images, happeningOn) VALUES($1, $2, $3, $4, $5)';
+		const meetups = 'INSERT INTO meetups(userid, topic, location, tags, images, happeningOn) VALUES($1, $2, $3, $4, $5, $6)';
 		const questions = 'INSERT INTO questions(title, body, meetup, createdBy, upvotes, downvotes) VALUES($1, $2, $3, $4, $5, $6)';
 		const rsvps = 'INSERT INTO rsvps(meetup, user_id, response) VALUES($1, $2, $3)';
 		const comments = 'INSERT INTO comments(userid, meetup, question, comment) VALUES($1, $2, $3, $4)';
@@ -21,8 +21,8 @@ const Seeders = async () => {
 		await client.query(users, ['Amaka', 'Ozulumba', 'amaka@gmail.com', '+2348033031605', hashPassword('AdakuNwanne')]);
 
 		// MEETUPS
-		await client.query(meetups, ['Kubernetes Conference Tech Zone', 'Lagos', ['api, endpoints'], ['http://localhost:5100/api/v1/image.png'], 'Monday, 31st March 2018']);
-		await client.query(meetups, ['Javascript Learning', 'Abuja', ['ES6, Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
+		await client.query(meetups, [1, 'Kubernetes Conference Tech Zone', 'Lagos', ['api, endpoints'], ['http://localhost:5100/api/v1/image.png'], 'Monday, 31st March 2018']);
+		await client.query(meetups, [2, 'Javascript Learning', 'Abuja', ['ES6, Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
 
 		// QUESTIONS
 		await client.query(questions, ['What is Javascript?', 'You should normally use only the derived, result-specific methods for executing queries, all of which are named according to how many rows of data the query is expected to return', 1, 1, [1], [2]]);
