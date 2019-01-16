@@ -21,7 +21,7 @@ router.post('/meetups', [MeetupValidation, Auth.verifyCSRF, Auth.isAdmin], Meetu
 * @returns {object}
 * @description Get all upcoming meetup record
 */
-router.get('/meetups/upcoming', Meetup.upcoming);
+router.get('/meetups/upcoming', [Auth.verifyCSRF], Meetup.upcoming);
 
 /**
 * @name GetSpecificMeetup
@@ -30,7 +30,7 @@ router.get('/meetups/upcoming', Meetup.upcoming);
 * @returns {object}
 * @description Get specific meetup record
 */
-router.get('/meetups/:id', [ValidateInteger], Meetup.getRecord);
+router.get('/meetups/:id', [ValidateInteger, Auth.verifyCSRF], Meetup.getRecord);
 
 /**
 * @name GetAllMeetup
@@ -39,7 +39,7 @@ router.get('/meetups/:id', [ValidateInteger], Meetup.getRecord);
 * @returns {object}
 * @description Get all meetup record
 */
-router.get('/meetups/', Meetup.getAllRecords);
+router.get('/meetups/', [Auth.verifyCSRF], Meetup.getAllRecords);
 
 /**
 * @name RSVP
@@ -48,6 +48,6 @@ router.get('/meetups/', Meetup.getAllRecords);
 * @returns {object}
 * @description RSVP for a specific meetup record
 */
-router.post('/meetups/:id/rsvp', [ValidateInteger, RSVPValidation], Meetup.rsvp);
+router.post('/meetups/:id/rsvp', [ValidateInteger, RSVPValidation, Auth.verifyCSRF], Meetup.rsvp);
 
 export default router;

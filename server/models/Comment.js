@@ -15,8 +15,7 @@ export default class Comment {
 		const {
 			id, user, comment, meetup,
 		} = this.payload;
-
-		const values = [id, user, meetup, comment];
+		const values = [user, meetup, parseInt(id, 10), comment];
 		try {
 			const { rows } = await db.query(createNewComment, values);
 			this.result = rows[0];

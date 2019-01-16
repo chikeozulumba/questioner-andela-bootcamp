@@ -100,7 +100,7 @@ class Question {
  */
 	static async editComment(req, res) {
 		const id = parseInt(req.params.id, 10);
-		const user = req.user !== undefined ? req.user.id : 1;
+		const user = req.user.id;
 		const CommentQuery = new CommentModel(id);
 		const comment = await CommentQuery.getCommentById();
 		if (!comment) return errorRxx(res, 500, 'Internal server error, try again');
@@ -119,7 +119,7 @@ class Question {
  * @description Delete a comment
  */
 	static async deleteComment(req, res) {
-		const id = req.params.id;
+		const id = parseInt(req.params.id, 10);
 		const CommentQuery = new CommentModel(id);
 		const comment = await CommentQuery.getCommentById();
 		if (!comment) return errorRxx(res, 500, 'Internal server error, try again');
