@@ -20,7 +20,7 @@ const Seeders = async () => {
 		// USERS
 		await client.query(users, ['Chike', 'Ozulumba', 'cheikkk@gmail.com', '+2348131976306', hashPassword('AdakuNwanne')]);
 		await client.query(users, ['Amaka', 'Ozulumba', 'amaka@gmail.com', '+2348033031605', hashPassword('AdakuNwanne')]);
-		await client.query(admin, ['Dike', 'Chinwe Ozulumba', 'chinwe@gmail.com', '+2348064649536', hashPassword('Tochi'), true]);
+		await client.query(admin, ['Dike', 'Chinwe Ozulumba', 'chinwe@gmail.com', '+2348064649536', hashPassword('TochiOzulumba'), true]);
 
 		// MEETUPS
 		await client.query(meetups, [1, 'Kubernetes Conference Tech Zone', 'Lagos', ['api, endpoints'], ['http://localhost:5100/api/v1/image.png'], 'Monday, 31st March 2018']);

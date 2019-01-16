@@ -24,4 +24,17 @@ const verifyCSRF = async (req, res, next) => {
 	}
 };
 
-export default { verifyCSRF };
+/**
+ * Check Admin
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @returns {object|void} response object
+ */
+const isAdmin = async (req, res, next) => {
+	if (!req.user && typeof req.user !== 'object') return errorRxx(res, 400, 'Invalid Authentication');
+	if (req.user.isadmin !== true) return errorRxx(res, 403, 'Your privileges are insufficient to proceed!');
+	return next();
+};
+
+export default { verifyCSRF, isAdmin };

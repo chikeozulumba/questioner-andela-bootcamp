@@ -1,5 +1,6 @@
 import express from 'express';
 import { MeetupValidation, ValidateInteger, RSVPValidation } from '../middlewares/validator';
+import Auth from '../middlewares/auth';
 import Meetup from '../controllers/Meetup';
 
 const router = express.Router();
@@ -11,7 +12,7 @@ const router = express.Router();
  * @returns {object}
  * @description Create a meetup
  */
-router.post('/meetups', [MeetupValidation], Meetup.create);
+router.post('/meetups', [MeetupValidation, Auth.verifyCSRF, Auth.isAdmin], Meetup.create);
 
 /**
 * @name GetUpcomingMeetups
