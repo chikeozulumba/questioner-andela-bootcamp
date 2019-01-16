@@ -24,12 +24,14 @@ before((done) => {
 		.end((err, res) => {
 			if (err) throw err;
 			userToken = res.body.data.token;
+			console.log('user', res.body.data.id);
 		});
 	request.post('/api/v1/auth/signin')
 		.send(admin)
 		.end((err, res) => {
 			if (err) throw err;
 			adminToken = res.body.data.token;
+			console.log('admin', res.body.data.id);
 			done();
 		});
 });
@@ -169,7 +171,7 @@ describe('PATCH /api/v1/downvote', () => {
 	it('should not be able to vote below 0 vote count', (done) => {
 		chai
 			.request(app)
-			.patch('/api/v1/questions/3/downvote')
+			.patch('/api/v1/questions/8/downvote')
 			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
@@ -210,7 +212,7 @@ describe('PATCH /api/v1/questions/comments/:id', () => {
 		};
 		chai
 			.request(app)
-			.patch('/api/v1/questions/comments/5')
+			.patch('/api/v1/questions/comments/35')
 			.set('Authorization', userToken)
 			.send(payload)
 			.end((err, res) => {

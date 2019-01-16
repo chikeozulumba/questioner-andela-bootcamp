@@ -30,6 +30,7 @@ class User {
 		const UserQuery = new UserModel(req.body);
 		if (await UserQuery.getUserByEmail() && await UserQuery.rowCount === 0) return errorRxx(res, 404, 'User record not found');
 		const user = await UserQuery.result[0];
+		// console.log(user)
 		if (!comparePassword(user.password, req.body.password)) return errorRxx(res, 403, 'Passwords don\'t match');
 		user.token = generateToken(user.id);
 		return response2xx(res, 200, user);

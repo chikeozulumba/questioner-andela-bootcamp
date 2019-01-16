@@ -95,6 +95,23 @@ class Meetup {
 		const formatByDateAsc = date(MeetupQuery.result);
 		return response2xx(res, 200, formatByDateAsc);
 	}
+
+	/**
+ * @name Delete
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Delete metup records
+ */
+	static async delete(req, res) {
+		const MeetupQuery = new Model(req.params.id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		if (!getMeetup) return errorRxx(res, 500, 'Error in processing request.');
+		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		const deleteMeetupRecord = await MeetupQuery.deleteMeetup();
+		if (!deleteMeetupRecord) return errorRxx(res, 500, 'Error in processing request, try again.');
+		return response2xx(res, 200, 'Meetup record successfully removed.');
+	}
 }
 
 export default Meetup;

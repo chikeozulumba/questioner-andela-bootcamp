@@ -8,17 +8,39 @@ const request = require('supertest')(app);
 const { expect } = chai;
 chai.use(chaiHttp);
 
-let token = null; // AUTH TOKEN
+let userToken = null; // AUTH TOKEN
+let userTwoToken = null; // AUTH TOKEN
+let adminToken = null; // AUTH TOKEN
 before((done) => {
-	const payload = {
+	const admin = {
 		email: 'chinwe@gmail.com',
 		password: 'TochiOzulumba',
 	};
+	const user = {
+		email: 'amaka@gmail.com',
+		password: 'AdakuNwanne',
+	};
+	const userTwo = {
+		email: 'adaku@gmail.com',
+		password: 'AdakuNwanne',
+	};
 	request.post('/api/v1/auth/signin')
-		.send(payload)
+		.send(user)
 		.end((err, res) => {
 			if (err) throw err;
-			token = res.body.data.token;
+			userToken = res.body.data.token;
+		});
+	request.post('/api/v1/auth/signin')
+		.send(userTwo)
+		.end((err, res) => {
+			if (err) throw err;
+			userTwoToken = res.body.data.token;
+		});
+	request.post('/api/v1/auth/signin')
+		.send(admin)
+		.end((err, res) => {
+			if (err) throw err;
+			adminToken = res.body.data.token;
 			done();
 		});
 });
@@ -36,7 +58,7 @@ describe('POST /api/v1/meetups', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
-			.set('Authorization', token)
+			.set('Authorization', adminToken)
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(201);
@@ -52,7 +74,7 @@ describe('POST /api/v1/meetups', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.send({
 				createdOn: 'Monday, 31st December 2018',
 				location: 'Lagos',
@@ -75,7 +97,7 @@ describe('GET /api/v1/meetups/:id', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/1')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
 				expect(res.body).to.have.property('data').and.to.be.an('object');
@@ -87,7 +109,7 @@ describe('GET /api/v1/meetups/:id', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/9999999')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(404);
 				expect(res.body.status).to.be.a('number').and.to.equals(404);
@@ -100,7 +122,7 @@ describe('GET /api/v1/meetups/:id', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/q1jkekfbebjhrejb-1nsdjhjreh')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('number').and.to.equals(400);
@@ -115,7 +137,7 @@ describe('GET /api/v1/meetups', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
@@ -130,16 +152,32 @@ describe('POST /api/v1/meetups/:id/rsvp', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
-			.set('Authorization', token)
+			.set('Authorization', userTwoToken)
 			.send({
 				response: 'yes',
 				meetup: 1,
-				user: Math.random(100, 9999999),
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number').and.to.equals(201);
 				expect(res.body).to.have.property('data').and.to.be.an('array');
+				done();
+			});
+	});
+
+	it('should return status 409 when user is already existing on rsvp record.', (done) => {
+		chai
+			.request(app)
+			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', userToken)
+			.send({
+				response: 'yes',
+				meetup: 1,
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(409);
+				expect(res.body.status).to.be.a('number').and.to.equals(409);
+				expect(res.body).to.have.property('error').and.to.be.an('string');
 				done();
 			});
 	});
@@ -152,7 +190,7 @@ describe('POST /api/v1/meetups/:id/rsvp', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(409);
@@ -166,7 +204,7 @@ describe('POST /api/v1/meetups/:id/rsvp', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.send({
 				meetup: 1,
 			})
@@ -182,7 +220,7 @@ describe('POST /api/v1/meetups/:id/rsvp', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/200/rsvp')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.send({
 				meetup: 1,
 			})
@@ -200,11 +238,39 @@ describe('GET /api/v1/meetups/upcoming', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/upcoming')
-			.set('Authorization', token)
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
 				expect(res.body).to.have.property('data').and.to.be.an('array');
+				done();
+			});
+	});
+});
+
+describe('DELETE /api/v1/meetups/:id', () => {
+	it('should return status 200 for an Admin to delete meetup record', (done) => {
+		chai
+			.request(app)
+			.delete('/api/v1/meetups/5')
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('number').and.to.equals(200);
+				expect(res.body).to.have.property('data').and.to.be.an('string').and.to.be.equals('Meetup record successfully removed.');
+				done();
+			});
+	});
+
+	it('should return status 403 for a User that attempts to delete meetup record', (done) => {
+		chai
+			.request(app)
+			.delete('/api/v1/meetups/1')
+			.set('Authorization', userToken)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body.status).to.be.a('number').and.to.equals(403);
+				expect(res.body).to.have.property('error').and.to.be.an('string');
 				done();
 			});
 	});

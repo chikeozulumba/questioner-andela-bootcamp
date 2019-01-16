@@ -1,6 +1,6 @@
 import db from '../config/database';
 import {
-	createNewMeetup, getMeetupByID, getAllMeetups, createRSVP,
+	createNewMeetup, getMeetupByID, getAllMeetups, createRSVP, deleteMeetup,
 } from './index';
 
 export default class Meetup {
@@ -74,6 +74,17 @@ export default class Meetup {
 		try {
 			const { rows } = await db.query(queryString, [parseInt(userId, 10), parseInt(meetupId, 10)]);
 			if (rows.length > 0) return 1;
+			return true;
+		} catch (error) {
+			this.error = error.stack;
+			return false;
+		}
+	}
+
+	async deleteMeetup() {
+		try {
+			const { rows } = await db.query(deleteMeetup, [this.payload]);
+			this.result = rows;
 			return true;
 		} catch (error) {
 			this.error = error.stack;
