@@ -2,6 +2,7 @@ import express from 'express';
 import {
 	QuestionValidation, ValidateInteger, ValidateComment, ValidateCommentUpdate,
 } from '../middlewares/validator';
+import Auth from '../middlewares/auth';
 import Question from '../controllers/Question';
 
 const router = express.Router();
@@ -13,7 +14,7 @@ const router = express.Router();
 * @returns {object}
 * @description Create a new question
 */
-router.post('/questions', [QuestionValidation], Question.create);
+router.post('/questions', [QuestionValidation, Auth.verifyCSRF], Question.create);
 
 /**
 * @name UpVoteQuestion
@@ -22,7 +23,7 @@ router.post('/questions', [QuestionValidation], Question.create);
 * @returns {object}
 * @description UpVote a new question
 */
-router.patch('/questions/:id/upvote', [ValidateInteger], Question.vote);
+router.patch('/questions/:id/upvote', [ValidateInteger, Auth.verifyCSRF], Question.vote);
 
 /**
 * @name DownVoteQuestion
@@ -31,7 +32,7 @@ router.patch('/questions/:id/upvote', [ValidateInteger], Question.vote);
 * @returns {object}
 * @description DownVote a new question
 */
-router.patch('/questions/:id/downvote', [ValidateInteger], Question.vote);
+router.patch('/questions/:id/downvote', [ValidateInteger, Auth.verifyCSRF], Question.vote);
 
 /**
 * @name AddComment
@@ -40,7 +41,7 @@ router.patch('/questions/:id/downvote', [ValidateInteger], Question.vote);
 * @returns {object}
 * @description Add comment to a question
 */
-router.post('/questions/:id/comment', [ValidateInteger, ValidateComment], Question.addComment);
+router.post('/questions/:id/comment', [ValidateInteger, ValidateComment, Auth.verifyCSRF], Question.addComment);
 
 /**
 * @name EditComment
@@ -49,7 +50,7 @@ router.post('/questions/:id/comment', [ValidateInteger, ValidateComment], Questi
 * @returns {object}
 * @description Edit comment on a question
 */
-router.patch('/questions/:id/comment', [ValidateInteger, ValidateCommentUpdate], Question.editComment);
+router.patch('/questions/comments/:id', [ValidateInteger, ValidateCommentUpdate, Auth.verifyCSRF], Question.editComment);
 
 /**
 * @name DeleteComment
@@ -58,6 +59,6 @@ router.patch('/questions/:id/comment', [ValidateInteger, ValidateCommentUpdate],
 * @returns {object}
 * @description Delete comment on a question
 */
-router.delete('/questions/:id/comment', [ValidateInteger], Question.deleteComment);
+router.delete('/questions/comments/:id', [ValidateInteger, Auth.verifyCSRF, Auth.isAdmin], Question.deleteComment);
 
 export default router;

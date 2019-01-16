@@ -3,13 +3,27 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 
+const request = require('supertest')(app);
+
 const { expect } = chai;
 chai.use(chaiHttp);
 
-// @route GET /api/v1/meetups
-// @desc  Create meetup route
+let token = null; // AUTH TOKEN
+before((done) => {
+	const payload = {
+		email: 'chinwe@gmail.com',
+		password: 'TochiOzulumba',
+	};
+	request.post('/api/v1/auth/signin')
+		.send(payload)
+		.end((err, res) => {
+			if (err) throw err;
+			token = res.body.data.token;
+			done();
+		});
+});
 
-describe('User can create a new meetup', () => {
+describe('POST /api/v1/meetups', () => {
 	it('should return status 201 with payload of newly created meetup record', (done) => {
 		const payload = {
 			createdOn: 'Monday, 31st December 2018',
@@ -22,6 +36,7 @@ describe('User can create a new meetup', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
+			.set('Authorization', token)
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(201);
@@ -37,6 +52,7 @@ describe('User can create a new meetup', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
+			.set('Authorization', token)
 			.send({
 				createdOn: 'Monday, 31st December 2018',
 				location: 'Lagos',
@@ -54,11 +70,12 @@ describe('User can create a new meetup', () => {
 	});
 });
 
-describe('User can get a SPECIFIC meetup record', () => {
+describe('GET /api/v1/meetups/:id', () => {
 	it('should return status 200 with specific meetup record.', (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/1')
+			.set('Authorization', token)
 			.end((err, res) => {
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
 				expect(res.body).to.have.property('data').and.to.be.an('object');
@@ -70,6 +87,7 @@ describe('User can get a SPECIFIC meetup record', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/9999999')
+			.set('Authorization', token)
 			.end((err, res) => {
 				expect(res).to.have.status(404);
 				expect(res.body.status).to.be.a('number').and.to.equals(404);
@@ -82,6 +100,7 @@ describe('User can get a SPECIFIC meetup record', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/q1jkekfbebjhrejb-1nsdjhjreh')
+			.set('Authorization', token)
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('number').and.to.equals(400);
@@ -91,11 +110,12 @@ describe('User can get a SPECIFIC meetup record', () => {
 	});
 });
 
-describe('User can get ALL meetup records', () => {
+describe('GET /api/v1/meetups', () => {
 	it('should return status 200 with all meetup records.', (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/')
+			.set('Authorization', token)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
@@ -105,11 +125,12 @@ describe('User can get ALL meetup records', () => {
 	});
 });
 
-describe('User can RSVP for a meetup', () => {
+describe('POST /api/v1/meetups/:id/rsvp', () => {
 	it('should return status 200 with rsvp record.', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', token)
 			.send({
 				response: 'yes',
 				meetup: 1,
@@ -131,6 +152,7 @@ describe('User can RSVP for a meetup', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', token)
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(409);
@@ -144,6 +166,7 @@ describe('User can RSVP for a meetup', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', token)
 			.send({
 				meetup: 1,
 			})
@@ -154,10 +177,12 @@ describe('User can RSVP for a meetup', () => {
 				done();
 			});
 	});
+
 	it('should return status 400 when meetup to RSVP isn\'t available.', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/200/rsvp')
+			.set('Authorization', token)
 			.send({
 				meetup: 1,
 			})
@@ -170,11 +195,12 @@ describe('User can RSVP for a meetup', () => {
 	});
 });
 
-describe('User can can get all upcoming meetups', () => {
+describe('GET /api/v1/meetups/upcoming', () => {
 	it('should return status 200 all upcoming meetup records.', (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/upcoming')
+			.set('Authorization', token)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);

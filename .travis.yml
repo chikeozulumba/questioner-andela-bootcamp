@@ -6,6 +6,7 @@ env:
     - PG_DB=epilznyu
     - PG_PASSWORD=H1fy_z9mo8ibwHlQKPfiwIHf-IMlXihw
     - PG_USER=epilznyu
+    - JWT_SIGN_SECRET_KEY="AndelaEPIC2019"
 language: node_js
 node_js:
   - "stable"

@@ -14,6 +14,7 @@ export const addVote = (field, value, id) => `UPDATE questions SET ${field} = ar
 export const removeVote = (field, value, id) => `UPDATE questions SET ${field} = array_remove(${field}, ${value}) WHERE id = ${id} returning *`;
 export const createNewComment = 'INSERT INTO comments(userid, meetupid, questionid, comment) VALUES($1, $2, $3, $4) returning *';
 export const getCommentByID = 'SELECT * FROM comments WHERE id = $1';
+export const getCommentByIDwithUser = 'SELECT * FROM comments WHERE id = $1 AND userid = $2';
 // export const updateComment = 'UPDATE comments SET comment = $1 WHERE id = $2 AND userid = $3 returning *;';
 
 export const updateComment = (field, commentId, userId) => `UPDATE comments SET comment = '${field}' WHERE id = ${commentId} AND userid = ${userId} returning *;`;

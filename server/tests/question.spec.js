@@ -3,10 +3,38 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 
+const request = require('supertest')(app);
+
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('User can create a new question', () => {
+let userToken = null; // AUTH TOKEN
+let adminToken = null; // AUTH TOKEN
+before((done) => {
+	const admin = {
+		email: 'chinwe@gmail.com',
+		password: 'TochiOzulumba',
+	};
+	const user = {
+		email: 'amaka@gmail.com',
+		password: 'AdakuNwanne',
+	};
+	request.post('/api/v1/auth/signin')
+		.send(user)
+		.end((err, res) => {
+			if (err) throw err;
+			userToken = res.body.data.token;
+		});
+	request.post('/api/v1/auth/signin')
+		.send(admin)
+		.end((err, res) => {
+			if (err) throw err;
+			adminToken = res.body.data.token;
+			done();
+		});
+});
+
+describe('POST /api/v1/questions', () => {
 	it('should return status 200 with content of newly created question record', (done) => {
 		const payload = {
 			title: 'What are federated clusters?',
@@ -15,6 +43,7 @@ describe('User can create a new question', () => {
 		chai
 			.request(app)
 			.post('/api/v1/questions')
+			.set('Authorization', userToken)
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(201);
@@ -30,6 +59,7 @@ describe('User can create a new question', () => {
 		chai
 			.request(app)
 			.post('/api/v1/questions')
+			.set('Authorization', userToken)
 			.send({
 			})
 			.end((err, res) => {
@@ -44,6 +74,7 @@ describe('User can create a new question', () => {
 		chai
 			.request(app)
 			.post('/api/v1/questions')
+			.set('Authorization', userToken)
 			.send({
 				title: 'NA',
 				body: 'NA',
@@ -60,6 +91,7 @@ describe('User can create a new question', () => {
 		chai
 			.request(app)
 			.post('/api/v1/questions')
+			.set('Authorization', userToken)
 			.send({
 				title: 'What###%^^^^',
 				body: 'As a typical application would have a cluster of containers running across multiple hosts, all these containers would need to talk to each other.',
@@ -76,6 +108,7 @@ describe('User can create a new question', () => {
 		chai
 			.request(app)
 			.post('/api/v1/questions')
+			.set('Authorization', userToken)
 			.send({
 				title: '',
 				body: 'As a typical application would have a cluster of containers running across multiple hosts, all these containers would need to talk to each other.',
@@ -89,11 +122,12 @@ describe('User can create a new question', () => {
 	});
 });
 
-describe('User can upvote or downvote a specific question', () => {
+describe('PATCH /api/v1/upvote', () => {
 	it('should return status 200 when User upvotes a question', (done) => {
 		chai
 			.request(app)
 			.patch('/api/v1/questions/1/upvote')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equal(200);
@@ -102,11 +136,14 @@ describe('User can upvote or downvote a specific question', () => {
 				done();
 			});
 	});
+});
 
+describe('PATCH /api/v1/downvote', () => {
 	it('should return status 200 when User downvotes a question', (done) => {
 		chai
 			.request(app)
 			.patch('/api/v1/questions/1/downvote')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equal(200);
@@ -120,6 +157,7 @@ describe('User can upvote or downvote a specific question', () => {
 		chai
 			.request(app)
 			.patch('/api/v1/questions/222222222/downvote')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(404);
 				expect(res.body.status).to.be.a('number').and.to.equal(404);
@@ -132,8 +170,8 @@ describe('User can upvote or downvote a specific question', () => {
 		chai
 			.request(app)
 			.patch('/api/v1/questions/3/downvote')
+			.set('Authorization', userToken)
 			.end((err, res) => {
-				console.log(res.status);
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('data').and.to.be.an('object');
 				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
@@ -143,7 +181,7 @@ describe('User can upvote or downvote a specific question', () => {
 	});
 });
 
-describe('User can add comments to a particular question', () => {
+describe('POST /api/v1/questions/:id/comment', () => {
 	it('should return status 201 when User adds a comment to a question', (done) => {
 		const payload = {
 			comment: 'You are God',
@@ -152,6 +190,7 @@ describe('User can add comments to a particular question', () => {
 		chai
 			.request(app)
 			.post('/api/v1/questions/1/comment')
+			.set('Authorization', userToken)
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(201);
@@ -161,7 +200,9 @@ describe('User can add comments to a particular question', () => {
 				done();
 			});
 	});
+});
 
+describe('PATCH /api/v1/questions/comments/:id', () => {
 	it('should return status 202 when User edits a comment to a question', (done) => {
 		const payload = {
 			comment: 'You are God alone!',
@@ -169,7 +210,8 @@ describe('User can add comments to a particular question', () => {
 		};
 		chai
 			.request(app)
-			.patch('/api/v1/questions/1/comment')
+			.patch('/api/v1/questions/comments/5')
+			.set('Authorization', userToken)
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(202);
@@ -179,15 +221,31 @@ describe('User can add comments to a particular question', () => {
 				done();
 			});
 	});
+});
 
-	it('should return status 200 when an Admin User deletes a comment to a question', (done) => {
+describe('DELETE /api/v1/questions/comments/:id', () => {
+	it('should return status 200 when an Admin User attempts to delete a comment', (done) => {
 		chai
 			.request(app)
-			.delete('/api/v1/questions/1/comment')
+			.delete('/api/v1/questions/comments/2')
+			.set('Authorization', adminToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equal(200);
-				expect(res.body).to.have.property('data').and.to.be.an('string');
+				expect(res.body).to.have.property('data').and.to.be.an('string').to.be.equal('Comment deleted successfully.');
+				done();
+			});
+	});
+
+	it('should return status 403 when a Normal User attempts to delete a comment', (done) => {
+		chai
+			.request(app)
+			.delete('/api/v1/questions/comments/6')
+			.set('Authorization', userToken)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body.status).to.be.a('number').and.to.equal(403);
+				expect(res.body).to.have.property('error').and.to.be.an('string');
 				done();
 			});
 	});

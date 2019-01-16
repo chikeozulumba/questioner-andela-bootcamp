@@ -135,7 +135,7 @@ export const ValidateInteger = (req, res, next) => {
  */
 export const ValidateComment = (req, res, next) => {
 	const schema = {
-		comment: ['required', stringValidation, 'string', 'min:0'],
+		comment: ['required', stringValidation, 'string', 'min:0', 'max:255'],
 		meetup: ['required', 'integer'],
 	};
 	const validator = new Validator(req.body, schema);
