@@ -6,7 +6,7 @@ import app from '../app';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('User should be able to visit Base App route', () => {
+describe('GET /', () => {
 	it('should return status 200', (done) => {
 		chai
 			.request(app)
@@ -19,7 +19,7 @@ describe('User should be able to visit Base App route', () => {
 	});
 });
 
-describe('User should be able to visit Base API route', () => {
+describe('GET /api/v1/', () => {
 	it('should return status 200', (done) => {
 		chai
 			.request(app)
@@ -31,8 +31,8 @@ describe('User should be able to visit Base API route', () => {
 	});
 });
 
-describe('User should recieve error message on invalid route', () => {
-	it('should return status 404 on accepting HTML', (done) => {
+describe('GET *', () => {
+	it(`should return status ${404} on accepting HTML`, (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/abrakadabra')
@@ -43,7 +43,7 @@ describe('User should recieve error message on invalid route', () => {
 				done();
 			});
 	});
-	it('should return status 404 on accepting JSON', (done) => {
+	it(`should return status ${404} on accepting JSON`, (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/abrakadabra')
