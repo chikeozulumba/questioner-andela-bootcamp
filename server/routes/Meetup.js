@@ -1,5 +1,7 @@
 import express from 'express';
-import { MeetupValidation, ValidateInteger, RSVPValidation } from '../middlewares/validator';
+import {
+	MeetupValidation, ValidateInteger, RSVPValidation, ValidateTags,
+} from '../middlewares/validator';
 import Auth from '../middlewares/auth';
 import Meetup from '../controllers/Meetup';
 
@@ -58,5 +60,14 @@ router.post('/meetups/:id/rsvp', [ValidateInteger, RSVPValidation, Auth.verifyCS
 * @description RSVP for a specific meetup record
 */
 router.delete('/meetups/:id', [ValidateInteger, Auth.verifyCSRF, Auth.isAdmin], Meetup.delete);
+
+/**
+* @name Add-Tags-to-Meetup
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Add Tags to a meetup
+*/
+router.put('/meetups/:id/tags', [ValidateTags, Auth.verifyCSRF, Auth.isAdmin], Meetup.addTags);
 
 export default router;
