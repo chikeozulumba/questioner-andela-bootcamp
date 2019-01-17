@@ -1,6 +1,6 @@
 import db from '../config/database';
 import {
-	createNewMeetup, getMeetupByID, getAllMeetups, createRSVP, deleteMeetup, updateTags,
+	createNewMeetup, getMeetupByID, getAllMeetups, createRSVP, deleteMeetup, updateTags, updateImages,
 } from './index';
 
 export default class Meetup {
@@ -95,6 +95,17 @@ export default class Meetup {
 	async updateTags(tags) {
 		try {
 			const { rows } = await db.query(updateTags, [tags, this.payload]);
+			this.result = rows;
+			return true;
+		} catch (error) {
+			this.error = error.stack;
+			return false;
+		}
+	}
+
+	async updateImages(tags) {
+		try {
+			const { rows } = await db.query(updateImages, [tags, this.payload]);
 			this.result = rows;
 			return true;
 		} catch (error) {

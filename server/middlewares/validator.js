@@ -1,4 +1,6 @@
+/* eslint-disable array-callback-return */
 import Validator from 'validatorjs';
+import urlRegex from 'url-regex';
 import { errorRxx } from '../helpers/handlers';
 
 const stringValidation = 'regex:/^([a-zA-Z0-9,.!? @_-]+)$/';
@@ -177,5 +179,34 @@ export const ValidateTags = (req, res, next) => {
 	const validator = new Validator(req.body, schema);
 	const errors = validator.errors.all();
 	if (validator.fails()) return errorRxx(res, 400, errors);
+	return next();
+};
+
+/**
+ * @name ValidateImage
+ * @param {object} req
+ * @param {object} res
+ * @returns {function} next
+ * @returns {function|error} next
+ * @description Validates comments in request fields
+ */
+export const ValidateImageUrl = (req, res, next) => {
+	let images = req.body.images.split(',');
+	const imageErrors = [];
+	let passed = true;
+	images = images.map((image) => {
+		image = image.trim();
+		if (!urlRegex({ exact: true }).test(image)) {
+			passed = false;
+			imageErrors.push(image);
+		}
+	});
+	const schema = {
+		images: ['required', 'string', 'min:0'],
+	};
+	const validator = new Validator(req.body, schema);
+	const errors = validator.errors.all();
+	errors.invalid = imageErrors;
+	if (validator.fails() || !passed) return errorRxx(res, 400, errors);
 	return next();
 };
