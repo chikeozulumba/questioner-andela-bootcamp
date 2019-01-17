@@ -30,10 +30,10 @@ export const response2xx = (response, status, data, message = null) => {
  */
 export const notFound = (req, res) => {
 	// respond with html page
-	if (req.accepts('html')) return errorRxx(res, 404, false, 'Not found');
+	if (req.accepts('html')) return errorRxx(res, 404, `Error in request, '${req.path}' not found!`);
 
 	// respond with json
-	if (req.accepts('json')) return errorRxx(res, 404, false, 'Not found');
+	if (req.accepts('json')) return errorRxx(res, 404, `Error in request, '${req.path}' not found!`);
 
 	// default to plain-text. json()
 	return errorRxx(res, 404, false, 'Not found');
