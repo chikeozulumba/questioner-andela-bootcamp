@@ -1,3 +1,14 @@
+@media screen and (min-width: 1680px) {
+	.stats h3.sm-text {
+		font-size: 1.5rem !important;
+	}
+}
+
+.btn {
+	padding: 1rem 1.2rem !important;
+	font-size: 1rem !important;
+}
+
 .ptb-5 {
 	padding: 50px 0;
 }
