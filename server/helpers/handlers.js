@@ -1,5 +1,6 @@
 /**
  * Returns an error response
+ * @name Response4xx
  * @param {object} response
  * @param {number} code
  * @param {boolean} status
@@ -10,6 +11,7 @@ export const errorRxx = (response, status, error) => response.status(status).jso
 
 /**
  * Returns a 2xx response with payload
+ * @name Responnse2xx
  * @param {object} response
  * @param {number} code
  * @param {boolean} status
@@ -24,23 +26,20 @@ export const response2xx = (response, status, data, message = null) => {
 
 /**
  * Returns an error response
+ * @name NotFound
  * @param {object} req
  * @param {object} req
  * @returns {object}
  */
 export const notFound = (req, res) => {
-	// respond with html page
 	if (req.accepts('html')) return errorRxx(res, 404, `Error in request, '${req.path}' not found!`);
-
-	// respond with json
 	if (req.accepts('json')) return errorRxx(res, 404, `Error in request, '${req.path}' not found!`);
-
-	// default to plain-text. json()
 	return errorRxx(res, 404, false, 'Not found');
 };
 
 /**
  * Returns default response
+ * @name BaseResponse
  * @param {object} req
  * @param {object} req
  * @returns {object}
