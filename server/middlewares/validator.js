@@ -161,3 +161,21 @@ export const ValidateCommentUpdate = (req, res, next) => {
 	if (validator.fails()) return errorRxx(res, 400, errors);
 	return next();
 };
+
+/**
+ * @name ValidateCommentUpdate
+ * @param {object} req
+ * @param {object} res
+ * @returns {function} next
+ * @returns {function|error} next
+ * @description Validates comments in request fields
+ */
+export const ValidateTags = (req, res, next) => {
+	const schema = {
+		tags: ['required', stringValidation, 'string', 'min:0'],
+	};
+	const validator = new Validator(req.body, schema);
+	const errors = validator.errors.all();
+	if (validator.fails()) return errorRxx(res, 400, errors);
+	return next();
+};
