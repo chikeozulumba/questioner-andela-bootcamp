@@ -77,6 +77,6 @@ router.put('/meetups/:id/tags', [ValidateTags, Auth.verifyCSRF, Auth.isAdmin], M
 * @returns {object}
 * @description Add Tags to a meetup
 */
-router.put('/meetups/:id/images', [ValidateImageUrl, Auth.verifyCSRF, Auth.isAdmin], Meetup.addTags);
+router.put('/meetups/:id/images', [ValidateImageUrl, Auth.verifyCSRF, Auth.isAdmin], Meetup.addImages);
 
 export default router;
