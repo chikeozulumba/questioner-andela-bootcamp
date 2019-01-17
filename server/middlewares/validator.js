@@ -202,11 +202,11 @@ export const ValidateImageUrl = (req, res, next) => {
 		}
 	});
 	const schema = {
-		images: ['required', stringValidation, 'string', 'min:0'],
+		images: ['required', 'string', 'min:0'],
 	};
 	const validator = new Validator(req.body, schema);
 	const errors = validator.errors.all();
-	const mainErrors = errors.length > 0 ? errors : imageErrors;
-	if (validator.fails() || !passed) return errorRxx(res, 400, mainErrors);
+	errors.invalid = imageErrors;
+	if (validator.fails() || !passed) return errorRxx(res, 400, errors);
 	return next();
 };
