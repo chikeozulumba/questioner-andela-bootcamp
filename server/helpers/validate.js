@@ -14,7 +14,6 @@ export const prepareContent = (payload, params) => {
 			}
 		});
 	}
-	console.log(payload);
 	return payload;
 };
 

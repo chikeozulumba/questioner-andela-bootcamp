@@ -96,7 +96,7 @@ class Meetup {
 		tags = mergeArray(tags, toArray(req.body.tags, { arrays: ['tags'] }));
 		const addTags = await MeetupQuery.updateTags(tags);
 		if (MeetupQuery.error !== null) return errorRxx(res, 500, 'An error occured while processing your RSVP.');
-		return response2xx(res, 200, MeetupQuery.result);
+		return response2xx(res, 200, MeetupQuery.result[0]);
 	}
 
 	/**
