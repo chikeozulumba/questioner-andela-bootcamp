@@ -172,13 +172,28 @@ a.sm-text {
 	text-decoration: underline;
 }
 
+.btn {
+	padding: 0.8rem 1rem;
+	line-height: 9px;
+	font-weight: 600;
+	font-size: 1rem;
+}
+
 @media screen and (max-width: 480px) {
 	.header.questions {
 		grid-template-columns: 1fr 1fr;
 	}
 
 	.questions .md-text {
-		font-size: 1.1rem;
+		font-size: 1.1rem !important;
+	}
+
+	.sm-text.sm {
+		font-size: 0.8rem !important;
+	}
+
+	.comments span {
+		font-size: 0.7rem !important;
 	}
 
 	a.sm-text {
@@ -187,29 +202,41 @@ a.sm-text {
 }
 
 @media screen and (min-width: 1680px) {
-	.md-text {
-		font-size: 2rem !important;
-		margin-bottom: 3rem !important;
-	}
-
-	p.sm-text {
+	.questions textarea {
 		font-size: 1.3rem !important;
 	}
 
-	.comments span {
-		font-weight: 600;
-		font-family: "Circular-Light";
-		color: grey;
+	.questions a>img {
+		height: 1.5rem;
+	}
+
+	.questions span {
 		font-size: 1rem;
 	}
+}
 
-	.sm-text {
-		font-size: 1.3rem !important;
-	}
+.md-text {
+	font-size: 2rem !important;
+	margin-bottom: 3rem !important;
+}
 
-	.content.card span {
-		font-size: 1rem !important;
-	}
+p.sm-text {
+	font-size: 1.3rem !important;
+}
+
+.comments span {
+	font-weight: 600;
+	font-family: "Circular-Light";
+	color: grey;
+	font-size: 1rem;
+}
+
+.sm-text {
+	font-size: 1.3rem !important;
+}
+
+.content.card span {
+	font-size: 1rem !important;
 }
 
 @media (max-width: 576px) {
