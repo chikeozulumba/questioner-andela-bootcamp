@@ -94,7 +94,25 @@ class Meetup {
 		if (!getMeetup || MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
 		let tags = MeetupQuery.result[0].tags;
 		tags = mergeArray(tags, toArray(req.body.tags, { arrays: ['tags'] }));
-		const addTags = await MeetupQuery.updateTags(tags);
+		await MeetupQuery.updateTags(tags);
+		if (MeetupQuery.error !== null) return errorRxx(res, 500, 'An error occured while processing your RSVP.');
+		return response2xx(res, 200, MeetupQuery.result[0]);
+	}
+
+	/**
+ * @name Add-Images
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Add tags to a meetup
+ */
+	static async addImages(req, res) {
+		const MeetupQuery = new Model(req.params.id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		if (!getMeetup || MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		let images = MeetupQuery.result[0].images;
+		images = mergeArray(images, toArray(req.body.images, { arrays: ['images'] }));
+		await MeetupQuery.updateImages(images);
 		if (MeetupQuery.error !== null) return errorRxx(res, 500, 'An error occured while processing your RSVP.');
 		return response2xx(res, 200, MeetupQuery.result[0]);
 	}
