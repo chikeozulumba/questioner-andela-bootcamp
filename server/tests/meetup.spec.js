@@ -275,3 +275,56 @@ describe('DELETE /api/v1/meetups/:id', () => {
 			});
 	});
 });
+
+describe('PUT /api/v1/meetups/:id/tags', () => {
+	it('should return status 200 for an Admin to add to meetup tags', (done) => {
+		const payload = {
+			tags: 'alc, google, facebook, abuja, kubernetes',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/1/tags')
+			.send(payload)
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('number').and.to.equals(200);
+				expect(res.body.data.tags).to.be.an('array');
+				done();
+			});
+	});
+
+	it('should return status 403 for an Normal user attempting to add to meetup tags', (done) => {
+		const payload = {
+			tags: 'alc, google, facebook, abuja, kubernetes',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/1/tags')
+			.send(payload)
+			.set('Authorization', userToken)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body.status).to.be.a('number').and.to.equals(403);
+				expect(res.body.error).to.be.an('string');
+				done();
+			});
+	});
+
+	it('should return status 404 for an a meetup that is not available', (done) => {
+		const payload = {
+			tags: 'alc, google, facebook, abuja, kubernetes',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/20/tags')
+			.send(payload)
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('number').and.to.equals(404);
+				expect(res.body.error).to.be.an('string');
+				done();
+			});
+	});
+});

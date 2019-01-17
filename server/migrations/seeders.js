@@ -27,11 +27,11 @@ const Seeders = async () => {
 		await client.query(admin, ['Eva', 'Ezeoke', 'eva@gmail.com', '+2348064649536', hashPassword('TochiOzulumba'), true]);
 
 		// MEETUPS
-		await client.query(meetups, [1, 'Kubernetes Conference Tech Zone', 'Lagos', ['api, endpoints'], ['http://localhost:5100/api/v1/image.png'], 'Monday, 31st March 2018']);
-		await client.query(meetups, [2, 'Javascript Learning', 'Abuja', ['ES6, Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
-		await client.query(meetups, [3, 'Javascript Learning', 'Abuja', ['ES6, Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
-		await client.query(meetups, [4, 'Javascript Learning', 'Abuja', ['ES6, Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
-		await client.query(meetups, [5, 'Javascript Learning', 'Abuja', ['ES6, Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
+		await client.query(meetups, [1, 'Kubernetes Conference Tech Zone', 'Lagos', ['api', 'endpoints'], ['http://localhost:5100/api/v1/image.png'], 'Monday, 31st March 2018']);
+		await client.query(meetups, [2, 'Javascript Learning', 'Abuja', ['ES6', 'Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
+		await client.query(meetups, [3, 'Javascript Learning', 'Abuja', ['ES6', 'Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
+		await client.query(meetups, [4, 'Javascript Learning', 'Abuja', ['ES6', 'Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
+		await client.query(meetups, [5, 'Javascript Learning', 'Abuja', ['ES6', 'Babel'], ['http://localhost:5100/api/v1/image.png'], 'Tuesday, 31st April 2018']);
 
 		// QUESTIONS
 		await client.query(questions, ['What is Javascript?', 'You should normally use only the derived, result-specific methods for executing queries, all of which are named according to how many rows of data the query is expected to return', 1, 1, [1], [2]]);
