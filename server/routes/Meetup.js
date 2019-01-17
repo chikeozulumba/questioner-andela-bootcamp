@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-	MeetupValidation, ValidateInteger, RSVPValidation, ValidateTags,
+	MeetupValidation, ValidateInteger, RSVPValidation, ValidateTags, ValidateImageUrl,
 } from '../middlewares/validator';
 import Auth from '../middlewares/auth';
 import Meetup from '../controllers/Meetup';
@@ -69,5 +69,14 @@ router.delete('/meetups/:id', [ValidateInteger, Auth.verifyCSRF, Auth.isAdmin], 
 * @description Add Tags to a meetup
 */
 router.put('/meetups/:id/tags', [ValidateTags, Auth.verifyCSRF, Auth.isAdmin], Meetup.addTags);
+
+/**
+* @name Add-Images-to-Meetup
+* @param {object} req
+* @param {object} res
+* @returns {object}
+* @description Add Tags to a meetup
+*/
+router.put('/meetups/:id/images', [ValidateImageUrl, Auth.verifyCSRF, Auth.isAdmin], Meetup.addTags);
 
 export default router;
