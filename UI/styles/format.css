@@ -94,6 +94,20 @@ th {
 	margin-bottom: 0.8rem !important;
 }
 
+.pagination {
+	text-align: center;
+	margin: 2rem auto;
+}
+
+.pagination span {
+	padding: 10px;
+	border-radius: 2px;
+	font-family: 'Circular-Book';
+	font-weight: 600;
+	font-size: 1rem;
+	margin: 0 5px;
+}
+
 @media screen and (min-width: 1680px) {
 	.reg-btn {
 		padding: 1.5rem 1.6rem 1.5rem;

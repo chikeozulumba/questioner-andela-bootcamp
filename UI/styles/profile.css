@@ -193,7 +193,22 @@ div.content.card {
 	}
 }
 
+.q-title {
+	display: grid;
+	grid-template-columns: 15% 80%;
+	grid-gap: 5%;
+	margin-bottom: 1rem;
+}
+
+.q-title img {
+	height: 3rem;
+}
+
 @media (max-width: 576px) {
+	.profile.user {
+		max-height: 200px;
+	}
+
 	.q-actions {
 		display: grid;
 		grid-template-columns: 1fr;
