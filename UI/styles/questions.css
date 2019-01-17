@@ -186,9 +186,44 @@ a.sm-text {
 	}
 }
 
+@media screen and (min-width: 1680px) {
+	.md-text {
+		font-size: 2rem !important;
+		margin-bottom: 3rem !important;
+	}
+
+	p.sm-text {
+		font-size: 1.3rem !important;
+	}
+
+	.comments span {
+		font-weight: 600;
+		font-family: "Circular-Light";
+		color: grey;
+		font-size: 1rem;
+	}
+
+	.sm-text {
+		font-size: 1.3rem !important;
+	}
+
+	.content.card span {
+		font-size: 1rem !important;
+	}
+}
+
 @media (max-width: 576px) {
 	.questions {
 		grid-template-columns: 1fr;
+	}
+
+	.questions {
+		padding: 1rem 1.3rem;
+	}
+
+	.content {
+		min-height: 30vh;
+		padding: 1.3rem 1rem;
 	}
 
 	.questions .img {
