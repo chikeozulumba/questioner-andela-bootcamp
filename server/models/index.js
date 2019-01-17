@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 export const getAllUsers = 'SELECT * FROM users';
 export const getUserByEmail = 'SELECT * FROM users WHERE email = $1';
 export const getUserByID = 'SELECT * FROM users WHERE id = $1';
@@ -18,5 +19,6 @@ export const getCommentByIDwithUser = 'SELECT * FROM comments WHERE id = $1 AND 
 // export const updateComment = 'UPDATE comments SET comment = $1 WHERE id = $2 AND userid = $3 returning *;';
 
 export const updateComment = (field, commentId, userId) => `UPDATE comments SET comment = '${field}' WHERE id = ${commentId} AND userid = ${userId} returning *;`;
+export const updateTags = `UPDATE meetups SET tags = (select array_agg(distinct e) from unnest(tags || $1) e) WHERE id = $2 returning *;`;
 export const deleteComment = 'DELETE FROM comments WHERE id = $1;';
 export const deleteMeetup = 'DELETE FROM meetups WHERE id = $1;';
