@@ -16,7 +16,11 @@ export const errorRxx = (response, status, error) => response.status(status).jso
  * @param {array} data
  * @returns {object}
  */
-export const response2xx = (response, status, data, message = null) => response.status(status).json({ status, message, data });
+export const response2xx = (response, status, data, message = null) => {
+	const responseBody = { status, message, data };
+	if (!message) delete responseBody.message;
+	response.status(status).json(responseBody);
+};
 
 /**
  * Returns an error response
