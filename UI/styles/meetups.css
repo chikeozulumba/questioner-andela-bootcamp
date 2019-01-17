@@ -90,6 +90,11 @@
 	margin-bottom: 1rem;
 }
 
+div.stats.m1 {
+	margin-top: 2.5rem !important;
+	/* margin-bottom: 3rem !important; */
+}
+
 .user h3.sm-text {
 	color: #393541;
 	font-weight: 400;

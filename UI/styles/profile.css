@@ -10,6 +10,10 @@
 	padding: 20px 10px;
 }
 
+.profile.user {
+	max-height: 25%;
+}
+
 #v-wrapper>div.profile.card>div.divider {
 	width: 100%;
 }
@@ -170,6 +174,23 @@ div.content.card {
 	text-align: center;
 	color: #fff;
 	border-radius: 10px;
+}
+
+@media (min-width: 1680px) {
+	.profile {
+		height: 300px !important;
+	}
+
+	.profile span {
+		font-size: 0.8rem;
+		margin: 10px 0 0;
+		font-weight: 800;
+	}
+
+	.list-items span {
+		font-family: 'Circular-Book' !important;
+		font-size: 1rem !important;
+	}
 }
 
 @media (max-width: 576px) {
