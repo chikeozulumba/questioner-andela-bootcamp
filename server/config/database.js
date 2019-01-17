@@ -2,21 +2,21 @@ import dotenv from 'dotenv';
 import { Pool } from 'pg';
 
 dotenv.config();
-const connectionString = process.env.PG_URI;
 const pool = new Pool({
-	connectionString,
+	user: process.env.PG_USER,
+	host: process.env.PG_HOST,
+	database: process.env.PG_DB,
+	password: process.env.PG_PASSWORD,
+	port: 5432,
+	ssl: process.env.PG_SSL || false,
 });
 
-// Handle connection error
 pool.on('error', (err) => {
 	console.error('Fatall Error ==> Client is idle', err.stack);
-	// Halt pool
 	pool.end();
 	process.exit(-1);
 });
 
-/**
- * Handle database successful connection
- */
-pool.on('connect', () => console.log('Database started!'));
+pool.on('connect', () => console.log('#DB CONNECTED#'));
+
 export default pool;

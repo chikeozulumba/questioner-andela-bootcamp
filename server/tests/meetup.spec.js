@@ -3,29 +3,69 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 
+const request = require('supertest')(app);
+
 const { expect } = chai;
 chai.use(chaiHttp);
 
-// @route GET /api/v1/meetups
-// @desc  Create meetup route
+let userToken = null; // AUTH TOKEN
+let userTwoToken = null; // AUTH TOKEN
+let adminToken = null; // AUTH TOKEN
+before((done) => {
+	const admin = {
+		email: 'chinwe@gmail.com',
+		password: 'TochiOzulumba',
+	};
+	const user = {
+		email: 'amaka@gmail.com',
+		password: 'AdakuNwanne',
+	};
+	const userTwo = {
+		email: 'adaku@gmail.com',
+		password: 'AdakuNwanne',
+	};
+	request.post('/api/v1/auth/signin')
+		.send(user)
+		.end((err, res) => {
+			if (err) throw err;
+			userToken = res.body.data.token;
+		});
+	request.post('/api/v1/auth/signin')
+		.send(userTwo)
+		.end((err, res) => {
+			if (err) throw err;
+			userTwoToken = res.body.data.token;
+		});
+	request.post('/api/v1/auth/signin')
+		.send(admin)
+		.end((err, res) => {
+			if (err) throw err;
+			adminToken = res.body.data.token;
+			done();
+		});
+});
 
-describe('User can create a new meetup', () => {
-	it('should return status 200 with payload of newly created meetup record', (done) => {
+describe('POST /api/v1/meetups', () => {
+	it('should return status 201 with payload of newly created meetup record', (done) => {
+		const payload = {
+			createdOn: 'Monday, 31st December 2018',
+			location: 'Lagos',
+			images: 'http://localhost:5100/api/v1/image.png',
+			topic: 'Kubernetesa',
+			happeningOn: 'Monday, 31st December 2018',
+			tags: 'api, endpoints',
+		};
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
-			.send({
-				createdOn: 'Monday, 31st December 2018',
-				location: 'Lagos',
-				images: 'http://localhost:5100/api/v1/image.png',
-				topic: 'Kubernetesa',
-				happeningOn: 'Monday, 31st December 2018',
-				tags: 'api, endpoints',
-			})
+			.set('Authorization', adminToken)
+			.send(payload)
 			.end((err, res) => {
-				expect(res).to.have.status(200);
+				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number');
 				expect(res.body.data).to.be.an('object');
+				expect(payload.topic).to.be.equal(res.body.data.topic);
+				expect(payload.tags.split(',').length).to.be.equal(res.body.data.tags.length);
 				done();
 			});
 	});
@@ -34,6 +74,7 @@ describe('User can create a new meetup', () => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups')
+			.set('Authorization', userToken)
 			.send({
 				createdOn: 'Monday, 31st December 2018',
 				location: 'Lagos',
@@ -51,11 +92,12 @@ describe('User can create a new meetup', () => {
 	});
 });
 
-describe('User can get a SPECIFIC meetup record', () => {
+describe('GET /api/v1/meetups/:id', () => {
 	it('should return status 200 with specific meetup record.', (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/1')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
 				expect(res.body).to.have.property('data').and.to.be.an('object');
@@ -67,6 +109,7 @@ describe('User can get a SPECIFIC meetup record', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/9999999')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(404);
 				expect(res.body.status).to.be.a('number').and.to.equals(404);
@@ -79,6 +122,7 @@ describe('User can get a SPECIFIC meetup record', () => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/q1jkekfbebjhrejb-1nsdjhjreh')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body.status).to.be.a('number').and.to.equals(400);
@@ -88,11 +132,12 @@ describe('User can get a SPECIFIC meetup record', () => {
 	});
 });
 
-describe('User can get ALL meetup records', () => {
+describe('GET /api/v1/meetups', () => {
 	it('should return status 200 with all meetup records.', (done) => {
 		chai
 			.request(app)
 			.get('/api/v1/meetups/')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
@@ -102,26 +147,64 @@ describe('User can get ALL meetup records', () => {
 	});
 });
 
-describe('User can RSVP for a meetup', () => {
+describe('POST /api/v1/meetups/:id/rsvp', () => {
 	it('should return status 200 with rsvp record.', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', userTwoToken)
 			.send({
 				response: 'yes',
 				meetup: 1,
 			})
 			.end((err, res) => {
-				expect(res).to.have.status(200);
-				expect(res.body.status).to.be.a('number').and.to.equals(200);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res).to.have.status(201);
+				expect(res.body.status).to.be.a('number').and.to.equals(201);
+				expect(res.body).to.have.property('data').and.to.be.an('array');
 				done();
 			});
 	});
+
+	it('should return status 409 when user is already existing on rsvp record.', (done) => {
+		chai
+			.request(app)
+			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', userToken)
+			.send({
+				response: 'yes',
+				meetup: 1,
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(409);
+				expect(res.body.status).to.be.a('number').and.to.equals(409);
+				expect(res.body).to.have.property('error').and.to.be.an('string');
+				done();
+			});
+	});
+
+	it('should return status 409 when user is already on rsvp record.', (done) => {
+		const payload = {
+			response: 'yes',
+			user: 2,
+		};
+		chai
+			.request(app)
+			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', userToken)
+			.send(payload)
+			.end((err, res) => {
+				expect(res).to.have.status(409);
+				expect(res.body.status).to.be.a('number').and.to.equals(409);
+				expect(res.body).to.have.property('error').and.to.be.a('string');
+				done();
+			});
+	});
+
 	it('should return status 400 when required field(s) is/are missing.', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/1/rsvp')
+			.set('Authorization', userToken)
 			.send({
 				meetup: 1,
 			})
@@ -132,31 +215,185 @@ describe('User can RSVP for a meetup', () => {
 				done();
 			});
 	});
+
 	it('should return status 400 when meetup to RSVP isn\'t available.', (done) => {
 		chai
 			.request(app)
 			.post('/api/v1/meetups/200/rsvp')
+			.set('Authorization', userToken)
 			.send({
 				meetup: 1,
 			})
 			.end((err, res) => {
-				expect(res).to.have.status(400);
-				expect(res.body.status).to.be.a('number').and.to.equals(400);
-				expect(res.body).to.have.property('error').and.to.be.an('object');
+				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('number').and.to.equals(404);
+				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
 			});
 	});
 });
 
-describe('User can can get all upcoming meetups', () => {
+describe('GET /api/v1/meetups/upcoming', () => {
 	it('should return status 200 all upcoming meetup records.', (done) => {
 		chai
 			.request(app)
-			.get('/api/v1/meetups/upcoming/asc')
+			.get('/api/v1/meetups/upcoming')
+			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
 				expect(res.body).to.have.property('data').and.to.be.an('array');
+				done();
+			});
+	});
+});
+
+describe('DELETE /api/v1/meetups/:id', () => {
+	it('should return status 200 for an Admin to delete meetup record', (done) => {
+		chai
+			.request(app)
+			.delete('/api/v1/meetups/5')
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('number').and.to.equals(200);
+				expect(res.body).to.have.property('data').and.to.be.an('string').and.to.be.equals('Meetup record successfully removed.');
+				done();
+			});
+	});
+
+	it('should return status 403 for a User that attempts to delete meetup record', (done) => {
+		chai
+			.request(app)
+			.delete('/api/v1/meetups/1')
+			.set('Authorization', userToken)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body.status).to.be.a('number').and.to.equals(403);
+				expect(res.body).to.have.property('error').and.to.be.an('string');
+				done();
+			});
+	});
+});
+
+describe('PUT /api/v1/meetups/:id/tags', () => {
+	it('should return status 200 for an Admin to add to meetup tags', (done) => {
+		const payload = {
+			tags: 'alc, google, facebook, abuja, kubernetes',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/1/tags')
+			.send(payload)
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('number').and.to.equals(200);
+				expect(res.body.data.tags).to.be.an('array');
+				done();
+			});
+	});
+
+	it('should return status 403 for an Normal user attempting to add to meetup tags', (done) => {
+		const payload = {
+			tags: 'alc, google, facebook, abuja, kubernetes',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/1/tags')
+			.send(payload)
+			.set('Authorization', userToken)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body.status).to.be.a('number').and.to.equals(403);
+				expect(res.body.error).to.be.an('string');
+				done();
+			});
+	});
+
+	it('should return status 404 for an a meetup that is not available', (done) => {
+		const payload = {
+			tags: 'alc, google, facebook, abuja, kubernetes',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/20/tags')
+			.send(payload)
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('number').and.to.equals(404);
+				expect(res.body.error).to.be.an('string');
+				done();
+			});
+	});
+});
+
+describe('PUT /api/v1/meetups/:id/images', () => {
+	it('should return status 200 for an Admin to add to meetup images', (done) => {
+		const payload = {
+			images: 'https://facebook.com/picture.png, https://insta.com/picture.png',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/1/images')
+			.send(payload)
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body.status).to.be.a('number').and.to.equals(200);
+				expect(res.body.data.tags).to.be.an('array');
+				done();
+			});
+	});
+
+	it('should return status 403 for an Normal user attempting to add to meetup tags', (done) => {
+		const payload = {
+			images: 'https://facebook.com/picture.png, https://youyou.com/picture.png',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/1/images')
+			.send(payload)
+			.set('Authorization', userToken)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body.status).to.be.a('number').and.to.equals(403);
+				expect(res.body.error).to.be.an('string');
+				done();
+			});
+	});
+
+	it('should return status 404 for an a meetup that is not available', (done) => {
+		const payload = {
+			images: 'https://facebook.com/picture.png, https://facebook.com/picture.png',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/20/images')
+			.send(payload)
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('number').and.to.equals(404);
+				expect(res.body.error).to.be.an('string');
+				done();
+			});
+	});
+
+	it('should return status 400 when attempting to add an invalid url', (done) => {
+		const payload = {
+			images: 'https://facebook.com/picture.png, https://facebook.com/picture.png, https://facebook     #.com/picture.png',
+		};
+		chai
+			.request(app)
+			.put('/api/v1/meetups/20/images')
+			.send(payload)
+			.set('Authorization', adminToken)
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body.status).to.be.a('number').and.to.equals(400);
+				expect(res.body.error).to.be.an('object');
 				done();
 			});
 	});

@@ -1,29 +1,40 @@
 import db from '../config/database';
+import { createNewUser, getUserByEmail } from './index';
+import { hashPassword, generateToken } from '../helpers/auth';
 
-
-/**
- * @name User
- * @returns {array}
- * @description Create User table on database
- */
-const User = async () => {
-	const client = await db.connect();
-	try {
-		const query = `CREATE TABLE IF NOT EXISTS users (
-          user_id SERIAL UNIQUE,
-          firstname VARCHAR NOT NULL,
-          lastname VARCHAR NOT NULL,
-          email VARCHAR NOT NULL,
-          hashpassword VARCHAR NOT NULL, 
-          user_role VARCHAR NOT NULL, 
-          PRIMARY KEY(user_id, email)
-      );`;
-
-		await client.query(query);
-	} catch (e) {
-		throw e;
-	} finally {
-		client.release();
+export default class User {
+	constructor(payload) {
+		this.payload = payload;
+		this.result = null;
+		this.error = null;
 	}
-};
-export default User;
+
+	async createNewUser() {
+		const {
+			firstName, lastName, email, phone, password,
+		} = this.payload;
+		const values = [firstName, lastName, email, phone, hashPassword(password)];
+		try {
+			const { rows } = await db.query(createNewUser, values);
+			this.result = rows[0];
+			this.result.token = generateToken(this.result.id);
+			return true;
+		} catch (error) {
+			this.error = error.stack;
+			return false;
+		}
+	}
+
+	async getUserByEmail() {
+		const email = this.payload.email;
+		try {
+			const { rows, rowCount } = await db.query(getUserByEmail, [email]);
+			this.result = rows;
+			this.rowCount = rowCount;
+			return true;
+		} catch (error) {
+			this.error = error.stack;
+			return false;
+		}
+	}
+}

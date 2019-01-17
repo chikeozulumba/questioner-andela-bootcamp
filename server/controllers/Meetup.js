@@ -1,7 +1,7 @@
-import { prepareContent } from '../helpers/validate';
+import { prepareContent, toArray, mergeArray } from '../helpers/validate';
 import { errorRxx, response2xx } from '../helpers/handlers';
-import Query from '../helpers/query';
-import Filters from '../helpers/filters';
+import { date } from '../helpers/filters';
+import Model from '../models/Meetup';
 
 const meetups = 'meetups';
 const rsvps = 'rsvps';
@@ -17,18 +17,17 @@ class Meetup {
  * @returns {object}
  * @description Create a meetup
  */
-	static create(req, res) {
+	static async create(req, res) {
 		let payload = req.body;
 		const params = {
-			arrays: ['Tags', 'images'],
+			arrays: ['tags', 'images'],
 		};
 		payload = prepareContent(payload, params);
-		// ADD TO MEETUPS DATA
-		const query = new Query(payload, meetups, ['topic']);
-		// SAVE MEETUP
-		return query.save()
-			.then(docs => response2xx(res, 200, docs))
-			.catch(err => errorRxx(res, query.code, err));
+		payload.userid = 1;
+		const MeetupQuery = new Model(payload);
+		const create = await MeetupQuery.createMeetup();
+		if (!create) return errorRxx(res, 500, 'Error in saving meetup, kindly try again.');
+		return response2xx(res, 201, MeetupQuery.result);
 	}
 
 	/**
@@ -38,12 +37,13 @@ class Meetup {
  * @returns {object}
  * @description Return a specific record
  */
-	static getRecord(req, res) {
+	static async getRecord(req, res) {
 		const id = req.params.id;
-		const query = new Query(id, meetups, null, 'integer');
-		const queryRecords = query.getRecord();
-		if (!queryRecords) return errorRxx(res, query.code, query.errorMsg);
-		return response2xx(res, 200, queryRecords);
+		const MeetupQuery = new Model(id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
+		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		return response2xx(res, 200, MeetupQuery.result[0]);
 	}
 
 	/**
@@ -53,10 +53,11 @@ class Meetup {
  * @returns {object}
  * @description Return all meetup records
  */
-	static getAllRecords(req, res) {
-		const query = new Query(null, meetups, null, null);
-		const queryAllRecords = query.getAllRecords();
-		return response2xx(res, 200, queryAllRecords);
+	static async getAllRecords(req, res) {
+		const MeetupQuery = new Model();
+		const getAllMeetup = await MeetupQuery.getAllMeetups();
+		if (!getAllMeetup) return errorRxx(res, 500, 'Error in retrieving all meetups, try again.');
+		return response2xx(res, 200, MeetupQuery.result);
 	}
 
 	/**
@@ -66,19 +67,55 @@ class Meetup {
  * @returns {object}
  * @description RSVP for a meetup
  */
-	static rsvp(req, res) {
-		const id = req.params.id;
-		const payload = req.body;
-		const query = new Query(id, rsvps, null, 'integer');
-		const queryRecords = query.getRecord();
-		if (!queryRecords) return errorRxx(res, query.code, false, query.errorMsg);
-		query.payload = payload;
-		query.rsvp.id = id;
-		return query.save()
-			.then(docs => response2xx(res, 200, docs))
-			.catch(err => errorRxx(res, 400, err));
+	static async rsvp(req, res) {
+		const user = req.user.id;
+		const MeetupQuery = new Model(req.params.id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		if (!getMeetup) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
+		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		if (req.rsvpErrors) return errorRxx(res, 400, req.rsvErrorMsg);
+		MeetupQuery.payload = req.body;
+		const createRSVP = await MeetupQuery.rsvpMeetup(req.params.id, user);
+		if (MeetupQuery.error !== null) return errorRxx(res, 500, 'An error occured while processing your RSVP.');
+		if (!createRSVP && MeetupQuery.exists) return errorRxx(res, 409, 'You are already on RSVP for this event.');
+		return response2xx(res, 201, MeetupQuery.result);
 	}
 
+	/**
+ * @name Add-Tags
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Add tags to a meetup
+ */
+	static async addTags(req, res) {
+		const MeetupQuery = new Model(req.params.id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		if (!getMeetup || MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		let tags = MeetupQuery.result[0].tags;
+		tags = mergeArray(tags, toArray(req.body.tags, { arrays: ['tags'] }));
+		await MeetupQuery.updateTags(tags);
+		if (MeetupQuery.error !== null) return errorRxx(res, 500, 'An error occured while processing your RSVP.');
+		return response2xx(res, 200, MeetupQuery.result[0]);
+	}
+
+	/**
+ * @name Add-Images
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Add tags to a meetup
+ */
+	static async addImages(req, res) {
+		const MeetupQuery = new Model(req.params.id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		if (!getMeetup || MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		let images = MeetupQuery.result[0].images;
+		images = mergeArray(images, toArray(req.body.images, { arrays: ['images'] }));
+		await MeetupQuery.updateImages(images);
+		if (MeetupQuery.error !== null) return errorRxx(res, 500, 'An error occured while processing your RSVP.');
+		return response2xx(res, 200, MeetupQuery.result[0]);
+	}
 
 	/**
  * @name upcoming
@@ -87,10 +124,29 @@ class Meetup {
  * @returns {object}
  * @description Return all upcoming meetup records
  */
-	static upcoming(req, res) {
-		const query = new Query(null, meetups, null, null);
-		const formatByDateAsc = Filters.date(query.getAllRecords());
+	static async upcoming(req, res) {
+		const MeetupQuery = new Model();
+		const results = await MeetupQuery.getAllMeetups();
+		if (!results) return errorRxx(res, 500, 'Error in retrieving meetup, try again.');
+		const formatByDateAsc = date(MeetupQuery.result);
 		return response2xx(res, 200, formatByDateAsc);
+	}
+
+	/**
+ * @name Delete
+ * @param {object} req
+ * @param {object} res
+ * @returns {object}
+ * @description Delete metup records
+ */
+	static async delete(req, res) {
+		const MeetupQuery = new Model(req.params.id);
+		const getMeetup = await MeetupQuery.getMeetupById();
+		if (!getMeetup) return errorRxx(res, 500, 'Error in processing request.');
+		if (MeetupQuery.result.length === 0) return errorRxx(res, 404, 'Meetup record not available.');
+		const deleteMeetupRecord = await MeetupQuery.deleteMeetup();
+		if (!deleteMeetupRecord) return errorRxx(res, 500, 'Error in processing request, try again.');
+		return response2xx(res, 200, 'Meetup record successfully removed.');
 	}
 }
 

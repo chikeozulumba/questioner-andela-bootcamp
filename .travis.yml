@@ -2,6 +2,11 @@ env:
   global:
     - CC_TEST_REPORTER_ID=5460d8d46d6c882c0c1ca7fb2de4aa1a1fe0eb4c3db1b4529ed62b6581682d59
     - PG_URI=postgres://epilznyu:H1fy_z9mo8ibwHlQKPfiwIHf-IMlXihw@manny.db.elephantsql.com:5432/epilznyu
+    - PG_HOST="manny.db.elephantsql.com"
+    - PG_DB=epilznyu
+    - PG_PASSWORD=H1fy_z9mo8ibwHlQKPfiwIHf-IMlXihw
+    - PG_USER=epilznyu
+    - JWT_SIGN_SECRET_KEY="AndelaEPIC2019"
 language: node_js
 node_js:
   - "stable"
