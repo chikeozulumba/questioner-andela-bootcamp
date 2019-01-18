@@ -13,9 +13,9 @@ export default class Comment {
 
 	async createComment() {
 		const {
-			id, user, comment, meetup,
+			id, userid, comment, meetup,
 		} = this.payload;
-		const values = [user, meetup, parseInt(id, 10), comment];
+		const values = [userid, meetup, parseInt(id, 10), comment];
 		try {
 			const { rows } = await db.query(createNewComment, values);
 			this.result = rows[0];
@@ -29,7 +29,7 @@ export default class Comment {
 	async updateComment(comment, user) {
 		try {
 			const { rows } = await db.query(updateComment(comment, this.payload, user));
-			this.result = rows[0];
+			this.result = rows;
 			return true;
 		} catch (error) {
 			this.error = error.stack;

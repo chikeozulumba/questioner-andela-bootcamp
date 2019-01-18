@@ -40,6 +40,7 @@ describe('POST /api/v1/questions', () => {
 	it('should return status 200 with content of newly created question record', (done) => {
 		const payload = {
 			title: 'What are federated clusters?',
+			meetup: 1,
 			body: 'Multiple Kubernetes clusters can be managed as a single cluster with the help of federated clusters.',
 		};
 		chai
@@ -171,7 +172,7 @@ describe('PATCH /api/v1/downvote', () => {
 	it('should not be able to vote below 0 vote count', (done) => {
 		chai
 			.request(app)
-			.patch('/api/v1/questions/8/downvote')
+			.patch('/api/v1/questions/1/downvote')
 			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);

@@ -249,14 +249,14 @@ describe('GET /api/v1/meetups/upcoming', () => {
 });
 
 describe('DELETE /api/v1/meetups/:id', () => {
-	it('should return status 200 for an Admin to delete meetup record', (done) => {
+	it('should return status 202 for an Admin to delete meetup record', (done) => {
 		chai
 			.request(app)
 			.delete('/api/v1/meetups/5')
 			.set('Authorization', adminToken)
 			.end((err, res) => {
-				expect(res).to.have.status(200);
-				expect(res.body.status).to.be.a('number').and.to.equals(200);
+				expect(res).to.have.status(202);
+				expect(res.body.status).to.be.a('number').and.to.equals(202);
 				expect(res.body).to.have.property('data').and.to.be.an('string').and.to.be.equals('Meetup record successfully removed.');
 				done();
 			});

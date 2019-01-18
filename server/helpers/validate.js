@@ -39,23 +39,3 @@ export const mergeArray = (array1, array2) => {
 	arr = arr.filter((item, index, inputArray) => inputArray.indexOf(item) === index);
 	return arr;
 };
-
-/**
- * @name checkType
- * @param {object} payload
- * @param {array} type
- * @returns {boolean}
- * @returns {string} on error
- * @description Returns check on request body
- */
-export const checkType = (payload, type) => {
-	// eslint-disable-next-line valid-typeof
-	const integer = /^\d+$/;
-	switch (type) {
-	case 'integer':
-		if (!integer.test(payload)) return 'Parameter must be of type - integer';
-		return true;
-	default:
-		return `Parameter must be of type ${type}, not ${typeof payload}`;
-	}
-};

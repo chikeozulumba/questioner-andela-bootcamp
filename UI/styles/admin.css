@@ -1,3 +1,24 @@
+.intro a {
+	width: 30%;
+}
+
+.intro h3 {
+	color: #221F28;
+	margin-bottom: 1rem;
+}
+
+.btn {
+	background: #221F28;
+	color: #F1F1F2;
+	padding: 1rem 0;
+	margin: 1rem 0;
+	text-transform: uppercase;
+	font-size: 1rem;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
 .q-actions {
 	display: flex;
 	flex-direction: row;

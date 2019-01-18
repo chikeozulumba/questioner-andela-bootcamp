@@ -11,12 +11,6 @@ const pool = new Pool({
 	ssl: process.env.PG_SSL || false,
 });
 
-pool.on('error', (err) => {
-	console.error('Fatall Error ==> Client is idle', err.stack);
-	pool.end();
-	process.exit(-1);
-});
-
 pool.on('connect', () => console.log('#DB CONNECTED#'));
 
 export default pool;

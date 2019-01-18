@@ -25,6 +25,7 @@
     "**/coverage/**",
     "**/UI/**",
     "**/.nyc_output/**",
-    "**/server/tests/**"
+    "**/server/tests/**",
+    "**/server/migrations/**"
   ]
 }
