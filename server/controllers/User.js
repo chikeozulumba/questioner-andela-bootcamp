@@ -22,7 +22,10 @@ class User {
 		const UserQuery = new UserModel(req.body);
 		if (await UserQuery.getUserByEmail() && await UserQuery.rowCount > 0) return errorRxx(res, 409, 'Email already in use');
 		if (!await UserQuery.createNewUser()) return errorRxx(res, 500, 'Your details could not be saved, try again.');
-		return response2xx(res, 201, UserQuery.result);
+		const user = UserQuery.result;
+		const token = generateToken(user.id);
+		const response = { token, user };
+		return response2xx(res, 201, response);
 	}
 
 	/**
@@ -37,8 +40,9 @@ class User {
 		if (await UserQuery.getUserByEmail() && await UserQuery.rowCount === 0) return errorRxx(res, 404, 'User record not found');
 		const user = await UserQuery.result[0];
 		if (!comparePassword(user.password, req.body.password)) return errorRxx(res, 401, 'Invalid email or password combination');
-		user.token = generateToken(user.id);
-		return response2xx(res, 200, user);
+		const token = generateToken(user.id);
+		const response = { token, user };
+		return response2xx(res, 200, response);
 	}
 }
 

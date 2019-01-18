@@ -1,7 +1,7 @@
-import moment from 'moment';
 import { errorRxx, response2xx } from '../helpers/handlers';
-import Query from '../helpers/query';
-import { friendlyDate, jsUcfirst, last } from '../helpers/filters';
+import {
+	friendlyDate, jsUcfirst, last, parseCommentResponse,
+} from '../helpers/filters';
 import Model from '../models/Question';
 import CommentModel from '../models/Comment';
 
@@ -17,21 +17,27 @@ class Question {
  * @description Create a Comment record
  */
 	static async create(req, res) {
-		const payload = req.body;
-		payload.meetup = 1;
-		payload.createdBy = req.user.id;
-		const QuestionQuery = new Model(payload);
-		const saveQuestion = await QuestionQuery.createQuestion();
-		if (!saveQuestion) return errorRxx(res, 500, 'Your details could not be saved, try again.');
-		return response2xx(res, 201, QuestionQuery.result);
+		const {
+			title, body, meetup,
+		} = req.body;
+		const { id } = req.user;
+		const QuestionQuery = new Model({
+			title, body, meetup, createdBy: id,
+		});
+		if (!await QuestionQuery.createQuestion()) return errorRxx(res, 500, 'Question could not be saved, try again.');
+		const response = QuestionQuery.result;
+		response.vote = 0;
+		response.user = response.createdby;
+		delete response.createdby;
+		return response2xx(res, 201, response);
 	}
 
 	/**
- * @name getQuestionById
+ * @name GetQuestionById
  * @param {object} req
  * @param {object} res
  * @returns {object}
- * @description VGet question by ID
+ * @description Get question by ID
  */
 	static async getQuestion(id) {
 		const QuestionQuery = new Model(id);
@@ -48,21 +54,24 @@ class Question {
  * @description Vote on a question
  */
 	static async vote(req, res) {
-		const user = req.user.id;
+		const { id } = req.user;
 		const path = last(req.url.split('/'));
 		const QuestionQuery = new Model(req.params.id);
-		const question = await QuestionQuery.getQuestionById();
-		if (!question) return errorRxx(res, 500, `Internal server error, could not ${path}`);
-		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question not found, check request parameters');
-		if (path === 'upvote') await QuestionQuery.upVote(user);
-		else await QuestionQuery.downVote(user);
-		const result = QuestionQuery.result;
-		if (result.upvotes !== null && result.upvotes.length > result.downvotes.length) result.votes = result.upvotes.length - result.downvotes.length;
-		else result.votes = 0;
-		delete result.upvotes;
-		delete result.downvotes;
-		result.createdon = friendlyDate(result.createdon);
-		return response2xx(res, 200, result, `${jsUcfirst(path)} successful!`);
+		if (!await QuestionQuery.getQuestionById()) return errorRxx(res, 500, `Internal server error, could not ${path}`);
+		if (QuestionQuery.result.length > 0) {
+			if (path === 'upvote') await QuestionQuery.upVote(id);
+			else await QuestionQuery.downVote(id);
+			const result = QuestionQuery.result;
+			const upvotes = !result.upvotes ? [] : result.upvotes;
+			const downvotes = !result.downvotes ? [] : result.downvotes;
+			if (upvotes !== null && (downvotes === null || upvotes.length > downvotes.length)) {
+				result.votes = upvotes.length - downvotes.length;
+			} else result.votes = 0;
+			delete result.upvotes;
+			delete result.downvotes;
+			result.createdon = friendlyDate(result.createdon);
+			return response2xx(res, 200, result, `${jsUcfirst(path)} successful!`);
+		} return errorRxx(res, 404, 'Question not found');
 	}
 
 	/**
@@ -74,21 +83,16 @@ class Question {
  */
 	static async addComment(req, res) {
 		const id = req.params.id;
-		const comment = req.body.comment;
-		const meetup = req.body.meetup;
-		const user = req.user.id;
+		const { comment, meetup } = req.body;
+		const userid = req.user.id;
 		const QuestionQuery = new Model(id);
-		const question = await QuestionQuery.getQuestionById();
-		if (!question) return errorRxx(res, 500, 'Internal server error, try again');
-		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question record not available, check request parameters');
-		const payload = {
-			id, user, meetup, comment,
-		};
-		const CommentQuery = new CommentModel(payload);
-		const saveComment = await CommentQuery.createComment();
-		if (!saveComment) return errorRxx(res, 500, 'Your comment could not be saved, try again.');
-		CommentQuery.result.createdon = friendlyDate(CommentQuery.result.createdon);
-		return response2xx(res, 201, CommentQuery.result);
+		if (!await QuestionQuery.getQuestionById()) return errorRxx(res, 500, 'Internal server error, try again');
+		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question record not available');
+		const CommentQuery = new CommentModel({
+			id, userid, meetup, comment,
+		});
+		if (!await CommentQuery.createComment()) return errorRxx(res, 500, 'Your comment could not be saved, try again.');
+		return response2xx(res, 201, parseCommentResponse(CommentQuery.result, comment, QuestionQuery.result[0]));
 	}
 
 	/**
@@ -99,15 +103,13 @@ class Question {
  * @description Edit a comment
  */
 	static async editComment(req, res) {
-		const id = parseInt(req.params.id, 10);
-		const user = req.user.id;
-		const CommentQuery = new CommentModel(id);
-		const comment = await CommentQuery.getCommentById(user);
-		if (comment && CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
-		const updateComment = await CommentQuery.updateComment(req.body.comment, user);
-		if (!updateComment) return errorRxx(res, 500, 'Your details could not be saved, try again.');
-		CommentQuery.result.createdon = friendlyDate(CommentQuery.result.createdon);
-		return response2xx(res, 202, CommentQuery.result);
+		const { id } = req.user;
+		const { comment } = req.body;
+		const CommentQuery = new CommentModel(req.params.id);
+		if (await CommentQuery.getCommentById(id) && CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available');
+		if (!await CommentQuery.updateComment(comment, id)) return errorRxx(res, 500, 'Your details could not be saved, try again.');
+		if (CommentQuery.result.length === 0) return errorRxx(res, 401, 'You are not assigned to manage this comment.');
+		return response2xx(res, 202, parseCommentResponse(CommentQuery.result[0], comment));
 	}
 
 	/**
@@ -118,13 +120,11 @@ class Question {
  * @description Delete a comment
  */
 	static async deleteComment(req, res) {
-		const id = parseInt(req.params.id, 10);
-		const CommentQuery = new CommentModel(id);
-		const comment = await CommentQuery.getCommentById();
-		if (!comment) return errorRxx(res, 500, 'Internal server error, try again');
-		if (CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available, check request parameters');
-		const deleteComment = await CommentQuery.deleteComment();
-		if (!deleteComment) return errorRxx(res, 500, 'Comment could not be deleted.');
+		const { id } = req.params;
+		const CommentQuery = new CommentModel(parseInt(id, 10));
+		if (!await CommentQuery.getCommentById()) return errorRxx(res, 500, 'Internal server error, try again');
+		if (CommentQuery.result.length === 0) return errorRxx(res, 404, 'Comment record not available');
+		if (!await CommentQuery.deleteComment()) return errorRxx(res, 500, 'Comment could not be deleted.');
 		return response2xx(res, 200, 'Comment deleted successfully.');
 	}
 }
