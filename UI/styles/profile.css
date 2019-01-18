@@ -10,6 +10,10 @@
 	padding: 20px 10px;
 }
 
+.profile.user {
+	max-height: 25%;
+}
+
 #v-wrapper>div.profile.card>div.divider {
 	width: 100%;
 }
@@ -172,7 +176,39 @@ div.content.card {
 	border-radius: 10px;
 }
 
+@media (min-width: 1680px) {
+	.profile {
+		height: 300px !important;
+	}
+
+	.profile span {
+		font-size: 0.8rem;
+		margin: 10px 0 0;
+		font-weight: 800;
+	}
+
+	.list-items span {
+		font-family: 'Circular-Book' !important;
+		font-size: 1rem !important;
+	}
+}
+
+.q-title {
+	display: grid;
+	grid-template-columns: 15% 80%;
+	grid-gap: 5%;
+	margin-bottom: 1rem;
+}
+
+.q-title img {
+	height: 3rem;
+}
+
 @media (max-width: 576px) {
+	.profile.user {
+		max-height: 200px;
+	}
+
 	.q-actions {
 		display: grid;
 		grid-template-columns: 1fr;

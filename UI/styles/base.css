@@ -221,8 +221,8 @@ a {
 	}
 
 	.md-text {
-		font-size: 2.5rem !important;
-		margin-bottom: 3rem !important;
+		font-size: 2.2rem !important;
+		margin-bottom: 1rem !important;
 	}
 
 	.sm-text {
@@ -518,8 +518,13 @@ footer h3 {
 }
 
 .b-wicked {
-	background: #6a1b9a !important;
+	background: #ff003b !important;
 }
+
+/* 
+.b-wicked {
+	background: #6a1b9a !important;
+} */
 
 .header {
 	display: grid;

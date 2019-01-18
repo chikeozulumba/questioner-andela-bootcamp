@@ -38,3 +38,17 @@ export const date = (array) => {
 export const last = array => array[array.length - 1];
 export const jsUcfirst = string => string.charAt(0).toUpperCase() + string.slice(1);
 export const friendlyDate = rawDate => moment(rawDate).format('MMMM Do YYYY, h:mm:ss a');
+
+export const parseCommentResponse = (commentQuery, comment, question = null) => {
+	const { questionid } = commentQuery;
+	let response = {
+		question: questionid, comment,
+	};
+	if (question) {
+		const { title, body } = question;
+		response = {
+			question: questionid, title, body, comment,
+		};
+	}
+	return response;
+};

@@ -70,12 +70,13 @@ export const MeetupValidation = (req, res, next) => {
  * @description Validates Question Request fields
  */
 export const QuestionValidation = (req, res, next) => {
-	const payload = req.body;
+	const { title, meetup, body } = req.body;
 	const schema = {
 		title: ['required', stringValidation, 'min:3', 'max:255'],
+		meetup: ['required', 'integer'],
 		body: 'required|string',
 	};
-	const validator = new Validator(payload, schema);
+	const validator = new Validator({ title, meetup, body }, schema);
 	const errors = validator.errors.all();
 	if (validator.fails()) return errorRxx(res, 400, errors);
 	return next();

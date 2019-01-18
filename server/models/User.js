@@ -17,7 +17,6 @@ export default class User {
 		try {
 			const { rows } = await db.query(createNewUser, values);
 			this.result = rows[0];
-			this.result.token = generateToken(this.result.id);
 			return true;
 		} catch (error) {
 			this.error = error.stack;

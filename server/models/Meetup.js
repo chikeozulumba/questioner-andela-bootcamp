@@ -13,10 +13,10 @@ export default class Meetup {
 
 	async createMeetup() {
 		const {
-			userid, topic, location, tags, images, happeningOn,
+			id, topic, location, tags, images, happeningOn,
 		} = this.payload;
 
-		const values = [userid, topic, location, tags, images, happeningOn];
+		const values = [id, topic, location, tags, images, happeningOn];
 		try {
 			const { rows } = await db.query(createNewMeetup, values);
 			this.result = rows[0];
