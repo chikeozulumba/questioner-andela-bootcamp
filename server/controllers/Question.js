@@ -32,19 +32,19 @@ class Question {
 		return response2xx(res, 201, response);
 	}
 
-	/**
- * @name GetQuestionById
- * @param {object} req
- * @param {object} res
- * @returns {object}
- * @description Get question by ID
- */
-	static async getQuestion(id) {
-		const QuestionQuery = new Model(id);
-		const question = await QuestionQuery.getQuestionById();
-		this.result = QuestionQuery.result;
-		return question;
-	}
+	// 	/**
+	//  * @name GetQuestionById
+	//  * @param {object} req
+	//  * @param {object} res
+	//  * @returns {object}
+	//  * @description Get question by ID
+	//  */
+	// 	static async getQuestion(id) {
+	// 		const QuestionQuery = new Model(id);
+	// 		const question = await QuestionQuery.getQuestionById();
+	// 		this.result = QuestionQuery.result;
+	// 		return question;
+	// 	}
 
 	/**
  * @name Vote

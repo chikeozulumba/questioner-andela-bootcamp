@@ -25,7 +25,10 @@ describe('POST /api/auth/signup', () => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number');
 				expect(res.body.data).to.be.an('object');
-				expect(res.body.data).to.have.property('token').to.be.an('string');
+				expect(res.body.data).to.have.property('token').to.be.a('string');
+				expect(res.body.data).to.have.property('user').to.be.an('object');
+				expect(res.body.data.user).to.have.property('email').to.be.a('string');
+				expect(res.body.data.user.email).to.be.equals(payload.email);
 				done();
 			});
 	});
@@ -66,6 +69,9 @@ describe('POST /api/v1/auth/signin', () => {
 				expect(res.body.status).to.be.a('number');
 				expect(res.body.data).to.be.an('object');
 				expect(res.body.data).to.have.property('token').to.be.an('string');
+				expect(res.body.data).to.have.property('user').to.be.an('object');
+				expect(res.body.data.user).to.have.property('email').to.be.an('string');
+				expect(res.body.data.user.email).to.be.equals(payload.email);
 				done();
 			});
 	});
@@ -77,10 +83,27 @@ describe('POST /api/v1/auth/signin', () => {
 		};
 		chai
 			.request(app)
-			.get('/api/v1/auth/signin')
+			.post('/api/v1/auth/signin')
 			.send(payload)
 			.end((err, res) => {
 				expect(res).to.have.status(404);
+				expect(res.body.status).to.be.a('number');
+				expect(res.body).to.have.property('error').and.to.be.a('string');
+				done();
+			});
+	});
+
+	it('should return status 401 for invalid password or email combination.', (done) => {
+		const payload = {
+			email: 'chinwe@gmail.com',
+			password: 'AndelaTest',
+		};
+		chai
+			.request(app)
+			.post('/api/v1/auth/signin')
+			.send(payload)
+			.end((err, res) => {
+				expect(res).to.have.status(401);
 				expect(res.body.status).to.be.a('number');
 				expect(res.body).to.have.property('error').and.to.be.a('string');
 				done();
