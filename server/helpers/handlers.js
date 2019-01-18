@@ -19,8 +19,8 @@ export const errorRxx = (response, status, error) => response.status(status).jso
  * @returns {object}
  */
 export const response2xx = (response, status, data, message = null) => {
-	const responseBody = { status, message, data };
-	if (!message) delete responseBody.message;
+	let responseBody = { status, message, data };
+	if (!message) responseBody = { status, data };
 	response.status(status).json(responseBody);
 };
 
