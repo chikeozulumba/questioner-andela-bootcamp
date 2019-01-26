@@ -2,8 +2,8 @@ import './config/index';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'babel-polyfill';
 import express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
-import morgan from 'morgan';
 import cors from 'cors';
 import { notFound, baseResponse } from './helpers/handlers';
 import Meetup from './routes/Meetup';
@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 app.use('/api/v1', User);
 app.use('/api/v1', Meetup);
 app.use('/api/v1', Question);
+app.use('/docs', express.static(path.join(__dirname, 'docs')));
 
 // Home route
 app.get('/', baseResponse);
