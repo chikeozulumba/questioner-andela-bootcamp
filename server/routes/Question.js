@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-	QuestionValidation, ValidateInteger, ValidateComment, ValidateCommentUpdate,
+	QuestionValidation, ValidateInteger,
 } from '../middlewares/validator';
 import Auth from '../middlewares/auth';
 import Question from '../controllers/Question';
