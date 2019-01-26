@@ -82,14 +82,13 @@ class Question {
  * @description Add a comment
  */
 	static async addComment(req, res) {
-		const id = req.params.id;
-		const { comment, meetup } = req.body;
+		const { comment, meetup, questionid } = req.body;
 		const userid = req.user.id;
-		const QuestionQuery = new Model(id);
+		const QuestionQuery = new Model(questionid);
 		if (!await QuestionQuery.getQuestionById()) return errorRxx(res, 500, 'Internal server error, try again');
 		if (QuestionQuery.result.length === 0) return errorRxx(res, 404, 'Question record not available');
 		const CommentQuery = new CommentModel({
-			id, userid, meetup, comment,
+			questionid, userid, meetup, comment,
 		});
 		if (!await CommentQuery.createComment()) return errorRxx(res, 500, 'Your comment could not be saved, try again.');
 		return response2xx(res, 201, parseCommentResponse(CommentQuery.result, comment, QuestionQuery.result[0]));
