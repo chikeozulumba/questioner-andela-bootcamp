@@ -8,6 +8,7 @@ import cors from 'cors';
 import { notFound, baseResponse } from './helpers/handlers';
 import Meetup from './routes/Meetup';
 import Question from './routes/Question';
+import Comment from './routes/Comment';
 import User from './routes/User';
 
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use('/api/v1', User);
 app.use('/api/v1', Meetup);
 app.use('/api/v1', Question);
+app.use('/api/v1', Comment);
 app.use('/docs', express.static(path.join(__dirname, 'docs')));
 
 // Home route

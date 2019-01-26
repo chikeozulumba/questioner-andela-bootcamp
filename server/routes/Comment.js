@@ -8,30 +8,30 @@ import Question from '../controllers/Question';
 const router = express.Router();
 
 /**
-* @name CreateQuestion
+* @name AddComment
 * @param {object} req
 * @param {object} res
 * @returns {object}
-* @description Create a new question
+* @description Add comment to a question
 */
-router.post('/questions', [QuestionValidation, Auth.verifyCSRF], Question.create);
+router.post('/comments/', [ValidateComment, Auth.verifyCSRF], Question.addComment);
 
 /**
-* @name UpVoteQuestion
+* @name EditComment
 * @param {object} req
 * @param {object} res
 * @returns {object}
-* @description UpVote a new question
+* @description Edit comment on a question
 */
-router.patch('/questions/:id/upvote', [ValidateInteger, Auth.verifyCSRF], Question.vote);
+router.patch('/comments/:id', [ValidateInteger, ValidateCommentUpdate, Auth.verifyCSRF], Question.editComment);
 
 /**
-* @name DownVoteQuestion
+* @name DeleteComment
 * @param {object} req
 * @param {object} res
 * @returns {object}
-* @description DownVote a new question
+* @description Delete comment on a question
 */
-router.patch('/questions/:id/downvote', [ValidateInteger, Auth.verifyCSRF], Question.vote);
+router.delete('/comments/:id', [ValidateInteger, Auth.verifyCSRF, Auth.isAdmin], Question.deleteComment);
 
 export default router;
