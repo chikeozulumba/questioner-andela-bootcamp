@@ -1,9 +1,9 @@
 import express from 'express';
 import {
-	QuestionValidation, ValidateInteger, ValidateComment, ValidateCommentUpdate,
+	ValidateInteger, ValidateComment, ValidateCommentUpdate,
 } from '../middlewares/validator';
 import Auth from '../middlewares/auth';
-import Question from '../controllers/Question';
+import Comment from '../controllers/Comment';
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ const router = express.Router();
 * @returns {object}
 * @description Add comment to a question
 */
-router.post('/comments/', [ValidateComment, Auth.verifyCSRF], Question.addComment);
+router.post('/comments/', [ValidateComment, Auth.verifyCSRF], Comment.addComment);
 
 /**
 * @name EditComment
@@ -23,7 +23,7 @@ router.post('/comments/', [ValidateComment, Auth.verifyCSRF], Question.addCommen
 * @returns {object}
 * @description Edit comment on a question
 */
-router.patch('/comments/:id', [ValidateInteger, ValidateCommentUpdate, Auth.verifyCSRF], Question.editComment);
+router.patch('/comments/:id', [ValidateInteger, ValidateCommentUpdate, Auth.verifyCSRF], Comment.editComment);
 
 /**
 * @name DeleteComment
@@ -32,6 +32,6 @@ router.patch('/comments/:id', [ValidateInteger, ValidateCommentUpdate, Auth.veri
 * @returns {object}
 * @description Delete comment on a question
 */
-router.delete('/comments/:id', [ValidateInteger, Auth.verifyCSRF, Auth.isAdmin], Question.deleteComment);
+router.delete('/comments/:id', [ValidateInteger, Auth.verifyCSRF, Auth.isAdmin], Comment.deleteComment);
 
 export default router;
