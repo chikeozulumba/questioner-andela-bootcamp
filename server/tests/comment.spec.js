@@ -23,13 +23,13 @@ before((done) => {
 		.send(user)
 		.end((err, res) => {
 			if (err) throw err;
-			userToken = res.body.data.token;
+			userToken = res.body.data[0].token;
 		});
 	request.post('/api/v1/auth/signin')
 		.send(admin)
 		.end((err, res) => {
 			if (err) throw err;
-			adminToken = res.body.data.token;
+			adminToken = res.body.data[0].token;
 			done();
 		});
 });
@@ -49,8 +49,8 @@ describe('POST /api/v1/comments/', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number').and.to.equal(201);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
-				expect(res.body.data.comment).to.be.a('string').and.to.be.equal(payload.comment);
+				expect(res.body).to.have.property('data').and.to.be.an('array');
+				expect(res.body.data[0].comment).to.be.a('string').and.to.be.equal(payload.comment);
 				done();
 			});
 	});
@@ -70,8 +70,8 @@ describe('PATCH /api/v1/comments/:id', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(202);
 				expect(res.body.status).to.be.a('number').and.to.equal(202);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
-				expect(res.body.data.comment).to.be.a('string').and.to.be.equal(payload.comment);
+				expect(res.body).to.have.property('data').and.to.be.an('array');
+				expect(res.body.data[0].comment).to.be.a('string').and.to.be.equal(payload.comment);
 				done();
 			});
 	});

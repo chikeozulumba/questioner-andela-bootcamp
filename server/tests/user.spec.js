@@ -24,11 +24,11 @@ describe('POST /api/auth/signup', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number');
-				expect(res.body.data).to.be.an('object');
-				expect(res.body.data).to.have.property('token').to.be.a('string');
-				expect(res.body.data).to.have.property('user').to.be.an('object');
-				expect(res.body.data.user).to.have.property('email').to.be.a('string');
-				expect(res.body.data.user.email).to.be.equals(payload.email);
+				expect(res.body.data).to.be.an('array');
+				expect(res.body.data[0]).to.have.property('token').to.be.a('string');
+				expect(res.body.data[0]).to.have.property('user').to.be.an('object');
+				expect(res.body.data[0].user).to.have.property('email').to.be.a('string');
+				expect(res.body.data[0].user.email).to.be.equals(payload.email);
 				done();
 			});
 	});
@@ -67,11 +67,11 @@ describe('POST /api/v1/auth/signin', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number');
-				expect(res.body.data).to.be.an('object');
-				expect(res.body.data).to.have.property('token').to.be.an('string');
-				expect(res.body.data).to.have.property('user').to.be.an('object');
-				expect(res.body.data.user).to.have.property('email').to.be.an('string');
-				expect(res.body.data.user.email).to.be.equals(payload.email);
+				expect(res.body.data).to.be.an('array');
+				expect(res.body.data[0]).to.have.property('token').to.be.an('string');
+				expect(res.body.data[0]).to.have.property('user').to.be.an('object');
+				expect(res.body.data[0].user).to.have.property('email').to.be.an('string');
+				expect(res.body.data[0].user.email).to.be.equals(payload.email);
 				done();
 			});
 	});
