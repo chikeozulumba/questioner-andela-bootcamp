@@ -21,6 +21,7 @@ export const errorRxx = (response, status, error) => response.status(status).jso
 export const response2xx = (response, status, data, message = null) => {
 	let responseBody = { status, message, data };
 	if (!message) responseBody = { status, data };
+	if (typeof data === 'object') responseBody.data = [data];
 	response.status(status).json(responseBody);
 };
 
