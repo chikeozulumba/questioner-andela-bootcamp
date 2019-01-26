@@ -7,52 +7,50 @@
 
 ## Questioner​ helps the meetup organizer prioritize questions to be answered.
 
-### Technology Stack
+## Technology Stack
 
-- NodeJs - Web Server.
-- ExpressJs - Server framework.
-- Babel - ES6 Javascript compiler.
-- Eslint - Javascript code and syntax linter (Airbnb style guide was adhered).
+- [NodeJs](https://nodejs.org/) - Web Server.
+- [ExpressJs](https://expressjs.com/) - Server framework.
+- [Babel](https://babeljs.io/) - ES6 Javascript compiler.
+- [Eslint](https://eslint.org/) - Javascript code and syntax linter (Airbnb style guide was implemented on this project).
+- [Postgres](https://www.postgresql.org/) - Relational database system.
 
-### Testing tools
+## Testing tools
 
-- Mocha - Javascript Test Framework.
-- Chai - Javascript Assertion Library.
-- Istanbul - Javascript code instrumenter.
-- NYC - Istanbul's command line interface.
-- Postman - Testing API endpoints.
+- [Mocha](https://mochajs.org/) - Javascript Test Framework.
+- [Chai](https://www.chaijs.com/) - Javascript Assertion Library.
+- [Istanbul](https://istanbul.js.org/) - Javascript test coverage tool.
+- [NYC](https://github.com/istanbuljs/nyc) - Istanbul's command line interface.
+- [Postman](https://www.getpostman.com/) - Testing API endpoints.
 
-### Features
+## Installation
 
-- user can create a new meetup
-- user can create a new question
-- users can get all meetups
-- users can get a retrieve a specific meetup by ID
-- users can update or downvote a meetup
-- users can rsvp for a meetup
+1. Clone this repo with `git clone https://github.com/chikeozulumba/questioner-andela-bootcamp.git`, install dependencies with `npm install`.
+2. Run `npm test`.
+3. To run server, execute `npm start`
+4. Ensure to set all required environment variables, for example
+    > PG_HOST=...
+    > PG_DB=epilznyu
+    > PG_PASSWORD=H1fy_z9mo8ibwHlQKPfiwIHf-IMlXihw
+    > PG_USER=epilznyu
+    > JWT_SIGN_SECRET_KEY="AndelaEPIC2019"
 
-### Management
+## Management
 
 Project is managed [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2232678).
 
-### Front End Pages
+## Front End Pages
 
 Front End Pages were hosted using Github pages 👉 [https://chikeozulumba.github.io/questioner-andela-bootcamp/UI](https://chikeozulumba.github.io/questioner-andela-bootcamp/UI)
 
-### API Deployment
+## API Deployment
 
 API endpoints was hosted using [Heroku](https://heroku.com) 👉 [https://questioner-andela.herokuapp.com/api/v1/](https://questioner-andela.herokuapp.com/api/v1/)
 
-### Api Endpoints
+## Documentation
 
-- Get All Meetups - `GET /api/v1/meetups`
-- Get Specific Meetup - `GET /api/v1/meetups/:id`
-- Create New Meetup - `POST /api/v1/meetups`
-- RSVP for a Meetup - `GET /api/v1/meetups/:id/rsvp`
-- Create New Question - `POST /api/v1/questions`
-- Upvote a question - `PATCH /api/v1/questions/:id/upvote`
-- Downvote a question - `PATCH /api/v1/questions/:id/downvote`
+Questioner REST API is highly detailed and easy to integrate with its documentation available at 👉 [https://questioner-andela.herokuapp.com/docs/](https://questioner-andela.herokuapp.com/docs/)
 
-### Authors
+## Authors
 
 [Chike Ozulumba](https://twitter.com/chikeozulumba)
