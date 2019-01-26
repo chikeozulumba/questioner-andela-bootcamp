@@ -1,0 +1,1091 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Andela Developer Challenge Cycle 40 Bootcamp Project - Questioner, that helps meetup organizers prioritize questions to be answered.",
+    "version": "1.0.0",
+    "title": "Questioner",
+    "termsOfService": "https://questioner-andela.herokuapp.com/terms",
+    "contact": {
+      "email": "chike.ozulumba@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "questioner-andela.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Authenticate and manage user accounts"
+    },
+    {
+      "name": "Meetup",
+      "description": "Create and manage meetup records"
+    },
+    {
+      "name": "Question",
+      "description": "Create and manage questions on meetups"
+    },
+    {
+      "name": "Comment",
+      "description": "Create and manage comments on questions"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a new user account",
+        "description": "",
+        "operationId": "addPet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserSignUp"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "419": {
+            "description": "Email already in use"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "questioner_auth": [
+              "write:users",
+              "read:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Sign in to user account",
+        "description": "Authenticate user based on email and password provided",
+        "operationId": "findUserByEmail",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserSignIn"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "419": {
+            "description": "Email already in use"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "questioner_auth": [
+              "write:users",
+              "read:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/meetups": {
+      "post": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "Create a new meetup record",
+        "description": "Creates and returns a new meetup record",
+        "operationId": "createNewMeetup",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewMeetup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "Get all meetup records",
+        "description": "Returns all meetup record",
+        "operationId": "getAllMeetups",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/MeetupResponse"
+            }
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/meetups/{meetupId}": {
+      "get": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "Get a meetup record",
+        "description": "Returns a meetup record",
+        "operationId": "getMeetupById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "meetupId",
+            "in": "path",
+            "description": "ID of meetup record that needs to be fetched",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/MeetupResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid ID parameter supplied"
+          },
+          "404": {
+            "description": "Meetup record not available."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "Delete a meetup record",
+        "description": "Deletes a meetup record",
+        "operationId": "deleteMeetupById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "meetupId",
+            "in": "path",
+            "description": "ID of meetup record that needs to be deleted",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "schema": {
+              "$ref": "#/definitions/MeetupResponseOnDelete"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid ID parameter supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "404": {
+            "description": "Meetup record not available."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/meetups/upcoming": {
+      "get": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "Get all upcoming meetup records",
+        "description": "Returns all upcoming meetup records",
+        "operationId": "getAllUpcomingMeetups",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/MeetupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/meetups/{meetupId}/rsvp": {
+      "post": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "RSVP a meetup record",
+        "description": "RSVP a meetup record",
+        "operationId": "rsvpMeetup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "meetupId",
+            "in": "path",
+            "description": "ID of meetup record that needs to be RSVP'd",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/MeetupResponseOnRSVP"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid ID parameter supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "404": {
+            "description": "Meetup record not available."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/meetups/{meetupId}/images": {
+      "put": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "Add images to a meetup",
+        "description": "Add images to a meetup record",
+        "operationId": "addImagesToMeetup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "meetupId",
+            "in": "path",
+            "description": "ID of meetup record that images would be added to.",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request object containing images that need to be added to meetup",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "images": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/MeetupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid ID parameter - image url supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "404": {
+            "description": "Meetup record not available."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/meetups/{meetupId}/tags": {
+      "put": {
+        "tags": [
+          "Meetup"
+        ],
+        "summary": "Add images to a meetup",
+        "description": "Add images to a meetup record",
+        "operationId": "addTagsToMeetup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "meetupId",
+            "in": "path",
+            "description": "ID of meetup record that tags would be added to.",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request object containing tags that need to be added to meetup",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK / Successful",
+            "schema": {
+              "$ref": "#/definitions/MeetupResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid ID parameter - tag format unsupported"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "404": {
+            "description": "Meetup record not available."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/questions": {
+      "post": {
+        "tags": [
+          "Question"
+        ],
+        "summary": "Add question to meetup",
+        "description": "Add questions to a meetup",
+        "operationId": "addQuestions",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "order placed for purchasing the pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addQuestion"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/QuestionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "500": {
+            "description": "Internal Server error"
+          }
+        }
+      }
+    },
+    "/questions/{questionId}/upvote": {
+      "patch": {
+        "tags": [
+          "Question"
+        ],
+        "summary": "Upvote a question",
+        "description": "Increments the votes on a question",
+        "operationId": "upVoteQuestion",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "questionId",
+            "in": "path",
+            "description": "ID of question record that needs to be upvoted",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK/Success",
+            "schema": {
+              "$ref": "#/definitions/QuestionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid ID parameter supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "404": {
+            "description": "Question record not available."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/questions/{questionId}/downvote": {
+      "patch": {
+        "tags": [
+          "Question"
+        ],
+        "summary": "Downvote a question",
+        "description": "Decrements the votes on a question",
+        "operationId": "downQuestion",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "questionId",
+            "in": "path",
+            "description": "ID of question record that needs to be upvoted",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK/Success",
+            "schema": {
+              "$ref": "#/definitions/QuestionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid ID parameter supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "404": {
+            "description": "Question record not available."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/comments": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Comment on a question",
+        "description": "A user can add comments to a question of choice.",
+        "operationId": "addComments",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request body object that needs to be added to database.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addComment"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/CommentResponseOnCreate"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid Parameters supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/comments/{commentId}": {
+      "patch": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Edit a comment",
+        "description": "A user can edit a comment on a question by ID.",
+        "operationId": "editComment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "ID of the comment that needs to be deleted.",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request body object that needs to be updated in database.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addComment"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "schema": {
+              "$ref": "#/definitions/CommentResponseOnUpdate"
+            }
+          },
+          "400": {
+            "description": "Bad request / Invalid Parameters supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Delete comment",
+        "description": "An Admin can remove a comment by ID.",
+        "operationId": "removeComment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "ID of the comment that needs to be deleted.",
+            "required": true,
+            "type": "integer",
+            "minimum": 1,
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment deleted successfully."
+          },
+          "400": {
+            "description": "Bad request / Invalid ID / Parameter supplied"
+          },
+          "403": {
+            "description": "Invalid Authorization, token not found! / Invalid Authorization, token invalid!"
+          },
+          "404": {
+            "description": "Comment record not available"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "questioner_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://questioner-andela.herokuapp.com/api/v1/auth/signin",
+      "flow": "implicit",
+      "scopes": {
+        "write:users": "modify users in your account",
+        "read:users": "read your users"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "addQuestion": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "meetup": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    },
+    "addComment": {
+      "type": "object",
+      "properties": {
+        "comment": {
+          "type": "string"
+        },
+        "meetup": {
+          "type": "integer",
+          "example": 5
+        }
+      }
+    },
+    "QuestionResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64",
+          "example": 201
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/QuestionResponseModel"
+          }
+        }
+      }
+    },
+    "QuestionResponseModel": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "meetup": {
+          "type": "integer",
+          "example": 1
+        },
+        "vote": {
+          "type": "integer",
+          "example": 1
+        },
+        "user": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "CommentResponseOnCreate": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64",
+          "example": 201
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CommentResponseOnCreateModel"
+          }
+        }
+      }
+    },
+    "CommentResponseOnCreateModel": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "CommentResponseOnUpdate": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64",
+          "example": 201
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CommentResponseOnUpdateModel"
+          }
+        }
+      }
+    },
+    "CommentResponseOnUpdateModel": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "type": "integer",
+          "example": 9
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "UserSignUp": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "UserSignIn": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "NewMeetup": {
+      "type": "object",
+      "properties": {
+        "topic": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "images": {
+          "type": "string"
+        },
+        "createdOn": {
+          "type": "string"
+        },
+        "happeningOn": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        }
+      }
+    },
+    "MeetupResponseModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "userid": {
+          "type": "integer"
+        },
+        "topic": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdon": {
+          "type": "string"
+        },
+        "happeningon": {
+          "type": "string"
+        }
+      }
+    },
+    "MeetupResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64",
+          "example": 200
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/MeetupResponseModel"
+          }
+        }
+      }
+    },
+    "MeetupResponseOnRSVP": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64",
+          "example": 201
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/MeetupResponseRSVPModel"
+          }
+        }
+      }
+    },
+    "MeetupResponseRSVPModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "meetup": {
+          "type": "integer"
+        },
+        "userid": {
+          "type": "string"
+        },
+        "response": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        }
+      }
+    },
+    "MeetupResponseOnDelete": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64",
+          "example": 202
+        },
+        "data": {
+          "type": "string",
+          "example": "Meetup record successfully removed."
+        }
+      }
+    }
+  }
+}
