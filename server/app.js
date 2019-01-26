@@ -16,11 +16,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/docs/', express.static(path.join(__dirname, 'docs')));
+
 app.use('/api/v1', User);
 app.use('/api/v1', Meetup);
 app.use('/api/v1', Question);
 app.use('/api/v1', Comment);
-app.use('/docs', express.static(path.join(__dirname, 'docs')));
 
 // Home route
 app.get('/', baseResponse);
