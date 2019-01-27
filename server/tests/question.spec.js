@@ -23,13 +23,13 @@ before((done) => {
 		.send(user)
 		.end((err, res) => {
 			if (err) throw err;
-			userToken = res.body.data.token;
+			userToken = res.body.data[0].token;
 		});
 	request.post('/api/v1/auth/signin')
 		.send(admin)
 		.end((err, res) => {
 			if (err) throw err;
-			adminToken = res.body.data.token;
+			adminToken = res.body.data[0].token;
 			done();
 		});
 });
@@ -49,9 +49,9 @@ describe('POST /api/v1/questions', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number').and.to.equals(201);
-				expect(res.body).to.be.an('object');
-				expect(payload.title).to.be.equal(res.body.data.title);
-				expect(payload.body).to.be.equal(res.body.data.body);
+				expect(res.body.data).to.be.an('array');
+				expect(payload.title).to.be.equal(res.body.data[0].title);
+				expect(payload.body).to.be.equal(res.body.data[0].body);
 				done();
 			});
 	});
@@ -132,8 +132,8 @@ describe('PATCH /api/v1/upvote', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equal(200);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
-				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
+				expect(res.body).to.have.property('data').and.to.be.an('array');
+				expect(res.body.data[0]).to.have.property('votes').and.to.be.a('number');
 				done();
 			});
 	});
@@ -148,8 +148,8 @@ describe('PATCH /api/v1/downvote', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equal(200);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
-				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
+				expect(res.body).to.have.property('data').and.to.be.an('array');
+				expect(res.body.data[0]).to.have.property('votes').and.to.be.a('number');
 				done();
 			});
 	});
@@ -174,9 +174,9 @@ describe('PATCH /api/v1/downvote', () => {
 			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
-				expect(res.body.data).to.have.property('votes').and.to.be.a('number');
-				expect(res.body.data.votes).to.not.be.lessThan(0);
+				expect(res.body).to.have.property('data').and.to.be.an('array');
+				expect(res.body.data[0]).to.have.property('votes').and.to.be.a('number');
+				expect(res.body.data[0].votes).to.not.be.lessThan(0);
 				done();
 			});
 	});

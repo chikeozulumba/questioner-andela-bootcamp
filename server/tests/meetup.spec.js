@@ -28,19 +28,19 @@ before((done) => {
 		.send(user)
 		.end((err, res) => {
 			if (err) throw err;
-			userToken = res.body.data.token;
+			userToken = res.body.data[0].token;
 		});
 	request.post('/api/v1/auth/signin')
 		.send(userTwo)
 		.end((err, res) => {
 			if (err) throw err;
-			userTwoToken = res.body.data.token;
+			userTwoToken = res.body.data[0].token;
 		});
 	request.post('/api/v1/auth/signin')
 		.send(admin)
 		.end((err, res) => {
 			if (err) throw err;
-			adminToken = res.body.data.token;
+			adminToken = res.body.data[0].token;
 			done();
 		});
 });
@@ -63,9 +63,9 @@ describe('POST /api/v1/meetups', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(201);
 				expect(res.body.status).to.be.a('number');
-				expect(res.body.data).to.be.an('object');
-				expect(payload.topic).to.be.equal(res.body.data.topic);
-				expect(payload.tags.split(',').length).to.be.equal(res.body.data.tags.length);
+				expect(res.body.data).to.be.an('array');
+				expect(payload.topic).to.be.equal(res.body.data[0].topic);
+				expect(payload.tags.split(',').length).to.be.equal(res.body.data[0].tags.length);
 				done();
 			});
 	});
@@ -100,7 +100,7 @@ describe('GET /api/v1/meetups/:id', () => {
 			.set('Authorization', userToken)
 			.end((err, res) => {
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
-				expect(res.body).to.have.property('data').and.to.be.an('object');
+				expect(res.body).to.have.property('data').and.to.be.an('array');
 				done();
 			});
 	});
@@ -289,7 +289,7 @@ describe('PUT /api/v1/meetups/:id/tags', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
-				expect(res.body.data.tags).to.be.an('array');
+				expect(res.body.data[0].tags).to.be.an('array');
 				done();
 			});
 	});
@@ -342,7 +342,7 @@ describe('PUT /api/v1/meetups/:id/images', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body.status).to.be.a('number').and.to.equals(200);
-				expect(res.body.data.tags).to.be.an('array');
+				expect(res.body.data[0].tags).to.be.an('array');
 				done();
 			});
 	});
